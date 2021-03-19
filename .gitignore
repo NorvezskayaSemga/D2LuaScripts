@@ -1,0 +1,9 @@
+D2LuaScripts/obj/
+D2LuaScripts/bin/
+TestResults/
+TestScripts/obj/
+TestScripts/bin/
+.vs/
+testimpactdata.sdf
+Local.testsettings
+D2LuaScripts.suo
