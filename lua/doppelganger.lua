@@ -93,9 +93,10 @@ function getLevel(doppelganger, target)
 
 	local lvl = expToLevelSlow(doppelExp, baseLevel, dynLevel, baseExp, expNext1, expNext2);
 
-	local lmax = math.max(doppelganger.baseImpl.level, lvl);
+	-- local lmax = math.max(doppelganger.baseImpl.level, lvl);--
 
-	local result = math.min(99, lmax);
+	-- local result = math.min(99, lmax);
+	local result = math.min(80, lvl);
 
 	-- log('Doppelganger will transform into lvl '..lvl);
 	-- log('lvl max '..lmax);
