@@ -43,7 +43,7 @@ settings = {
 	drainOverflowHeal = 50,
 
 	-- Change doppelganger attacks to copy units with respect to their level
-	leveledDoppelgangerAttack = false,
+	leveledDoppelgangerAttack = true,
 
 	-- Round in battle after which paralyze and petrify attacks
 	-- starts missing targets constantly [1 : INT_MAX]
@@ -69,8 +69,6 @@ settings = {
 	missChanceSingleRoll = false,
 
 	-- Create mss32 proxy dll log files with debug info
-	debugHooks = true,
-	
-	leveledDoppelgangerAttack = true
+	debugHooks = true
 }
 
