@@ -74,8 +74,9 @@ function getUnitExp(unit)
 	local baseExp = baseImpl.xpNext;
 	local expNext1 = baseImpl.dynUpg1.xpNext;
 	local expNext2 = baseImpl.dynUpg2.xpNext;
+	local expToNextLevel = unit.xp;
 
-	return levelToExpSlow(baseLevel, currLevel, dynLevel, baseExp, expNext1, expNext2);
+	return levelToExpSlow(baseLevel, currLevel, dynLevel, baseExp, expNext1, expNext2) + expToNextLevel;	
 end
 
 function getLevel(doppelganger, target)
