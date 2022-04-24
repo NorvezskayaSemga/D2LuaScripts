@@ -45,7 +45,7 @@ function _target_SemgaAdjacentAndUncovered(attacker, selected, allies, targets, 
 	pool = {}
 	pool = _common_AddRange(pool, targets, minC, maxC, 1, 1)
 	for i = 1, #pool do
-		if _common_HasCover(targets, pool[i]) == 0 then
+		if not _common_HasCover(targets, pool[i]) then
 			result = _common_AddDelta(result, pool[i], targets, 0, 0, 0)
 		end
 	end
@@ -67,7 +67,7 @@ end
 function _target_SemgaAllUncovered(attacker, selected, allies, targets, targetsAreAllies)
 	local result = {}
 	for i = 1, #targets do
-		if _common_HasCover(targets, targets[i]) == 0 then
+		if not _common_HasCover(targets, targets[i]) then
 			result = _common_AddDelta(result, targets[i], targets, 0, 0, 0)
 		end
 	end

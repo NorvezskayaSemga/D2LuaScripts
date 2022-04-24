@@ -40,6 +40,10 @@ function _selector_getTargets(methodName, attacker, selected, allies, targets, t
 		result = _attack_SemgaFuryMelee(attacker, selected, allies, targets, targetsAreAllies)
 	elseif  methodName == "_attack_SemgaFuryRange" then
 		result = _attack_SemgaFuryRange(attacker, selected, allies, targets, targetsAreAllies)
+	elseif  methodName == "_attack_SemgaLineAndRandomPerLostHPx1" then
+		result = _attack_SemgaLineAndRandomPerLostHPxMultiplier(attacker, selected, allies, targets, targetsAreAllies, 1)
+	elseif  methodName == "_attack_SemgaLineAndRandomPerLostHPx3" then
+		result = _attack_SemgaLineAndRandomPerLostHPxMultiplier(attacker, selected, allies, targets, targetsAreAllies, 3)
 	elseif  methodName == "_attack_SemgaNearestLineOrAll" then
 		result = _attack_SemgaNearestLineOrAll(attacker, selected, allies, targets, targetsAreAllies)
 	elseif  methodName == "_attack_SemgaPierceHit" then

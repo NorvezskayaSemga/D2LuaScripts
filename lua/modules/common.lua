@@ -2,10 +2,10 @@
 -- Created by Norvezskaya Semga
 
 function _common_IsAddedFilter(result, target)
-	local notAdded = 1
+	local notAdded = true
 	for k = 1, #result do
 		if result[k] == target then
-			notAdded = 0
+			notAdded = false
 			break
 		end
 	end
@@ -15,7 +15,7 @@ end
 function _common_RemoveAddedFromPool(added, pool)
 	local newpool = {}
 	for k = 1, #pool do
-		if _common_IsAddedFilter(added, pool[k]) == 1 then
+		if _common_IsAddedFilter(added, pool[k]) then
 			table.insert(newpool, pool[k])
 		end
 	end
@@ -40,20 +40,20 @@ function _common_AddDelta(result, selected, targets, deltaColumn, deltaLine, tra
 	end
 	
 	for i = 1, #targets do
-		local add = 0
+		local add = false
 		if targets[i].unit.impl.small then
 			if sc == targets[i].column and sl == targets[i].line then
-				add = 1
+				add = true
 			end
 		else
 			if sc == targets[i].column then
-				add = 1
+				add = true
 			end
 		end
-		if add == 1 then
+		if add then
 			add = _common_IsAddedFilter(result, targets[i])
 		end
-		if add == 1 then
+		if add then
 			table.insert(result, targets[i])
 		end
 	end
@@ -62,22 +62,22 @@ end
 
 function _common_AddRange(result, targets, minColumn, maxColumn, minLine, maxLine)
 	for i = 1, #targets do
-		local add = 0
+		local add = false
 		local c = targets[i].column
 		local l = targets[i].line
 		if targets[i].unit.impl.small then
 			if c >= minColumn and c <= maxColumn and l >= minLine and l <= maxLine then
-				add = 1
+				add = true
 			end
 		else
 			if c >= minColumn and c <= maxColumn then
-				add = 1
+				add = true
 			end
 		end
-		if add == 1 then
+		if add then
 			add = _common_IsAddedFilter(result, targets[i])
 		end
-		if add == 1 then
+		if add then
 			table.insert(result, targets[i])	
 		end
 	end
@@ -85,25 +85,24 @@ function _common_AddRange(result, targets, minColumn, maxColumn, minLine, maxLin
 end
 
 function _common_PickOneRandom(result, selected, targets, maxDeltaColumn, maxDeltaLine)
-
     local others = {}
-    local add = 1
+    local add = true
     for i = 1, #targets do
-    	add = 1
+    	add = true
     	if targets[i].unit.impl.small then
     		if math.abs(targets[i].line - selected.line) > maxDeltaLine then
-    			add = 0
+    			add = false
     		end
     	end
-    	if add == 1 then
+    	if add then
     		if math.abs(targets[i].column - selected.column) > maxDeltaColumn then
-    			add = 0
+    			add = false
     		end
     	end
-    	if add == 1 then
+    	if add then
 		add = _common_IsAddedFilter(result, targets[i])
     	end
-    	if add == 1 then
+    	if add then
         	table.insert(others, i)
         	if not targets[i].unit.impl.small and maxDeltaLine > 0 then
             		table.insert(others, i)
@@ -120,6 +119,35 @@ function _common_PickOneRandom(result, selected, targets, maxDeltaColumn, maxDel
     return result
 end
 
+function _common_PickNRandomsWithChance(result, selected, targets, maxDeltaColumn, maxDeltaLine, chance)
+
+        -- log('chance to add: ' .. chance)
+        -- log('initial added: ' .. #result)        
+
+	local currentChance = chance
+	local n = 0
+	while( currentChance >= 100 )
+	do
+		n = n + 1
+		currentChance = currentChance - 100
+	end
+	if currentChance > 0 then
+		if _common_RndEvent(currentChance, 0) then
+			n = n + 1
+		end
+	end
+	while( n > 0 )
+	do
+		n = n - 1
+		result = _common_PickOneRandom(result, selected, targets, maxDeltaColumn, maxDeltaLine)
+	end
+	
+        -- log('result len: ' .. #result)
+        -- log('target len: ' .. #targets)
+
+	return result
+end
+
 function _common_GetFrontline(targets)
 	local nearestLine = 99
 	for i = 1, #targets do
@@ -129,11 +157,11 @@ function _common_GetFrontline(targets)
 end
 
 function _common_HasCover(targets, target)
-	local result = 0
+	local result = false
 	for i = 1, #targets do
 		if targets[i].column == target.column then	
 			if targets[i].line < target.line then
-				result = 1
+				result = true
 				break
 			end
 		end

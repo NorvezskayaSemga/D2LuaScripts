@@ -85,7 +85,7 @@ end
 function _attack_SemgaAllUncovered(attacker, selected, allies, targets, targetsAreAllies, pierceChance)
 	local result = {selected}
 	for i = 1, #targets do
-		if _common_HasCover(targets, targets[i]) == 0 then
+		if not _common_HasCover(targets, targets[i]) then
 			result = _common_AddDelta(result, targets[i], targets, 0, 0, 0)
 		elseif _common_RndEvent(pierceChance, 0) then
 			result = _common_AddDelta(result, targets[i], targets, 0, 0, 0)
@@ -139,6 +139,14 @@ function _attack_SemgaFuryRange(attacker, selected, allies, targets, targetsAreA
 	return result
 end
 
+function _attack_SemgaLineAndRandomPerLostHPxMultiplier(attacker, selected, allies, targets, targetsAreAllies, multiplier)
+	local result = {}
+	local chance = 100 * multiplier * ( attacker.unit.hpMax - attacker.unit.hp ) / attacker.unit.hpMax	
+	result = _attack_Line(attacker, selected, allies, targets, targetsAreAllies)
+	result = _common_PickNRandomsWithChance(result, selected, targets, 100, 100, chance)
+	return result
+end
+
 function _attack_SemgaNearestLineOrAll(attacker, selected, allies, targets, targetsAreAllies)
 	local result = {selected}
 	if _common_IsOnFrontline(attacker, allies) then
@@ -160,11 +168,11 @@ end
 
 function _attack_SemgaPointBlank(attacker, selected, allies, targets, targetsAreAllies)
 	local result = {}
-	local selectedIsAdjusted = 0
+	local selectedIsAdjusted = false
 	if math.abs(attacker.column - selected.column) < 2 then
-		selectedIsAdjusted = 1
+		selectedIsAdjusted = true
 	end
-	if _common_IsOnFrontline(attacker, allies) and selectedIsAdjusted == 1 then
+	if _common_IsOnFrontline(attacker, allies) and selectedIsAdjusted then
 		local minC = selected.column
 		local maxC = selected.column
 		result = _common_AddRange(result, targets, minC, maxC, 0, 0)
@@ -229,3 +237,5 @@ function _attack_SemgaTwoAnyInLine(attacker, selected, allies, targets, targetsA
 	result = _common_AddDelta(result, selected, targets, 1, 0, 1)
 	return result
 end
+
+
