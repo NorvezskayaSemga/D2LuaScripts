@@ -6,7 +6,7 @@ settings = {
 	-- Show resources panel
 	showResources = true,
 	-- Show percentage of land coverted
-	showLandConverted = true,
+	showLandConverted = false,
 
 	-- Allow scenarios with prebuilt capital cities
 	preserveCapitalBuildings = false,
@@ -29,6 +29,8 @@ settings = {
 	shatteredArmorMax = 100,
 	-- Maximum armor shatter damage per attack [0 : 100]
 	shatterDamageMax = 15,
+	-- Percentage of damage upgrade value that shatter attack receives when units level up [0 : 255]
+	shatterDamageUpgradeRatio = 100,
 	-- Allow shatter attacks to miss
 	allowShatterAttackToMiss = false,
 
@@ -42,33 +44,65 @@ settings = {
 	-- Percentage of L_DRAIN_OVERFLOW attacks damage used as heal [INT_MIN : INT_MAX]
 	drainOverflowHeal = 50,
 
-	-- Change doppelganger attacks to copy units with respect to their level
+	-- Change doppelganger attacks to compute level of a copy using 'doppelganger.lua' script
 	leveledDoppelgangerAttack = true,
+	-- Change transform self attacks to compute transformed unit level using 'transformSelf.lua' script
+	leveledTransformSelfAttack = true,
+	-- Change summon attacks to compute summoned units levels using 'summon.lua' script
+	leveledSummonAttack = true,
+
+	-- Change doppelganger attacks to respect enemy/ally wards and immunities to the attack class and source
+	doppelgangerRespectsEnemyImmunity = true,
+	doppelgangerRespectsAllyImmunity = true,
+
+	-- Increases total wards limit per caster from 8 to 48
+	unrestrictedBestowWards = true,
+
+	-- Allows transform-self attack to not consume a unit turn for transformation (once per turn)
+	freeTransformSelfAttack = false,
 
 	-- Round in battle after which paralyze and petrify attacks
 	-- starts missing targets constantly [1 : INT_MAX]
 	disableAllowedRoundMax = 40,
+	
+	-- Change accuracy reduction for mage leaders per each additional target
+	mageLeaderAccuracyReduction = 0,
 
 	aiAccuracyBonus = {
 		-- Treat AI accuracy bonus as absolute value or as percentage.
 		-- Absolute: accuracy += bonus;
 		-- Percentage: accuracy += accuracy * bonus / 100;
-		absolute = false,
-		-- AI accuracy bonus on easy difficulty [-100 : 100]
+		absolute = true,
+		-- AI accuracy bonus on easy difficulty [-127 : 127]
 		easy = -15,
-		-- AI accuracy bonus on average difficulty [-100 : 100]
+		-- AI accuracy bonus on average difficulty [-127 : 127]
 		average = 0,
-		-- AI accuracy bonus on hard difficulty [-100 : 100]
+		-- AI accuracy bonus on hard difficulty [-127 : 127]
 		hard = 5,
-		-- AI accuracy bonus on very hard difficulty [-100 : 100]
+		-- AI accuracy bonus on very hard difficulty [-127 : 127]
 		veryHard = 10
+	},
+
+	movementCost = {
+		-- Show stacks movement cost
+		show = true,
+		-- Color components are all in range [0 : 255]
+		textColor = {
+			red = 200, green = 200, blue = 200
+		},
+		outlineColor = {
+			red = 0, green = 0, blue = 0
+		}
 	},
 
 	-- If true, switches attacks miss check to a single random value roll
 	-- instead of check against arithmetic mean of two random numbers
 	missChanceSingleRoll = false,
 
+	-- Fix missing attack information in unit encyclopedia
+	detailedAttackDescription = true,
+
 	-- Create mss32 proxy dll log files with debug info
-	debugHooks = true
+	debugHooks = true,
 }
 
