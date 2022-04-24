@@ -187,7 +187,7 @@ use_forceRndNum = false
 function _common_RndEvent(chance, forceRndNum)
 	local result = false
 	if chance > 0 then
-		if chance >= common_RndNum(100, forceRndNum) then
+		if chance >= _common_RndNum(100, forceRndNum) then
 			result = true
 		end
 	end
