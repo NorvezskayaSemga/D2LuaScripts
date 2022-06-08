@@ -43,7 +43,51 @@ textids = {
 		-- Defines text id to format split damage in unit encyclopedia.
 		-- The text must contain keyword "%DMG%".
 		-- Fallback text is "%DMG%, split between targets".
-		splitDamage = "",
+		splitDamage = "X015TA0006",
+		
+		
+		-- Defines modified text representation in unit encyclopedia.
+		-- Modified text includes attack name, source, reach, etc.
+		-- The text must contain keyword "%VALUE%".
+		-- Fallback text is "\c025;090;000;%VALUE%\c000;000;000;".
+		modifiedValue = "",
+
+		-- Defines modifiers list caption in unit encyclopedia.
+		-- Fallback text is "\fMedBold;Effects:\fNormal;"
+		modifiersCaption = "",
+
+		-- Defines modifiers list caption in unit encyclopedia.
+		-- Fallback text id is "X005TA0676" (empty leader abilities).
+		modifiersEmpty = "",
+
+		-- Defines format id for modifier description in unit encyclopedia.
+		-- The text must contain keyword "%DESC%".
+		-- Fallback text is "\vC;%DESC%"
+		modifierDescription = "",
+
+		-- Defines format id for native modifier description in unit encyclopedia.
+		-- The text must contain keyword "%DESC%".
+		-- Fallback text is "\vC;\fMedBold;%DESC%\fNormal;"
+		nativeModifierDescription = "",
+		
+		
+		-- Defines format id for drain description in unit encyclopedia.
+		-- The text must contain keywords "%DRAINEFFECT%" and "%DRAIN%".
+		-- Fallback text is "\fMedBold;%DRAINEFFECT%:\t\fNormal;%DRAIN%\n"
+		drainDescription = "X015TA0008",
+
+		-- Defines text id of drain effect in unit encyclopedia.
+		-- Fallback text id is the standard "X005TA0792".
+		drainEffect = "X015TA0009",
+
+		-- Defines text id to mark Drain Overflow attacks in unit encyclopedia.
+		-- Fallback text is "Overflow".
+		overflowAttack = "X005TA0801",
+
+		-- Defines text id to format Drain Overflow text in unit encyclopedia.
+		-- The text must contain keywords "%ATTACK%" and "%OVERFLOW%".
+		-- Fallback text is "%ATTACK% (%OVERFLOW%)".
+		overflowText = "",
 	},
 
 	-- Text ids related to events logic

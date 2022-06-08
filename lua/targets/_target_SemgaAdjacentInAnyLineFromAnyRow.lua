@@ -17,6 +17,6 @@ package.path = ".\\Scripts\\modules\\?.lua"
 require('library')
 
 function getTargets(attacker, selected, allies, targets, targetsAreAllies)
-	local result = _getChoices("_target_SemgaAllIfFronline", attacker, selected, allies, targets, targetsAreAllies)
+	local result = _getChoices("_target_SemgaAdjacentInAnyLineFromAnyRow", attacker, selected, allies, targets, targetsAreAllies)
 	return result
 end

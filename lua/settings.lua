@@ -30,7 +30,7 @@ settings = {
 	-- Maximum armor shatter damage per attack [0 : 100]
 	shatterDamageMax = 15,
 	-- Percentage of damage upgrade value that shatter attack receives when units level up [0 : 255]
-	shatterDamageUpgradeRatio = 100,
+	shatterDamageUpgradeRatio = 10,
 	-- Allow shatter attacks to miss
 	allowShatterAttackToMiss = false,
 
@@ -59,14 +59,14 @@ settings = {
 	unrestrictedBestowWards = true,
 
 	-- Allows transform-self attack to not consume a unit turn for transformation (once per turn)
-	freeTransformSelfAttack = false,
+	freeTransformSelfAttack = true,
 
 	-- Round in battle after which paralyze and petrify attacks
 	-- starts missing targets constantly [1 : INT_MAX]
 	disableAllowedRoundMax = 40,
 	
 	-- Change accuracy reduction for mage leaders per each additional target
-	mageLeaderAccuracyReduction = 0,
+	mageLeaderAccuracyReduction = 10,
 
 	aiAccuracyBonus = {
 		-- Treat AI accuracy bonus as absolute value or as percentage.
