@@ -11,7 +11,7 @@ function _target_Adjacent(attacker, selected, allies, targets, targetsAreAllies)
 
 	local adjacentLine = _common_GetFrontline(targets)
 	local minC = attacker.column - 1
-	local maxC = attacker.column + 1
+	local maxC = minC            + 2
 	result = _common_AddRange(result, targets, minC, maxC, adjacentLine, adjacentLine)
 	if #result == 0 then
 		minC = minC - 1
@@ -31,8 +31,9 @@ function _target_SemgaAdjacentAndUncovered(attacker, selected, allies, targets, 
 		return result
 	end
 	
-	local minC = attacker.column - 1
-	local maxC = attacker.column + 1
+	local aCol = attacker.column
+	local minC = aCol            - 1
+	local maxC = minC            + 2
 	result = _common_AddRange(result, targets, minC, maxC, 0, 0)
 	if #result == 0 then
 		minC = minC - 1
@@ -40,8 +41,8 @@ function _target_SemgaAdjacentAndUncovered(attacker, selected, allies, targets, 
 		result = _common_AddRange(result, targets, minC, maxC, 0, 0)
 	end
 	
-	minC = attacker.column - 1
-	maxC = attacker.column + 1
+	minC = aCol            - 1
+	maxC = minC            + 2
 	pool = {}
 	pool = _common_AddRange(pool, targets, minC, maxC, 1, 1)
 	for i = 1, #pool do
@@ -57,11 +58,60 @@ function _target_SemgaAdjacentAndUncovered(attacker, selected, allies, targets, 
 	return result
 end
 
-function _target_SemgaAllIfFronline(attacker, selected, allies, targets, targetsAreAllies)
+function _target_SemgaAdjacentInAnyLineFromAnyRow(attacker, selected, allies, targets, targetsAreAllies)
+	local result = {}
+	local minC = attacker.column - 1
+	local maxC = minC            + 2
+	result = _common_AddRange(result, targets, minC, maxC, 0, 1)
+	if #result == 0 then
+		minC = minC - 1
+		maxC = maxC + 1
+		result = _common_AddRange(result, targets, minC, maxC, 0, 1)
+	end
+	return result
+end
+
+function _target_SemgaAdjacentFromAnyRow(attacker, selected, allies, targets, targetsAreAllies)
+	local result = {}
+	local adjacentLine = _common_GetFrontline(targets)
+	local minC = attacker.column - 1
+	local maxC = minC            + 2
+	result = _common_AddRange(result, targets, minC, maxC, adjacentLine, adjacentLine)
+	if #result == 0 then
+		minC = minC - 1
+		maxC = maxC + 1
+		result = _common_AddRange(result, targets, minC, maxC, adjacentLine, adjacentLine)
+	end
+	return result
+end
+
+function _target_SemgaAllIfFrontline(attacker, selected, allies, targets, targetsAreAllies)
 	if not targetsAreAllies and not _common_IsOnFrontline(attacker, allies) then
 		return {}
 	end
 	return targets
+end
+
+function _target_SemgaAllNearestUncovered(attacker, selected, allies, targets, targetsAreAllies)
+	local result = {}
+	if not targetsAreAllies and not _common_IsOnFrontline(attacker, allies) then
+		return result
+	end
+	
+	local aCol = attacker.column
+	for r = 2, 3 do
+		for i = 1, #targets do
+    			if math.abs(targets[i].column - aCol) < r then
+				if not _common_HasCover(targets, targets[i]) then
+					result = _common_AddDelta(result, targets[i], targets, 0, 0, 0)
+				end
+			end
+		end
+		if #result > 0 then
+			break
+		end
+	end
+	return result
 end
 
 function _target_SemgaAllUncovered(attacker, selected, allies, targets, targetsAreAllies)
@@ -95,7 +145,7 @@ function _target_SemgaCatAgility(attacker, selected, allies, targets, targetsAre
 	        -- log('nearestLine: '..nearestLine)
 		if attacker.unit.impl.attack1.initiative > maxEnemyIni then
 			local minC = attacker.column - 1
-			local maxC = attacker.column + 1
+			local maxC = minC            + 2
 			result = _common_AddRange(result, targets, minC, maxC, 1, 1)
 		end
 	end

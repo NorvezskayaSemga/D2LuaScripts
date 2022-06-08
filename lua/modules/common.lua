@@ -1,4 +1,6 @@
 
+require('mRnd')
+
 -- Created by Norvezskaya Semga
 
 function _common_IsAddedFilter(result, target)
@@ -158,9 +160,11 @@ end
 
 function _common_HasCover(targets, target)
 	local result = false
+	local tcolumn = target.column
+	local tline   = target.line
 	for i = 1, #targets do
-		if targets[i].column == target.column then	
-			if targets[i].line < target.line then
+		if targets[i].column == tcolumn then	
+			if targets[i].line < tline then
 				result = true
 				break
 			end
@@ -171,9 +175,10 @@ end
 
 function _common_IsOnFrontline(unit, allies)
 	local result = true
+	local uline  = unit.line
 	if unit.backline then
 		for i = 1, #allies do
-			if allies[i].line < unit.line then
+			if allies[i].line < uline then
 				result = false
 				break
 			end
@@ -182,7 +187,6 @@ function _common_IsOnFrontline(unit, allies)
 	return result
 end
 
-set_randomseed = true
 use_forceRndNum = false
 function _common_RndEvent(chance, forceRndNum)
 	local result = false
@@ -200,50 +204,8 @@ function _common_RndNum(maxValue, forceRndNum)
 	if use_forceRndNum then
 		r = forceRndNum
 	else
-		r = math.random(maxValue)
+		r = _mRnd_RndNum(maxValue)
 	end
 	-- log('random value: ' .. r .. ' max: ' .. maxValue)
 	return r
 end
-function _common_SetSeed(addThis, attacker, allies, targets)
-	local myseed = 0
-	if set_randomseed then
-		local myseed = os.time() + addThis
-		myseed = myseed + _common_StatsSumArray(allies)
-		myseed = myseed + _common_StatsSumArray(targets)
-		myseed = myseed + _common_StatsSumItem(attacker)
-		myseed = myseed + 712697 * attacker.column 
-		                +  53383 * attacker.line
-		
-		-- log('random seed: ' .. myseed)
-		math.randomseed(myseed)
-		set_randomseed = false
-	end
-	return myseed
-end
-
-function _common_StatsSumArray(units)
-	local result = 0
-	for i = 1, #units do
-		result = result + _common_StatsSumItem(units[i])
-	end
-	return result
-end
-function _common_StatsSumItem(unit)
-	local u = unit.unit
-	local i = u.impl
-	local a = i.attack1
-	
-	local statsSum = 921 * u.hp
-		       +  34 * i.armor
-		       + 377 * i.level
-	               +  19 * a.initiative
-	               + 125 * a.power 
-	               +  91 * a.damage 
-	               + 162 * a.heal
-	              
-	local posSum   = 3 * (unit.column + 1) + 29 * (unit.line + 1)
-	
-	return  statsSum * posSum
-end
-

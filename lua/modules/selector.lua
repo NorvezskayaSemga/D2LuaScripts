@@ -28,6 +28,10 @@ function _selector_getTargets(methodName, attacker, selected, allies, targets, t
 		result = _attack_SelectedTargetAndOneRandomAdjacentToIt(attacker, selected, allies, targets, targetsAreAllies)
 	elseif  methodName == "_attack_SelectedTargetAndTwoChainedRandom" then
 		result = _attack_SelectedTargetAndTwoChainedRandom(attacker, selected, allies, targets, targetsAreAllies)
+	elseif  methodName == "_attack_SemgaAllNearestUncovered" then
+		result = _attack_SemgaAllNearestUncovered(attacker, selected, allies, targets, targetsAreAllies, 0)
+	elseif  methodName == "_attack_SemgaAllNearestUncoveredPierce" then
+		result = _attack_SemgaAllNearestUncovered(attacker, selected, allies, targets, targetsAreAllies, 50)
 	elseif  methodName == "_attack_SemgaAllUncovered" then
 		result = _attack_SemgaAllUncovered(attacker, selected, allies, targets, targetsAreAllies, 0)
 	elseif  methodName == "_attack_SemgaAllUncoveredPierce" then
@@ -51,6 +55,12 @@ function _selector_getTargets(methodName, attacker, selected, allies, targets, t
 	elseif  methodName == "_attack_SemgaPointBlank" then
 		result = _attack_SemgaPointBlank(attacker, selected, allies, targets, targetsAreAllies)
 	elseif  methodName == "_attack_SemgaSacrifice" then
+	elseif  methodName == "_attack_SemgaSinglePlusChancePerIni" then
+		result = _attack_SemgaSinglePlusChancePerIni(attacker, selected, allies, targets, targetsAreAllies)	
+	elseif  methodName == "_attack_SemgaSinglePlusOnePerThreeLevels" then
+		result = _attack_SemgaSinglePlusNPerTwoLevels(attacker, selected, allies, targets, targetsAreAllies, 3)
+	elseif  methodName == "_attack_SemgaSinglePlusOnePerTwoLevels" then
+		result = _attack_SemgaSinglePlusNPerTwoLevels(attacker, selected, allies, targets, targetsAreAllies, 2)
 	elseif  methodName == "_attack_SemgaSmallEnth" then
 		result = _attack_SemgaSmallEnth(attacker, selected, allies, targets, targetsAreAllies)
 	elseif  methodName == "_attack_SemgaTargetAndTwoRandomBackline" then
@@ -71,8 +81,14 @@ function _selector_getChoices(methodName, attacker, selected, allies, targets, t
 		result = _target_All(attacker, selected, allies, targets, targetsAreAllies)
 	elseif  methodName == "_target_SemgaAdjacentAndUncovered" then
 		result = _target_SemgaAdjacentAndUncovered(attacker, selected, allies, targets, targetsAreAllies)
-	elseif  methodName == "_target_SemgaAllIfFronline" then
-		result = _target_SemgaAllIfFronline(attacker, selected, allies, targets, targetsAreAllies)
+	elseif  methodName == "_target_SemgaAdjacentInAnyLineFromAnyRow" then
+		result = _target_SemgaAdjacentInAnyLineFromAnyRow(attacker, selected, allies, targets, targetsAreAllies)
+	elseif  methodName == "_target_SemgaAdjacentFromAnyRow" then
+		result = _target_SemgaAdjacentFromAnyRow(attacker, selected, allies, targets, targetsAreAllies)
+	elseif  methodName == "_target_SemgaAllIfFrontline" then
+		result = _target_SemgaAllIfFrontline(attacker, selected, allies, targets, targetsAreAllies)
+	elseif  methodName == "_target_SemgaAllNearestUncovered" then
+		result = _target_SemgaAllNearestUncovered(attacker, selected, allies, targets, targetsAreAllies)
 	elseif  methodName == "_target_SemgaAllUncovered" then
 		result = _target_SemgaAllUncovered(attacker, selected, allies, targets, targetsAreAllies)
 	elseif  methodName == "_target_SemgaCatAgility" then

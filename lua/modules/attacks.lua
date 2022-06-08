@@ -11,7 +11,9 @@ end
 
 function _attack_AllAdjacent(attacker, selected, allies, targets, targetsAreAllies)
 	local result = {selected}
-	local adjacentLine = _common_GetFrontline(targets)
+	
+	-- local adjacentLine = _common_GetFrontline(targets)
+	local adjacentLine = selected.line
 	local minC = attacker.column - 1
 	local maxC = attacker.column + 1
 	result = _common_AddRange(result, targets, minC, maxC, adjacentLine, adjacentLine)
@@ -82,6 +84,21 @@ function _attack_SelectedTargetAndTwoChainedRandom(attacker, selected, allies, t
 	return result
 end
 
+function _attack_SemgaAllNearestUncovered(attacker, selected, allies, targets, targetsAreAllies, pierceChance)
+	local result = {selected}
+	local r = math.max(2, math.abs(selected.column - attacker.column) + 1)
+	for i = 1, #targets do
+    		if math.abs(targets[i].column - attacker.column) < r then
+			if not _common_HasCover(targets, targets[i]) then
+				result = _common_AddDelta(result, targets[i], targets, 0, 0, 0)
+			elseif _common_RndEvent(pierceChance, 0) then
+				result = _common_AddDelta(result, targets[i], targets, 0, 0, 0)
+			end
+    		end
+	end
+	return result
+end
+
 function _attack_SemgaAllUncovered(attacker, selected, allies, targets, targetsAreAllies, pierceChance)
 	local result = {selected}
 	for i = 1, #targets do
@@ -115,6 +132,11 @@ function _attack_SemgaCross(attacker, selected, allies, targets, targetsAreAllie
 	result = _common_AddDelta(result, selected, targets, 1, 0, 0)
 	result = _common_AddDelta(result, selected, targets, 0, -1, 0)
 	result = _common_AddDelta(result, selected, targets, -1, 0, 0)
+	if #result < 2 and not selected.unit.impl.small and attacker.unit.impl.attack1.reach == 19 then
+		result = _common_AddDelta(result, selected, targets, 1, 1, 0)
+		result = _common_AddDelta(result, selected, targets, -1, 1, 0)
+	end
+	
 	return result
 end
 
@@ -183,6 +205,33 @@ function _attack_SemgaPointBlank(attacker, selected, allies, targets, targetsAre
 	return result
 end
 
+function _attack_SemgaSinglePlusChancePerIni(attacker, selected, allies, targets, targetsAreAllies, amount)
+	local result = {selected}
+	local overlevelsBonus = math.min(50, 5 * ( attacker.unit.impl.level - attacker.unit.baseImpl.level ) )
+	local deltaIni = 0
+	local chance = 0
+	local aIni = attacker.unit.impl.attack1.initiative
+	
+	for i = 1, #targets do
+		if targets[i] ~= selected then
+			deltaIni = aIni - targets[i].unit.impl.attack1.initiative
+			chance = deltaIni + overlevelsBonus
+			if _common_RndEvent(chance, 0) then
+				table.insert(result, targets[i])
+			end
+		end
+	end
+	return result
+end
+
+function _attack_SemgaSinglePlusNPerTwoLevels(attacker, selected, allies, targets, targetsAreAllies, amount)
+	local result = {selected}
+	local overlevels = attacker.unit.impl.level - attacker.unit.baseImpl.level
+	local chance = 100 * math.floor(overlevels / amount)
+	result = _common_PickNRandomsWithChance(result, selected, targets, 100, 100, chance)
+	return result
+end
+
 function _attack_SemgaSmallEnth(attacker, selected, allies, targets, targetsAreAllies)
 	local result = {}
 	if attacker.unit.impl.level < 5 then
@@ -235,6 +284,9 @@ end
 function _attack_SemgaTwoAnyInLine(attacker, selected, allies, targets, targetsAreAllies)
 	local result = {selected}
 	result = _common_AddDelta(result, selected, targets, 1, 0, 1)
+	if #result < 2 and not selected.unit.impl.small then
+		result = _common_AddDelta(result, selected, targets, 1, 1, 1)
+	end
 	return result
 end
 

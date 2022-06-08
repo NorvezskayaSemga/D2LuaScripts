@@ -5,7 +5,6 @@ require('selector')
 require('common')
 
 function _getTargets(methodName, attacker, selected, allies, targets, targetsAreAllies)
-	local mySeed = _common_SetSeed(1234, attacker, allies, targets)
 	local result = {}
 	
 	-- применение модификаторов на удар в другую цель, отличную от selected
@@ -23,8 +22,9 @@ function _getTargets(methodName, attacker, selected, allies, targets, targetsAre
 end
 
 function _getChoices(methodName, attacker, selected, allies, targets, targetsAreAllies)
-	local mySeed = _common_SetSeed(5678, attacker, allies, targets)
 	local result = {}
+	
+	-- логика исключения для карманницы
 	
 	-- логика исключения из targets того, кто и так получит баф
 	
