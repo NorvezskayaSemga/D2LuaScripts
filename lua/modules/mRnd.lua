@@ -2,7 +2,7 @@
 -- шанс от 0 до 100
 function _mRnd_simpleRndEvent(chance)
 	if chance > 0 then
-		if chance >= _mRnd_RndNum(100) then
+		if chance == 100 or chance >= _mRnd_RndNum(100) then
 			return true
 		end
 	end

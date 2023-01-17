@@ -16,7 +16,8 @@ Frontline positions are even, backline - odd.
 package.path = ".\\Scripts\\modules\\?.lua"
 require('library')
 
-function getTargets(attacker, selected, allies, targets, targetsAreAllies)
-	local result = _getTargets("_attack_SemgaNearestLineOrAll", attacker, selected, allies, targets, targetsAreAllies)
+function getTargets(attacker, selected, allies, targets, targetsAreAllies, item, battle, isMarking)
+	_unitAura_SetScenario(getScenario())
+	local result = _getTargets("_attack_SemgaNearestLineOrAll", attacker, selected, allies, targets, targetsAreAllies, item, battle, isMarking)
 	return result
 end

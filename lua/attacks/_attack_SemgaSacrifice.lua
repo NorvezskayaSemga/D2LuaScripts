@@ -14,6 +14,7 @@ Frontline positions are even, backline - odd.
 -- Created by Norvezskaya Semga
 
 function getTargets(attacker, selected, allies, targets, targetsAreAllies)
+	_unitAura_SetScenario(getScenario())
     -- pick selected
     local result = {selected}
 

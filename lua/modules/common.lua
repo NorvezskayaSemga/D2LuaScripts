@@ -1,7 +1,17 @@
 
 require('mRnd')
+require('game_constants')
 
 -- Created by Norvezskaya Semga
+
+_common_useRandom = true
+function _common_set_useRandom(v)
+	_common_useRandom = v
+	return _common_useRandom
+end
+function _common_get_useRandom()
+	return _common_useRandom
+end
 
 function _common_IsAddedFilter(result, target)
 	local notAdded = true
@@ -42,14 +52,16 @@ function _common_AddDelta(result, selected, targets, deltaColumn, deltaLine, tra
 	end
 	
 	for i = 1, #targets do
-		local add = false
-		if targets[i].unit.impl.small then
-			if sc == targets[i].column and sl == targets[i].line then
-				add = true
-			end
-		else
-			if sc == targets[i].column then
-				add = true
+		local add = (targets[i].unit == nil)
+		if not add then
+			if targets[i].unit.impl.small then
+				if sc == targets[i].column and sl == targets[i].line then
+					add = true
+				end
+			else
+				if sc == targets[i].column then
+					add = true
+				end
 			end
 		end
 		if add then
@@ -64,16 +76,18 @@ end
 
 function _common_AddRange(result, targets, minColumn, maxColumn, minLine, maxLine)
 	for i = 1, #targets do
-		local add = false
+		local add = (targets[i].unit == nil)
 		local c = targets[i].column
 		local l = targets[i].line
-		if targets[i].unit.impl.small then
-			if c >= minColumn and c <= maxColumn and l >= minLine and l <= maxLine then
-				add = true
-			end
-		else
-			if c >= minColumn and c <= maxColumn then
-				add = true
+		if not add then
+			if targets[i].unit.impl.small then
+				if c >= minColumn and c <= maxColumn and l >= minLine and l <= maxLine then
+					add = true
+				end
+			else
+				if c >= minColumn and c <= maxColumn then
+					add = true
+				end
 			end
 		end
 		if add then
@@ -91,7 +105,7 @@ function _common_PickOneRandom(result, selected, targets, maxDeltaColumn, maxDel
     local add = true
     for i = 1, #targets do
     	add = true
-    	if targets[i].unit.impl.small then
+    	if targets[i].unit ~= nil and targets[i].unit.impl.small then
     		if math.abs(targets[i].line - selected.line) > maxDeltaLine then
     			add = false
     		end
@@ -113,7 +127,7 @@ function _common_PickOneRandom(result, selected, targets, maxDeltaColumn, maxDel
     end
 
     if #others > 0 then
-        local selectedOther = _common_RndNum(#others, #others)
+        local selectedOther = _mRnd_RndNum(#others)
         local other = targets[others[selectedOther]]
         table.insert(result, other)
     end
@@ -134,7 +148,7 @@ function _common_PickNRandomsWithChance(result, selected, targets, maxDeltaColum
 		currentChance = currentChance - 100
 	end
 	if currentChance > 0 then
-		if _common_RndEvent(currentChance, 0) then
+		if _mRnd_simpleRndEvent(currentChance) then
 			n = n + 1
 		end
 	end
@@ -187,25 +201,37 @@ function _common_IsOnFrontline(unit, allies)
 	return result
 end
 
-use_forceRndNum = false
-function _common_RndEvent(chance, forceRndNum)
-	local result = false
-	if chance > 0 then
-		if chance >= _common_RndNum(100, forceRndNum) then
-			result = true
+function _common_getBattleInitiative(unit, battle)
+	local ini = unit.impl.attack1.initiative
+	local uid = unit.id
+	
+	if battle:getUnitStatus(uid, BattleStatus.LowerInitiative)
+	or battle:getUnitStatus(uid, BattleStatus.LowerInitiativeLong) then
+		ini = math.ceil(LowerInitiative_1_value * ini)
+	end
+	return ini
+end
+
+function _common_getUnitsInBattle(targets, battle)
+	local result = {}
+	if #targets > 0 then
+		local targetGroup, owner, ownerType = _GroupInfo_getUnitGroup(targets[1].unit)
+		local slots = targetGroup.slots
+		local unit
+		local uid
+		local n = 0
+		for i = 1, #slots do
+			unit = slots[i].unit
+			if unit ~= nil and unit.hp > 0 and not _GroupInfo_UnitHasModifierValue(unit, incorporeality_mod) then
+				uid = unit.id
+				if  not battle:getUnitStatus(uid, BattleStatus.Retreated)
+				and not battle:getUnitStatus(uid, BattleStatus.Hidden) then
+					n = n + 1
+					result[n] = slots[i]
+				end
+			end
 		end
 	end
 	return result
 end
 
--- вернет целое число от 1 до maxValue (включительно)
-function _common_RndNum(maxValue, forceRndNum)
-	local r = 0
-	if use_forceRndNum then
-		r = forceRndNum
-	else
-		r = _mRnd_RndNum(maxValue)
-	end
-	-- log('random value: ' .. r .. ' max: ' .. maxValue)
-	return r
-end

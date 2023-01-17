@@ -1,0 +1,26 @@
+package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\units\\?.lua"
+require('setValue')
+
+function getModifierDisplay(unit, prev)
+	return prev
+end
+
+function getModifierDescTxt(unit, prev)
+	return prev
+end
+
+function getAttackPower(unit, prev)
+	return svMultimplyPower1(unit, prev, 0.15)
+end
+
+function getAttack2Power(unit, prev)
+	return svMultimplyPower2(unit, prev, 0.15)
+end
+
+function getAttackDrain(unit, damage, prev)
+	return svAddDrain1(unit, prev, damage, 0.25)
+end
+
+function getAttack2Drain(unit, damage, prev)
+	return svAddDrain2(unit, prev, damage, 0.25)
+end

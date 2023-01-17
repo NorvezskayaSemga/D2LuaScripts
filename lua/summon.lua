@@ -5,15 +5,15 @@ package.path = ".\\Scripts\\exp\\?.lua"
 require('converter')
 require('bonus')
 
-function getLevel(summoner, summonImpl)
+function getLevel(summoner, summonImpl, item)
 
-	local summonerExp = _getUnitExp(summoner)
+	local summonerExp = _getUnitExp(summoner) 
+		* _getSummonExpTransferEffectiveness(summoner, summonImpl, item)
 	-- log('summoner exp:'..summonerExp)
 
-	local lvl = _getUnitImplLevel(summonImpl, summonerExp)
+	local bonusLvl = _getSummonBonusLevel(summoner, summonImpl, item)
+	local lvl = _getUnitImplLevel(summonImpl, summonerExp, bonusLvl)
 	-- log('summon exp lvl:'..lvl)
-
-	lvl = lvl + _getBonusLevel(summoner)
 	
 	local result = _levelCap(lvl)
 

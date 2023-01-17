@@ -10,6 +10,8 @@ settings = {
 
 	-- Allow scenarios with prebuilt capital cities
 	preserveCapitalBuildings = false,
+	-- Start with pre built temple in capital for warrior lord
+	buildTempleForWarriorLord = true,
 	-- Maximum number of items the player is allowed to transfer
 	-- between campaign scenarios [0 : INT_MAX]
 	carryOverItemsMax = 5,
@@ -28,17 +30,23 @@ settings = {
 	-- Total armor shatter damage [0 : 100]
 	shatteredArmorMax = 100,
 	-- Maximum armor shatter damage per attack [0 : 100]
-	shatterDamageMax = 15,
+	shatterDamageMax = 20,
 	-- Percentage of damage upgrade value that shatter attack receives when units level up [0 : 255]
 	shatterDamageUpgradeRatio = 10,
 	-- Allow shatter attacks to miss
-	allowShatterAttackToMiss = false,
+	allowShatterAttackToMiss = true,
 
 	-- Percentage damage of critical hit [0 : 255]
-	criticalHitDamage = 5,
+	criticalHitDamage = 20,
 	-- Percentage chance of critical hit [0 : 100]
-	criticalHitChance = 100,
+	criticalHitChance = 70,
 
+	-- Multiplies total damage dealt by split damage (DAM_SPLIT) [1 : 6]
+	-- Split damage is introduced by "custom attack damage ratio"
+	-- This multiplier allows split damage to scale for late game as default maximum of 300 total damage is miserable
+	-- For example, multiplier of 6 allows for 300 * 6 = 1800 total damage that corresponds to maximum damage of any mage
+	splitDamageMultiplier = 1,
+	
 	-- Percentage of L_DRAIN attacks damage used as heal [INT_MIN : INT_MAX]
 	drainAttackHeal = 50,
 	-- Percentage of L_DRAIN_OVERFLOW attacks damage used as heal [INT_MIN : INT_MAX]
@@ -48,6 +56,10 @@ settings = {
 	leveledDoppelgangerAttack = true,
 	-- Change transform self attacks to compute transformed unit level using 'transformSelf.lua' script
 	leveledTransformSelfAttack = true,
+	-- Change transform other attacks to compute transformed unit level using 'transformOther.lua' script
+	leveledTransformOtherAttack = false,
+	-- Change drain level attacks to compute transformed unit level using 'drainLevel.lua' script
+	leveledDrainLevelAttack = true,
 	-- Change summon attacks to compute summoned units levels using 'summon.lua' script
 	leveledSummonAttack = true,
 
@@ -60,19 +72,21 @@ settings = {
 
 	-- Allows transform-self attack to not consume a unit turn for transformation (once per turn)
 	freeTransformSelfAttack = true,
+	-- Allows free transform-self attack to be used infinite number of times per single turn
+	freeTransformSelfAttackInfinite = false,
 
 	-- Round in battle after which paralyze and petrify attacks
 	-- starts missing targets constantly [1 : INT_MAX]
 	disableAllowedRoundMax = 40,
 	
-	-- Change accuracy reduction for mage leaders per each additional target
+	-- Change accuracy reduction for vanilla mage leaders per each additional target
 	mageLeaderAccuracyReduction = 10,
 
 	aiAccuracyBonus = {
 		-- Treat AI accuracy bonus as absolute value or as percentage.
 		-- Absolute: accuracy += bonus;
 		-- Percentage: accuracy += accuracy * bonus / 100;
-		absolute = true,
+		absolute = false,
 		-- AI accuracy bonus on easy difficulty [-127 : 127]
 		easy = -15,
 		-- AI accuracy bonus on average difficulty [-127 : 127]
@@ -101,6 +115,58 @@ settings = {
 
 	-- Fix missing attack information in unit encyclopedia
 	detailedAttackDescription = true,
+
+	unitEncyclopedia = {
+		-- Additional display of some stats bonuses, regeneration, xp reward for killing, etc.
+		detailedUnitDescription = true,
+
+		-- Additional display of some stats bonuses, drain, critical hit, custom attack ratios, etc.
+		detailedAttackDescription = true,
+
+		-- Additional display of dynamic upgrade values (only for unit type encyclopedia to avoid clutter)
+                -- Enable detailedUnitDescription and/or detailedAttackDescription to show upgrade values for corresponding stats
+                displayDynamicUpgradeValues = true,
+           
+                -- Additional display of bonus hit points
+                -- Requires detailedUnitDescription
+                displayBonusHp = true,
+           
+                -- Additional display of experience points reduction
+                -- Requires detailedUnitDescription
+                displayBonusXp = true,
+	},
+	
+	-- Fix effective unit hp computation
+	-- Original formula: (hp * armor / 100) + hp
+	-- Fixed formula: hp / (1 - (armor / 100))
+	fixEffectiveHpFormula = true,
+	
+	-- Allows transformed leaders (doppelganger, drain-level, transform-self/other attacks) to use battle items (potions, orbs and talismans)
+	allowBattleItems = {
+		-- If leader is transformed by TransformOther attack (Witch, orb/talisman, artifact effect, etc.)
+		onTransformOther = false,
+		-- If leader is transformed by TransformSelf attack (Wolf Lord, orb/talisman, artifact effect, etc.)
+		onTransformSelf = true,
+		-- If leader's level is drained by DrainLevel attack (Wight, orb/talisman, artifact effect, etc.)
+		onDrainLevel = true,
+		-- If leader transformed himself by Doppelganger attack
+		onDoppelganger = true,
+	},
+	
+	modifiers = {
+		-- Allow unit regeneration modifiers to stack.
+		-- By default, the game picks single highest value, then sums it with lord, terrain and city bonuses.
+		cumulativeUnitRegeneration = true,
+		
+        	-- Enables 'modifiersChanged' notification for custom-modifiers scripts.
+        	-- Keep it disabled if you don't need it to improve general performance.
+        	notifyModifiersChanged = true,
+        	
+        	-- Enables 'onModifierAdded' / 'onModifierRemoved' notifications for custom-modifiers scripts.
+	        -- Keep it disabled if you don't need it - to improve general performance.
+	        notifyModifierAdded = true,
+	        notifyModifierRemoved = true,
+	},
 
 	-- Create mss32 proxy dll log files with debug info
 	debugHooks = true,

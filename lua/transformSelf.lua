@@ -8,12 +8,12 @@ require('bonus')
 function getLevel(unit, transformImpl)
 
 	local unitExp = _getUnitExp(unit)
+		* _getTransformSelfExpTransferEffectiveness(unit, transformImpl)
 	-- log('transforming unit exp:'..unitExp)
 
-	local lvl = _getUnitImplLevel(transformImpl, unitExp)
+	local bonusLvl = _getTransformSelfBonusLevel(unit, transformImpl)
+	local lvl = _getUnitImplLevel(transformImpl, unitExp, bonusLvl)
 	-- log('transform exp lvl:'..lvl)
-	
-	lvl = lvl + _getBonusLevel(unit)
 	
 	local result = _levelCap(lvl)
 

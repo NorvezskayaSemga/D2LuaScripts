@@ -12,6 +12,33 @@ textids = {
 		-- The text must contain keyword "%PRICE%".
 		-- Fallback text is "Do you want to sell all items? Revenue will be:\n%PRICE%"
 		sellAllItems = "X015TA0003",
+		
+		
+		-- Defines format id for effect duration description in unit encyclopedia.
+		-- The text must contain keywords "%DURATION%" and "%DURATIONVALUE%".
+		-- Fallback text is "\fMedBold;%DURATION%:\t\fNormal;%DURATIONVALUE%\n"
+		durationDescription = "X015TA0016",
+
+		-- Defines text id of effect duration in unit encyclopedia.
+		-- Fallback text is "Duration".
+		durationText = "X015TA0017",
+
+		-- Defines text id of instant effect duration in unit encyclopedia.
+		-- Fallback text is "Instant".
+		instantDurationText = "X015TA0018",
+
+		-- Defines text id of random effect duration in unit encyclopedia.
+		-- Fallback text is "Random".
+		randomDurationText = "X015TA0019",
+
+		-- Defines text id of single-turn effect duration in unit encyclopedia.
+		-- Fallback text is "Single turn".
+		singleTurnDurationText = "X015TA0020",
+
+		-- Defines text id of whole-battle effect duration in unit encyclopedia.
+		-- Fallback text is "Whole battle".
+		wholeBattleDurationText = "X015TA0021",
+		
 
 		-- Defines text id to mark Infinite attacks in unit encyclopedia.
 		-- Fallback text is "Lasting".
@@ -51,6 +78,12 @@ textids = {
 		-- The text must contain keyword "%VALUE%".
 		-- Fallback text is "\c025;090;000;%VALUE%\c000;000;000;".
 		modifiedValue = "",
+		
+		-- Defines modified number with total representation in unit encyclopedia.
+                -- Used for HP and XP bonus display.
+                -- The text must contain keywords "%TOTAL%" and "%BONUS%".
+                -- Fallback text is "%TOTAL% (%BONUS%)".
+                modifiedNumberTotal = "",
 
 		-- Defines modifiers list caption in unit encyclopedia.
 		-- Fallback text is "\fMedBold;Effects:\fNormal;"
@@ -58,7 +91,7 @@ textids = {
 
 		-- Defines modifiers list caption in unit encyclopedia.
 		-- Fallback text id is "X005TA0676" (empty leader abilities).
-		modifiersEmpty = "",
+		modifiersEmpty = "X015TA0015",
 
 		-- Defines format id for modifier description in unit encyclopedia.
 		-- The text must contain keyword "%DESC%".
@@ -88,6 +121,17 @@ textids = {
 		-- The text must contain keywords "%ATTACK%" and "%OVERFLOW%".
 		-- Fallback text is "%ATTACK% (%OVERFLOW%)".
 		overflowText = "",
+		
+		-- Defines text id to format dynamic upgrade level in unit encyclopedia.
+		-- The text must contain keyword %STAT%.
+		-- "%UPGLV%" is optional and can be ommited if you don't want to display upgrade level.
+		-- Fallback text is "%STAT% (level-ups weaken at %UPGLV%)".
+		dynamicUpgradeLevel = "X015TA0011",
+
+		-- Defines text id to format dynamic upgrades text in unit encyclopedia.
+		-- The text must contain keywords "%STAT%", %UPG1% and %UPG2%.
+		-- Fallback text is "%STAT% (%UPG1% | %UPG2% per level)".
+		dynamicUpgradeValues = "X015TA0012",
 	},
 
 	-- Text ids related to events logic
