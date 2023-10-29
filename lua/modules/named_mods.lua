@@ -44,12 +44,28 @@ ringofheavenwill_itm = Id.new('G001IG0612').value
 itemsmasterperk_mod = Id.new('g040um0276').value
 incorporeality_mod = Id.new('g040um0279').value
 
-ignoreprotection_mod = Id.new('g040um0282').value
-
 immunetosourcevulnerability_mod = Id.new('g201um9254').value
+
+small_enth_leveling_mod = Id.new('g040um0106').value
+
+cursedash_mod = Id.new('g002um0070').value
+divinationbox_mod = Id.new('g002um0055').value
+abyssfangs_mod = Id.new('g002um0006').value
+luteofcharming_mod = Id.new('g000um7548').value
+oceanheart_mod = Id.new('g040um0017').value
+bloodshroud_mod = Id.new('g006um0047').value
+executionersax_mod = Id.new('g040um0321').value
+
+linaret_mod = Id.new('g040um0231').value
+
+puritytiara_mod = Id.new('g000um2206').value
+blessedbracelet_mod = Id.new('g002um0054').value
+runeoflife_mod = Id.new('g002um0011').value
+perseverancebreastplate_mod = Id.new('g040um0326').value
 
 -- -100% movepoints
 spell_paraseus_mod = Id.new('g000um0053').value
+drawing_nomove_mod = Id.new('g200um9034').value
 
 -- -99% movepoints
 spell_mutilation_mod = Id.new('g002um0043').value
@@ -61,7 +77,22 @@ spell_deathpsalm_mod = Id.new('g000um0094').value
 -- -30% movepoints
 spell_entanglement_mod = Id.new('g000um7539').value
 
+delete_attack2_mod = Id.new('g201um9296').value
 
+potion_change_attack_heal_mod = Id.new('g040um0235').value
+potion_change_attack_damage_mod = Id.new('g040um0233').value
+potion_change_attack_vampirism_mod = Id.new('g040um0234').value
+potion_change_attack_thaumaturgy_mod = Id.new('g040um0063').value
 
+no_exp_bonus_with_selftransform = Id.new('g040um0344').value
 
+galleansboon_mod = Id.new('g000um7545').value
+curse_random_targets_mod = Id.new('g040um0376').value
 
+ClansT4SpellChangeAttackType_mod = Id.new('g040um0377').value
+
+no_summoner_aura_bonus_mod = Id.new('g201um9365').value
+
+banner_of_impenetrable_darkness_mod = Id.new('g040um0380').value
+
+shield_of_elusive_reflections_mod = Id.new('g040um0384').value

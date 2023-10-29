@@ -1,14 +1,24 @@
-package.path = ".\\Scripts\\modules\\?.lua"
+package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modifiers\\drawing\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\leaderMods\\?.lua;.\\Scripts\\modifiers\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\?.lua;.\\Scripts\\modifiers\\smns\\items\\?.lua;.\\Scripts\\modifiers\\smns\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\spells\\?.lua;.\\Scripts\\modifiers\\smns\\units\\?.lua;.\\Scripts\\modifiers\\spells\\?.lua;.\\Scripts\\modifiers\\units\\?.lua;.\\Scripts\\modifiers\\units\\bloodsorcerer\\?.lua;.\\Scripts\\modifiers\\units\\multiplicative_stats\\?.lua;.\\Scripts\\modifiers\\units\\torhoth\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\workshop\\?.lua;.\\Scripts\\workshop\\classes\\?.lua"
 require('GroupInfo')
+require('smnsInfo')
+if smnsEnabled then
+	require('smnsAura')
+end
 
 G040UM0155 = Id.new('g040um0155').value
+G040UM0307 = Id.new('g040um0307').value
+G040UM0385 = Id.new('g040um0385').value
 G020AA0011 = Id.new('g020aa0011')
-StormCentaurId = Id.new('g001uu8240').value
+
+DeleveledUnitIsImmuneToDrainLevel = {}
+DeleveledUnitIsImmuneToDrainLevel[Id.new('g001uu8240').value] = 1
+DeleveledUnitIsImmuneToDrainLevel[Id.new('g000uu2004').value] = 1
 
 function getLevel(attacker, target, item)
     -- transform into unit with its level minus 1 and minus attacker over-level
     local lvl = target.impl.level
     local drain
+    local attackerMods = _GroupInfo_UnitModifiers(attacker)
     local targetMods = _GroupInfo_UnitModifiers(target)
     if item then
     	drain = 1
@@ -17,7 +27,13 @@ function getLevel(attacker, target, item)
     	if a2 ~= nil and a2.id == G020AA0011 then
     		drain = 1
     	else
-	    	drain = math.min(10, 1 + math.floor( (attacker.impl.level - attacker.baseImpl.level) / 3))
+    		local flatBonus = 2 * _GroupInfo_UnitModifierAmount(attackerMods, G040UM0307)
+    		                + _GroupInfo_UnitModifierAmount(attackerMods, G040UM0385)
+    		if not smnsEnabled then
+			drain = math.min(5, 1 + flatBonus + math.floor( (attacker.impl.level - attacker.baseImpl.level) / 5))
+		else
+    			drain = _smns_getUnitAttackDrainLevelBaseValue(attacker, target)
+    		end
     	end
     end
     
@@ -28,7 +44,7 @@ function getLevel(attacker, target, item)
     
     if _GroupInfo_UnitModifierAmount(targetMods, G040UM0155) > 0 then
     	    return math.max(target.baseImpl.level, lvl - drain)
-    elseif target.impl.id.value == StormCentaurId then
+    elseif DeleveledUnitIsImmuneToDrainLevel[target.impl.id.value] ~= nil then
     	    return math.max(target.baseImpl.level - 1, lvl - drain)
     else
 	    return math.max(1, lvl - drain)

@@ -1,4 +1,4 @@
-package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\units\\?.lua"
+package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modifiers\\drawing\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\leaderMods\\?.lua;.\\Scripts\\modifiers\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\?.lua;.\\Scripts\\modifiers\\smns\\items\\?.lua;.\\Scripts\\modifiers\\smns\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\spells\\?.lua;.\\Scripts\\modifiers\\smns\\units\\?.lua;.\\Scripts\\modifiers\\spells\\?.lua;.\\Scripts\\modifiers\\units\\?.lua;.\\Scripts\\modifiers\\units\\bloodsorcerer\\?.lua;.\\Scripts\\modifiers\\units\\multiplicative_stats\\?.lua;.\\Scripts\\modifiers\\units\\torhoth\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\workshop\\?.lua;.\\Scripts\\workshop\\classes\\?.lua"
 require "unitAura"
 require "GroupInfo"
 
@@ -67,14 +67,14 @@ function _modifCustomTxt_HitPoint_Percent(unit, prev)
 end
 
 function _HitPoint_Percent_modifCustomDescTxt_init(unit, unitIndex)
-		if _HitPoint_Percent_UnitMods[unitIndex]  == nil then
-			_HitPoint_Percent_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_HitPoint_Percent_DisplayCalls[unitIndex]    = _unitAura_HitPoint_cntPercent(unit, _HitPoint_Percent_UnitMods[unitIndex])
-		_HitPoint_Percent_DisplayCalls[unitIndex]             = 0
-		_expected_HitPoint_Percent_DescTxtCalls[unitIndex]    = 1
-		_HitPoint_Percent_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _HitPoint_Percent_UnitMods[unitIndex]  == nil then
+		_HitPoint_Percent_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_HitPoint_Percent_DisplayCalls[unitIndex]    = _unitAura_HitPoint_cntPercent(unit, _HitPoint_Percent_UnitMods[unitIndex])
+	_HitPoint_Percent_DisplayCalls[unitIndex]             = 0
+	_expected_HitPoint_Percent_DescTxtCalls[unitIndex]    = 1
+	_HitPoint_Percent_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _HitPoint_Flat_UnitMods              = {}
@@ -142,14 +142,14 @@ function _modifCustomTxt_HitPoint_Flat(unit, prev)
 end
 
 function _HitPoint_Flat_modifCustomDescTxt_init(unit, unitIndex)
-		if _HitPoint_Flat_UnitMods[unitIndex]  == nil then
-			_HitPoint_Flat_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_HitPoint_Flat_DisplayCalls[unitIndex]    = _unitAura_HitPoint_cntFlat(unit, _HitPoint_Flat_UnitMods[unitIndex])
-		_HitPoint_Flat_DisplayCalls[unitIndex]             = 0
-		_expected_HitPoint_Flat_DescTxtCalls[unitIndex]    = 1
-		_HitPoint_Flat_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _HitPoint_Flat_UnitMods[unitIndex]  == nil then
+		_HitPoint_Flat_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_HitPoint_Flat_DisplayCalls[unitIndex]    = _unitAura_HitPoint_cntFlat(unit, _HitPoint_Flat_UnitMods[unitIndex])
+	_HitPoint_Flat_DisplayCalls[unitIndex]             = 0
+	_expected_HitPoint_Flat_DescTxtCalls[unitIndex]    = 1
+	_HitPoint_Flat_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _Regen_Flat_UnitMods              = {}
@@ -217,14 +217,14 @@ function _modifCustomTxt_Regen_Flat(unit, prev)
 end
 
 function _Regen_Flat_modifCustomDescTxt_init(unit, unitIndex)
-		if _Regen_Flat_UnitMods[unitIndex]  == nil then
-			_Regen_Flat_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_Regen_Flat_DisplayCalls[unitIndex]    = _unitAura_Regen_cntFlat(unit, _Regen_Flat_UnitMods[unitIndex])
-		_Regen_Flat_DisplayCalls[unitIndex]             = 0
-		_expected_Regen_Flat_DescTxtCalls[unitIndex]    = 1
-		_Regen_Flat_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _Regen_Flat_UnitMods[unitIndex]  == nil then
+		_Regen_Flat_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_Regen_Flat_DisplayCalls[unitIndex]    = _unitAura_Regen_cntFlat(unit, _Regen_Flat_UnitMods[unitIndex])
+	_Regen_Flat_DisplayCalls[unitIndex]             = 0
+	_expected_Regen_Flat_DescTxtCalls[unitIndex]    = 1
+	_Regen_Flat_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _Armor_Flat_UnitMods              = {}
@@ -292,14 +292,14 @@ function _modifCustomTxt_Armor_Flat(unit, prev)
 end
 
 function _Armor_Flat_modifCustomDescTxt_init(unit, unitIndex)
-		if _Armor_Flat_UnitMods[unitIndex]  == nil then
-			_Armor_Flat_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_Armor_Flat_DisplayCalls[unitIndex]    = _unitAura_Armor_cntFlat(unit, _Armor_Flat_UnitMods[unitIndex])
-		_Armor_Flat_DisplayCalls[unitIndex]             = 0
-		_expected_Armor_Flat_DescTxtCalls[unitIndex]    = 1
-		_Armor_Flat_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _Armor_Flat_UnitMods[unitIndex]  == nil then
+		_Armor_Flat_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_Armor_Flat_DisplayCalls[unitIndex]    = _unitAura_Armor_cntFlat(unit, _Armor_Flat_UnitMods[unitIndex])
+	_Armor_Flat_DisplayCalls[unitIndex]             = 0
+	_expected_Armor_Flat_DescTxtCalls[unitIndex]    = 1
+	_Armor_Flat_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _AttackInitiative_Percent_UnitMods              = {}
@@ -367,14 +367,14 @@ function _modifCustomTxt_AttackInitiative_Percent(unit, prev)
 end
 
 function _AttackInitiative_Percent_modifCustomDescTxt_init(unit, unitIndex)
-		if _AttackInitiative_Percent_UnitMods[unitIndex]  == nil then
-			_AttackInitiative_Percent_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_AttackInitiative_Percent_DisplayCalls[unitIndex]    = _unitAura_AttackInitiative_cntPercent(unit, _AttackInitiative_Percent_UnitMods[unitIndex])
-		_AttackInitiative_Percent_DisplayCalls[unitIndex]             = 0
-		_expected_AttackInitiative_Percent_DescTxtCalls[unitIndex]    = 1
-		_AttackInitiative_Percent_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _AttackInitiative_Percent_UnitMods[unitIndex]  == nil then
+		_AttackInitiative_Percent_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_AttackInitiative_Percent_DisplayCalls[unitIndex]    = _unitAura_AttackInitiative_cntPercent(unit, _AttackInitiative_Percent_UnitMods[unitIndex])
+	_AttackInitiative_Percent_DisplayCalls[unitIndex]             = 0
+	_expected_AttackInitiative_Percent_DescTxtCalls[unitIndex]    = 1
+	_AttackInitiative_Percent_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _AttackDamageHeal_Percent_UnitMods              = {}
@@ -442,14 +442,14 @@ function _modifCustomTxt_AttackDamageHeal_Percent(unit, prev)
 end
 
 function _AttackDamageHeal_Percent_modifCustomDescTxt_init(unit, unitIndex)
-		if _AttackDamageHeal_Percent_UnitMods[unitIndex]  == nil then
-			_AttackDamageHeal_Percent_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_AttackDamageHeal_Percent_DisplayCalls[unitIndex]    = _unitAura_AttackDamageHeal_cntPercent(unit, _AttackDamageHeal_Percent_UnitMods[unitIndex])
-		_AttackDamageHeal_Percent_DisplayCalls[unitIndex]             = 0
-		_expected_AttackDamageHeal_Percent_DescTxtCalls[unitIndex]    = 1
-		_AttackDamageHeal_Percent_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _AttackDamageHeal_Percent_UnitMods[unitIndex]  == nil then
+		_AttackDamageHeal_Percent_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_AttackDamageHeal_Percent_DisplayCalls[unitIndex]    = _unitAura_AttackDamageHeal_cntPercent(unit, _AttackDamageHeal_Percent_UnitMods[unitIndex])
+	_AttackDamageHeal_Percent_DisplayCalls[unitIndex]             = 0
+	_expected_AttackDamageHeal_Percent_DescTxtCalls[unitIndex]    = 1
+	_AttackDamageHeal_Percent_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _AttackPower_Percent_UnitMods              = {}
@@ -517,14 +517,14 @@ function _modifCustomTxt_AttackPower_Percent(unit, prev)
 end
 
 function _AttackPower_Percent_modifCustomDescTxt_init(unit, unitIndex)
-		if _AttackPower_Percent_UnitMods[unitIndex]  == nil then
-			_AttackPower_Percent_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_AttackPower_Percent_DisplayCalls[unitIndex]    = _unitAura_AttackPower_cntPercent(unit, _AttackPower_Percent_UnitMods[unitIndex])
-		_AttackPower_Percent_DisplayCalls[unitIndex]             = 0
-		_expected_AttackPower_Percent_DescTxtCalls[unitIndex]    = 1
-		_AttackPower_Percent_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _AttackPower_Percent_UnitMods[unitIndex]  == nil then
+		_AttackPower_Percent_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_AttackPower_Percent_DisplayCalls[unitIndex]    = _unitAura_AttackPower_cntPercent(unit, _AttackPower_Percent_UnitMods[unitIndex])
+	_AttackPower_Percent_DisplayCalls[unitIndex]             = 0
+	_expected_AttackPower_Percent_DescTxtCalls[unitIndex]    = 1
+	_AttackPower_Percent_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _AttackDrain_Flat_UnitMods              = {}
@@ -592,14 +592,14 @@ function _modifCustomTxt_AttackDrain_Flat(unit, prev)
 end
 
 function _AttackDrain_Flat_modifCustomDescTxt_init(unit, unitIndex)
-		if _AttackDrain_Flat_UnitMods[unitIndex]  == nil then
-			_AttackDrain_Flat_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_AttackDrain_Flat_DisplayCalls[unitIndex]    = _unitAura_AttackDrain_cntFlat(unit, _AttackDrain_Flat_UnitMods[unitIndex])
-		_AttackDrain_Flat_DisplayCalls[unitIndex]             = 0
-		_expected_AttackDrain_Flat_DescTxtCalls[unitIndex]    = 1
-		_AttackDrain_Flat_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _AttackDrain_Flat_UnitMods[unitIndex]  == nil then
+		_AttackDrain_Flat_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_AttackDrain_Flat_DisplayCalls[unitIndex]    = _unitAura_AttackDrain_cntFlat(unit, _AttackDrain_Flat_UnitMods[unitIndex])
+	_AttackDrain_Flat_DisplayCalls[unitIndex]             = 0
+	_expected_AttackDrain_Flat_DescTxtCalls[unitIndex]    = 1
+	_AttackDrain_Flat_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _AttackCrit_Flat_UnitMods              = {}
@@ -667,14 +667,14 @@ function _modifCustomTxt_AttackCrit_Flat(unit, prev)
 end
 
 function _AttackCrit_Flat_modifCustomDescTxt_init(unit, unitIndex)
-		if _AttackCrit_Flat_UnitMods[unitIndex]  == nil then
-			_AttackCrit_Flat_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_AttackCrit_Flat_DisplayCalls[unitIndex]    = _unitAura_AttackCrit_cntFlat(unit, _AttackCrit_Flat_UnitMods[unitIndex])
-		_AttackCrit_Flat_DisplayCalls[unitIndex]             = 0
-		_expected_AttackCrit_Flat_DescTxtCalls[unitIndex]    = 1
-		_AttackCrit_Flat_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _AttackCrit_Flat_UnitMods[unitIndex]  == nil then
+		_AttackCrit_Flat_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_AttackCrit_Flat_DisplayCalls[unitIndex]    = _unitAura_AttackCrit_cntFlat(unit, _AttackCrit_Flat_UnitMods[unitIndex])
+	_AttackCrit_Flat_DisplayCalls[unitIndex]             = 0
+	_expected_AttackCrit_Flat_DescTxtCalls[unitIndex]    = 1
+	_AttackCrit_Flat_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _SummonTransform_Flat_UnitMods              = {}
@@ -742,14 +742,14 @@ function _modifCustomTxt_SummonTransform_Flat(unit, prev)
 end
 
 function _SummonTransform_Flat_modifCustomDescTxt_init(unit, unitIndex)
-		if _SummonTransform_Flat_UnitMods[unitIndex]  == nil then
-			_SummonTransform_Flat_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_SummonTransform_Flat_DisplayCalls[unitIndex]    = _unitAura_SummonTransform_cntFlat(unit, _SummonTransform_Flat_UnitMods[unitIndex])
-		_SummonTransform_Flat_DisplayCalls[unitIndex]             = 0
-		_expected_SummonTransform_Flat_DescTxtCalls[unitIndex]    = 1
-		_SummonTransform_Flat_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _SummonTransform_Flat_UnitMods[unitIndex]  == nil then
+		_SummonTransform_Flat_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_SummonTransform_Flat_DisplayCalls[unitIndex]    = _unitAura_SummonTransform_cntFlat(unit, _SummonTransform_Flat_UnitMods[unitIndex])
+	_SummonTransform_Flat_DisplayCalls[unitIndex]             = 0
+	_expected_SummonTransform_Flat_DescTxtCalls[unitIndex]    = 1
+	_SummonTransform_Flat_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _CurseProtection_Covered_UnitMods              = {}
@@ -817,14 +817,14 @@ function _modifCustomTxt_CurseProtection_Covered(unit, prev)
 end
 
 function _CurseProtection_Covered_modifCustomDescTxt_init(unit, unitIndex)
-		if _CurseProtection_Covered_UnitMods[unitIndex]  == nil then
-			_CurseProtection_Covered_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_CurseProtection_Covered_DisplayCalls[unitIndex]    = _unitAura_CurseProtection_cntCovered(unit, _CurseProtection_Covered_UnitMods[unitIndex])
-		_CurseProtection_Covered_DisplayCalls[unitIndex]             = 0
-		_expected_CurseProtection_Covered_DescTxtCalls[unitIndex]    = 1
-		_CurseProtection_Covered_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _CurseProtection_Covered_UnitMods[unitIndex]  == nil then
+		_CurseProtection_Covered_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_CurseProtection_Covered_DisplayCalls[unitIndex]    = _unitAura_CurseProtection_cntCovered(unit, _CurseProtection_Covered_UnitMods[unitIndex])
+	_CurseProtection_Covered_DisplayCalls[unitIndex]             = 0
+	_expected_CurseProtection_Covered_DescTxtCalls[unitIndex]    = 1
+	_CurseProtection_Covered_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _ArmorFlat_Covered_UnitMods              = {}
@@ -892,14 +892,14 @@ function _modifCustomTxt_ArmorFlat_Covered(unit, prev)
 end
 
 function _ArmorFlat_Covered_modifCustomDescTxt_init(unit, unitIndex)
-		if _ArmorFlat_Covered_UnitMods[unitIndex]  == nil then
-			_ArmorFlat_Covered_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_ArmorFlat_Covered_DisplayCalls[unitIndex]    = _unitAura_ArmorFlat_cntCovered(unit, _ArmorFlat_Covered_UnitMods[unitIndex])
-		_ArmorFlat_Covered_DisplayCalls[unitIndex]             = 0
-		_expected_ArmorFlat_Covered_DescTxtCalls[unitIndex]    = 1
-		_ArmorFlat_Covered_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _ArmorFlat_Covered_UnitMods[unitIndex]  == nil then
+		_ArmorFlat_Covered_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_ArmorFlat_Covered_DisplayCalls[unitIndex]    = _unitAura_ArmorFlat_cntCovered(unit, _ArmorFlat_Covered_UnitMods[unitIndex])
+	_ArmorFlat_Covered_DisplayCalls[unitIndex]             = 0
+	_expected_ArmorFlat_Covered_DescTxtCalls[unitIndex]    = 1
+	_ArmorFlat_Covered_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _HitPointOnDeath_Percent_UnitMods              = {}
@@ -967,14 +967,14 @@ function _modifCustomTxt_HitPointOnDeath_Percent(unit, prev)
 end
 
 function _HitPointOnDeath_Percent_modifCustomDescTxt_init(unit, unitIndex)
-		if _HitPointOnDeath_Percent_UnitMods[unitIndex]  == nil then
-			_HitPointOnDeath_Percent_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_HitPointOnDeath_Percent_DisplayCalls[unitIndex]    = _unitAura_HitPointOnDeath_cntPercent(unit, _HitPointOnDeath_Percent_UnitMods[unitIndex])
-		_HitPointOnDeath_Percent_DisplayCalls[unitIndex]             = 0
-		_expected_HitPointOnDeath_Percent_DescTxtCalls[unitIndex]    = 1
-		_HitPointOnDeath_Percent_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _HitPointOnDeath_Percent_UnitMods[unitIndex]  == nil then
+		_HitPointOnDeath_Percent_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_HitPointOnDeath_Percent_DisplayCalls[unitIndex]    = _unitAura_HitPointOnDeath_cntPercent(unit, _HitPointOnDeath_Percent_UnitMods[unitIndex])
+	_HitPointOnDeath_Percent_DisplayCalls[unitIndex]             = 0
+	_expected_HitPointOnDeath_Percent_DescTxtCalls[unitIndex]    = 1
+	_HitPointOnDeath_Percent_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _AttackDrainOnDeath_Percent_UnitMods              = {}
@@ -1042,14 +1042,14 @@ function _modifCustomTxt_AttackDrainOnDeath_Percent(unit, prev)
 end
 
 function _AttackDrainOnDeath_Percent_modifCustomDescTxt_init(unit, unitIndex)
-		if _AttackDrainOnDeath_Percent_UnitMods[unitIndex]  == nil then
-			_AttackDrainOnDeath_Percent_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_AttackDrainOnDeath_Percent_DisplayCalls[unitIndex]    = _unitAura_AttackDrainOnDeath_cntPercent(unit, _AttackDrainOnDeath_Percent_UnitMods[unitIndex])
-		_AttackDrainOnDeath_Percent_DisplayCalls[unitIndex]             = 0
-		_expected_AttackDrainOnDeath_Percent_DescTxtCalls[unitIndex]    = 1
-		_AttackDrainOnDeath_Percent_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _AttackDrainOnDeath_Percent_UnitMods[unitIndex]  == nil then
+		_AttackDrainOnDeath_Percent_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_AttackDrainOnDeath_Percent_DisplayCalls[unitIndex]    = _unitAura_AttackDrainOnDeath_cntPercent(unit, _AttackDrainOnDeath_Percent_UnitMods[unitIndex])
+	_AttackDrainOnDeath_Percent_DisplayCalls[unitIndex]             = 0
+	_expected_AttackDrainOnDeath_Percent_DescTxtCalls[unitIndex]    = 1
+	_AttackDrainOnDeath_Percent_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _PoisonResist_UnitMods              = {}
@@ -1117,14 +1117,14 @@ function _modifCustomTxt_PoisonResist(unit, prev)
 end
 
 function _PoisonResist_modifCustomDescTxt_init(unit, unitIndex)
-		if _PoisonResist_UnitMods[unitIndex]  == nil then
-			_PoisonResist_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_PoisonResist_DisplayCalls[unitIndex]    = _unitAura_PoisonResist_cnt(unit, _PoisonResist_UnitMods[unitIndex])
-		_PoisonResist_DisplayCalls[unitIndex]             = 0
-		_expected_PoisonResist_DescTxtCalls[unitIndex]    = 1
-		_PoisonResist_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _PoisonResist_UnitMods[unitIndex]  == nil then
+		_PoisonResist_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_PoisonResist_DisplayCalls[unitIndex]    = _unitAura_PoisonResist_cnt(unit, _PoisonResist_UnitMods[unitIndex])
+	_PoisonResist_DisplayCalls[unitIndex]             = 0
+	_expected_PoisonResist_DescTxtCalls[unitIndex]    = 1
+	_PoisonResist_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _FrostbiteResist_UnitMods              = {}
@@ -1192,14 +1192,14 @@ function _modifCustomTxt_FrostbiteResist(unit, prev)
 end
 
 function _FrostbiteResist_modifCustomDescTxt_init(unit, unitIndex)
-		if _FrostbiteResist_UnitMods[unitIndex]  == nil then
-			_FrostbiteResist_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_FrostbiteResist_DisplayCalls[unitIndex]    = _unitAura_FrostbiteResist_cnt(unit, _FrostbiteResist_UnitMods[unitIndex])
-		_FrostbiteResist_DisplayCalls[unitIndex]             = 0
-		_expected_FrostbiteResist_DescTxtCalls[unitIndex]    = 1
-		_FrostbiteResist_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _FrostbiteResist_UnitMods[unitIndex]  == nil then
+		_FrostbiteResist_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_FrostbiteResist_DisplayCalls[unitIndex]    = _unitAura_FrostbiteResist_cnt(unit, _FrostbiteResist_UnitMods[unitIndex])
+	_FrostbiteResist_DisplayCalls[unitIndex]             = 0
+	_expected_FrostbiteResist_DescTxtCalls[unitIndex]    = 1
+	_FrostbiteResist_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _BlisterResist_UnitMods              = {}
@@ -1267,14 +1267,14 @@ function _modifCustomTxt_BlisterResist(unit, prev)
 end
 
 function _BlisterResist_modifCustomDescTxt_init(unit, unitIndex)
-		if _BlisterResist_UnitMods[unitIndex]  == nil then
-			_BlisterResist_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_BlisterResist_DisplayCalls[unitIndex]    = _unitAura_BlisterResist_cnt(unit, _BlisterResist_UnitMods[unitIndex])
-		_BlisterResist_DisplayCalls[unitIndex]             = 0
-		_expected_BlisterResist_DescTxtCalls[unitIndex]    = 1
-		_BlisterResist_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _BlisterResist_UnitMods[unitIndex]  == nil then
+		_BlisterResist_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_BlisterResist_DisplayCalls[unitIndex]    = _unitAura_BlisterResist_cnt(unit, _BlisterResist_UnitMods[unitIndex])
+	_BlisterResist_DisplayCalls[unitIndex]             = 0
+	_expected_BlisterResist_DescTxtCalls[unitIndex]    = 1
+	_BlisterResist_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _LowerInitiativeResist_UnitMods              = {}
@@ -1342,14 +1342,14 @@ function _modifCustomTxt_LowerInitiativeResist(unit, prev)
 end
 
 function _LowerInitiativeResist_modifCustomDescTxt_init(unit, unitIndex)
-		if _LowerInitiativeResist_UnitMods[unitIndex]  == nil then
-			_LowerInitiativeResist_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_LowerInitiativeResist_DisplayCalls[unitIndex]    = _unitAura_LowerInitiativeResist_cnt(unit, _LowerInitiativeResist_UnitMods[unitIndex])
-		_LowerInitiativeResist_DisplayCalls[unitIndex]             = 0
-		_expected_LowerInitiativeResist_DescTxtCalls[unitIndex]    = 1
-		_LowerInitiativeResist_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _LowerInitiativeResist_UnitMods[unitIndex]  == nil then
+		_LowerInitiativeResist_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_LowerInitiativeResist_DisplayCalls[unitIndex]    = _unitAura_LowerInitiativeResist_cnt(unit, _LowerInitiativeResist_UnitMods[unitIndex])
+	_LowerInitiativeResist_DisplayCalls[unitIndex]             = 0
+	_expected_LowerInitiativeResist_DescTxtCalls[unitIndex]    = 1
+	_LowerInitiativeResist_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _LowerDamageResist_UnitMods              = {}
@@ -1417,14 +1417,164 @@ function _modifCustomTxt_LowerDamageResist(unit, prev)
 end
 
 function _LowerDamageResist_modifCustomDescTxt_init(unit, unitIndex)
-		if _LowerDamageResist_UnitMods[unitIndex]  == nil then
-			_LowerDamageResist_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	if _LowerDamageResist_UnitMods[unitIndex]  == nil then
+		_LowerDamageResist_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_LowerDamageResist_DisplayCalls[unitIndex]    = _unitAura_LowerDamageResist_cnt(unit, _LowerDamageResist_UnitMods[unitIndex])
+	_LowerDamageResist_DisplayCalls[unitIndex]             = 0
+	_expected_LowerDamageResist_DescTxtCalls[unitIndex]    = 1
+	_LowerDamageResist_DescTxtCalls[unitIndex]             = 0
+	return 0
+end
+
+_FearResist_UnitMods              = {}
+_FearResist_DisplayCalls          = {}
+_FearResist_DescTxtCalls          = {}
+_expected_FearResist_DisplayCalls = {}
+_expected_FearResist_DescTxtCalls = {}
+
+function _modifDisplay_FearResist(unit, prev)
+	local v = unit.id.value
+	if _expected_FearResist_DisplayCalls[v] == nil then
+		_FearResist_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _FearResist_DisplayCalls[v] == 0 then
+		if _unitAura_FearResist_val(unit, _FearResist_UnitMods[v]) > 0 then
+			result = true
+		else
+			result = false
+			_FearResist_UnitMods[v]	   = nil
+			_expected_FearResist_DisplayCalls[v] = nil
+			_FearResist_DisplayCalls[v]          = nil
+			_expected_FearResist_DescTxtCalls[v] = nil
+			_FearResist_DescTxtCalls[v]          = nil
+			return result
 		end
-		_expected_LowerDamageResist_DisplayCalls[unitIndex]    = _unitAura_LowerDamageResist_cnt(unit, _LowerDamageResist_UnitMods[unitIndex])
-		_LowerDamageResist_DisplayCalls[unitIndex]             = 0
-		_expected_LowerDamageResist_DescTxtCalls[unitIndex]    = 1
-		_LowerDamageResist_DescTxtCalls[unitIndex]             = 0
-		return 0
+	else
+		result = false
+	end
+	_FearResist_DisplayCalls[v] = _FearResist_DisplayCalls[v] + 1
+	if _expected_FearResist_DisplayCalls[v] <= _FearResist_DisplayCalls[v] then
+		if _expected_FearResist_DescTxtCalls[v] == nil then
+			_FearResist_UnitMods[v]	   = nil
+		end
+		_expected_FearResist_DisplayCalls[v] = nil
+		_FearResist_DisplayCalls[v]          = nil
+	end
+	return result
+end
+
+function _modifCustomTxt_FearResist(unit, prev)
+	local v = unit.id.value
+	if _expected_FearResist_DescTxtCalls[v] == nil then
+		_FearResist_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _FearResist_DescTxtCalls[v] == 0 then
+		if _FearResist_UnitMods[v]  == nil then
+			_FearResist_UnitMods[v]  = _GroupInfo_UnitModifiers(unit)
+		end
+		local eff = _unitAura_FearResist_val(unit, _FearResist_UnitMods[v])
+		result = Id.new('x012tg1237')
+	else
+		result = prev
+	end
+	_FearResist_DescTxtCalls[v] = _FearResist_DescTxtCalls[v] + 1
+	if _expected_FearResist_DescTxtCalls[v] <= _FearResist_DescTxtCalls[v] then
+		if _expected_FearResist_DisplayCalls[v] == nil then
+			_FearResist_UnitMods[v]	   = nil
+		end
+		_expected_FearResist_DescTxtCalls[v] = nil
+		_FearResist_DescTxtCalls[v]          = nil
+	end
+	return result
+end
+
+function _FearResist_modifCustomDescTxt_init(unit, unitIndex)
+	if _FearResist_UnitMods[unitIndex]  == nil then
+		_FearResist_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_FearResist_DisplayCalls[unitIndex]    = _unitAura_FearResist_cnt(unit, _FearResist_UnitMods[unitIndex])
+	_FearResist_DisplayCalls[unitIndex]             = 0
+	_expected_FearResist_DescTxtCalls[unitIndex]    = 1
+	_FearResist_DescTxtCalls[unitIndex]             = 0
+	return 0
+end
+
+_PetrifyResist_UnitMods              = {}
+_PetrifyResist_DisplayCalls          = {}
+_PetrifyResist_DescTxtCalls          = {}
+_expected_PetrifyResist_DisplayCalls = {}
+_expected_PetrifyResist_DescTxtCalls = {}
+
+function _modifDisplay_PetrifyResist(unit, prev)
+	local v = unit.id.value
+	if _expected_PetrifyResist_DisplayCalls[v] == nil then
+		_PetrifyResist_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _PetrifyResist_DisplayCalls[v] == 0 then
+		if _unitAura_PetrifyResist_val(unit, _PetrifyResist_UnitMods[v]) > 0 then
+			result = true
+		else
+			result = false
+			_PetrifyResist_UnitMods[v]	   = nil
+			_expected_PetrifyResist_DisplayCalls[v] = nil
+			_PetrifyResist_DisplayCalls[v]          = nil
+			_expected_PetrifyResist_DescTxtCalls[v] = nil
+			_PetrifyResist_DescTxtCalls[v]          = nil
+			return result
+		end
+	else
+		result = false
+	end
+	_PetrifyResist_DisplayCalls[v] = _PetrifyResist_DisplayCalls[v] + 1
+	if _expected_PetrifyResist_DisplayCalls[v] <= _PetrifyResist_DisplayCalls[v] then
+		if _expected_PetrifyResist_DescTxtCalls[v] == nil then
+			_PetrifyResist_UnitMods[v]	   = nil
+		end
+		_expected_PetrifyResist_DisplayCalls[v] = nil
+		_PetrifyResist_DisplayCalls[v]          = nil
+	end
+	return result
+end
+
+function _modifCustomTxt_PetrifyResist(unit, prev)
+	local v = unit.id.value
+	if _expected_PetrifyResist_DescTxtCalls[v] == nil then
+		_PetrifyResist_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _PetrifyResist_DescTxtCalls[v] == 0 then
+		if _PetrifyResist_UnitMods[v]  == nil then
+			_PetrifyResist_UnitMods[v]  = _GroupInfo_UnitModifiers(unit)
+		end
+		local eff = _unitAura_PetrifyResist_val(unit, _PetrifyResist_UnitMods[v])
+		result = Id.new('x012tg1238')
+	else
+		result = prev
+	end
+	_PetrifyResist_DescTxtCalls[v] = _PetrifyResist_DescTxtCalls[v] + 1
+	if _expected_PetrifyResist_DescTxtCalls[v] <= _PetrifyResist_DescTxtCalls[v] then
+		if _expected_PetrifyResist_DisplayCalls[v] == nil then
+			_PetrifyResist_UnitMods[v]	   = nil
+		end
+		_expected_PetrifyResist_DescTxtCalls[v] = nil
+		_PetrifyResist_DescTxtCalls[v]          = nil
+	end
+	return result
+end
+
+function _PetrifyResist_modifCustomDescTxt_init(unit, unitIndex)
+	if _PetrifyResist_UnitMods[unitIndex]  == nil then
+		_PetrifyResist_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_PetrifyResist_DisplayCalls[unitIndex]    = _unitAura_PetrifyResist_cnt(unit, _PetrifyResist_UnitMods[unitIndex])
+	_PetrifyResist_DisplayCalls[unitIndex]             = 0
+	_expected_PetrifyResist_DescTxtCalls[unitIndex]    = 1
+	_PetrifyResist_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _PerLostHP_Armor_UnitMods              = {}
@@ -1492,14 +1642,14 @@ function _modifCustomTxt_PerLostHP_Armor(unit, prev)
 end
 
 function _PerLostHP_Armor_modifCustomDescTxt_init(unit, unitIndex)
-		if _PerLostHP_Armor_UnitMods[unitIndex]  == nil then
-			_PerLostHP_Armor_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_PerLostHP_Armor_DisplayCalls[unitIndex]    = _unitAura_PerLostHP_Armor_cnt(unit, _PerLostHP_Armor_UnitMods[unitIndex])
-		_PerLostHP_Armor_DisplayCalls[unitIndex]             = 0
-		_expected_PerLostHP_Armor_DescTxtCalls[unitIndex]    = 1
-		_PerLostHP_Armor_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _PerLostHP_Armor_UnitMods[unitIndex]  == nil then
+		_PerLostHP_Armor_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_PerLostHP_Armor_DisplayCalls[unitIndex]    = _unitAura_PerLostHP_Armor_cnt(unit, _PerLostHP_Armor_UnitMods[unitIndex])
+	_PerLostHP_Armor_DisplayCalls[unitIndex]             = 0
+	_expected_PerLostHP_Armor_DescTxtCalls[unitIndex]    = 1
+	_PerLostHP_Armor_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _PerLostHP_AttackInitiative_UnitMods              = {}
@@ -1567,14 +1717,14 @@ function _modifCustomTxt_PerLostHP_AttackInitiative(unit, prev)
 end
 
 function _PerLostHP_AttackInitiative_modifCustomDescTxt_init(unit, unitIndex)
-		if _PerLostHP_AttackInitiative_UnitMods[unitIndex]  == nil then
-			_PerLostHP_AttackInitiative_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_PerLostHP_AttackInitiative_DisplayCalls[unitIndex]    = _unitAura_PerLostHP_AttackInitiative_cnt(unit, _PerLostHP_AttackInitiative_UnitMods[unitIndex])
-		_PerLostHP_AttackInitiative_DisplayCalls[unitIndex]             = 0
-		_expected_PerLostHP_AttackInitiative_DescTxtCalls[unitIndex]    = 1
-		_PerLostHP_AttackInitiative_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _PerLostHP_AttackInitiative_UnitMods[unitIndex]  == nil then
+		_PerLostHP_AttackInitiative_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_PerLostHP_AttackInitiative_DisplayCalls[unitIndex]    = _unitAura_PerLostHP_AttackInitiative_cnt(unit, _PerLostHP_AttackInitiative_UnitMods[unitIndex])
+	_PerLostHP_AttackInitiative_DisplayCalls[unitIndex]             = 0
+	_expected_PerLostHP_AttackInitiative_DescTxtCalls[unitIndex]    = 1
+	_PerLostHP_AttackInitiative_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _PerLostHP_AttackDamageHeal_UnitMods              = {}
@@ -1642,14 +1792,14 @@ function _modifCustomTxt_PerLostHP_AttackDamageHeal(unit, prev)
 end
 
 function _PerLostHP_AttackDamageHeal_modifCustomDescTxt_init(unit, unitIndex)
-		if _PerLostHP_AttackDamageHeal_UnitMods[unitIndex]  == nil then
-			_PerLostHP_AttackDamageHeal_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_PerLostHP_AttackDamageHeal_DisplayCalls[unitIndex]    = _unitAura_PerLostHP_AttackDamageHeal_cnt(unit, _PerLostHP_AttackDamageHeal_UnitMods[unitIndex])
-		_PerLostHP_AttackDamageHeal_DisplayCalls[unitIndex]             = 0
-		_expected_PerLostHP_AttackDamageHeal_DescTxtCalls[unitIndex]    = 1
-		_PerLostHP_AttackDamageHeal_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _PerLostHP_AttackDamageHeal_UnitMods[unitIndex]  == nil then
+		_PerLostHP_AttackDamageHeal_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_PerLostHP_AttackDamageHeal_DisplayCalls[unitIndex]    = _unitAura_PerLostHP_AttackDamageHeal_cnt(unit, _PerLostHP_AttackDamageHeal_UnitMods[unitIndex])
+	_PerLostHP_AttackDamageHeal_DisplayCalls[unitIndex]             = 0
+	_expected_PerLostHP_AttackDamageHeal_DescTxtCalls[unitIndex]    = 1
+	_PerLostHP_AttackDamageHeal_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _PerLostHP_AttackPower_UnitMods              = {}
@@ -1717,14 +1867,14 @@ function _modifCustomTxt_PerLostHP_AttackPower(unit, prev)
 end
 
 function _PerLostHP_AttackPower_modifCustomDescTxt_init(unit, unitIndex)
-		if _PerLostHP_AttackPower_UnitMods[unitIndex]  == nil then
-			_PerLostHP_AttackPower_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_PerLostHP_AttackPower_DisplayCalls[unitIndex]    = _unitAura_PerLostHP_AttackPower_cnt(unit, _PerLostHP_AttackPower_UnitMods[unitIndex])
-		_PerLostHP_AttackPower_DisplayCalls[unitIndex]             = 0
-		_expected_PerLostHP_AttackPower_DescTxtCalls[unitIndex]    = 1
-		_PerLostHP_AttackPower_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _PerLostHP_AttackPower_UnitMods[unitIndex]  == nil then
+		_PerLostHP_AttackPower_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_PerLostHP_AttackPower_DisplayCalls[unitIndex]    = _unitAura_PerLostHP_AttackPower_cnt(unit, _PerLostHP_AttackPower_UnitMods[unitIndex])
+	_PerLostHP_AttackPower_DisplayCalls[unitIndex]             = 0
+	_expected_PerLostHP_AttackPower_DescTxtCalls[unitIndex]    = 1
+	_PerLostHP_AttackPower_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _PerLostHP_AttackDrain_UnitMods              = {}
@@ -1792,14 +1942,14 @@ function _modifCustomTxt_PerLostHP_AttackDrain(unit, prev)
 end
 
 function _PerLostHP_AttackDrain_modifCustomDescTxt_init(unit, unitIndex)
-		if _PerLostHP_AttackDrain_UnitMods[unitIndex]  == nil then
-			_PerLostHP_AttackDrain_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_PerLostHP_AttackDrain_DisplayCalls[unitIndex]    = _unitAura_PerLostHP_AttackDrain_cnt(unit, _PerLostHP_AttackDrain_UnitMods[unitIndex])
-		_PerLostHP_AttackDrain_DisplayCalls[unitIndex]             = 0
-		_expected_PerLostHP_AttackDrain_DescTxtCalls[unitIndex]    = 1
-		_PerLostHP_AttackDrain_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _PerLostHP_AttackDrain_UnitMods[unitIndex]  == nil then
+		_PerLostHP_AttackDrain_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_PerLostHP_AttackDrain_DisplayCalls[unitIndex]    = _unitAura_PerLostHP_AttackDrain_cnt(unit, _PerLostHP_AttackDrain_UnitMods[unitIndex])
+	_PerLostHP_AttackDrain_DisplayCalls[unitIndex]             = 0
+	_expected_PerLostHP_AttackDrain_DescTxtCalls[unitIndex]    = 1
+	_PerLostHP_AttackDrain_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _PerLostHP_AttackCrit_UnitMods              = {}
@@ -1867,14 +2017,14 @@ function _modifCustomTxt_PerLostHP_AttackCrit(unit, prev)
 end
 
 function _PerLostHP_AttackCrit_modifCustomDescTxt_init(unit, unitIndex)
-		if _PerLostHP_AttackCrit_UnitMods[unitIndex]  == nil then
-			_PerLostHP_AttackCrit_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_PerLostHP_AttackCrit_DisplayCalls[unitIndex]    = _unitAura_PerLostHP_AttackCrit_cnt(unit, _PerLostHP_AttackCrit_UnitMods[unitIndex])
-		_PerLostHP_AttackCrit_DisplayCalls[unitIndex]             = 0
-		_expected_PerLostHP_AttackCrit_DescTxtCalls[unitIndex]    = 1
-		_PerLostHP_AttackCrit_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _PerLostHP_AttackCrit_UnitMods[unitIndex]  == nil then
+		_PerLostHP_AttackCrit_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_PerLostHP_AttackCrit_DisplayCalls[unitIndex]    = _unitAura_PerLostHP_AttackCrit_cnt(unit, _PerLostHP_AttackCrit_UnitMods[unitIndex])
+	_PerLostHP_AttackCrit_DisplayCalls[unitIndex]             = 0
+	_expected_PerLostHP_AttackCrit_DescTxtCalls[unitIndex]    = 1
+	_PerLostHP_AttackCrit_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _PerLostHP_DoubleAttack_UnitMods              = {}
@@ -1942,14 +2092,14 @@ function _modifCustomTxt_PerLostHP_DoubleAttack(unit, prev)
 end
 
 function _PerLostHP_DoubleAttack_modifCustomDescTxt_init(unit, unitIndex)
-		if _PerLostHP_DoubleAttack_UnitMods[unitIndex]  == nil then
-			_PerLostHP_DoubleAttack_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_PerLostHP_DoubleAttack_DisplayCalls[unitIndex]    = _unitAura_PerLostHP_DoubleAttack_cnt(unit, _PerLostHP_DoubleAttack_UnitMods[unitIndex])
-		_PerLostHP_DoubleAttack_DisplayCalls[unitIndex]             = 0
-		_expected_PerLostHP_DoubleAttack_DescTxtCalls[unitIndex]    = 1
-		_PerLostHP_DoubleAttack_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _PerLostHP_DoubleAttack_UnitMods[unitIndex]  == nil then
+		_PerLostHP_DoubleAttack_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_PerLostHP_DoubleAttack_DisplayCalls[unitIndex]    = _unitAura_PerLostHP_DoubleAttack_cnt(unit, _PerLostHP_DoubleAttack_UnitMods[unitIndex])
+	_PerLostHP_DoubleAttack_DisplayCalls[unitIndex]             = 0
+	_expected_PerLostHP_DoubleAttack_DescTxtCalls[unitIndex]    = 1
+	_PerLostHP_DoubleAttack_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _AttackDamageInitiativeOnFullLife_UnitMods              = {}
@@ -2017,14 +2167,14 @@ function _modifCustomTxt_AttackDamageInitiativeOnFullLife(unit, prev)
 end
 
 function _AttackDamageInitiativeOnFullLife_modifCustomDescTxt_init(unit, unitIndex)
-		if _AttackDamageInitiativeOnFullLife_UnitMods[unitIndex]  == nil then
-			_AttackDamageInitiativeOnFullLife_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_AttackDamageInitiativeOnFullLife_DisplayCalls[unitIndex]    = _unitAura_AttackDamageInitiativeOnFullLife_cnt(unit, _AttackDamageInitiativeOnFullLife_UnitMods[unitIndex])
-		_AttackDamageInitiativeOnFullLife_DisplayCalls[unitIndex]             = 0
-		_expected_AttackDamageInitiativeOnFullLife_DescTxtCalls[unitIndex]    = 1
-		_AttackDamageInitiativeOnFullLife_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _AttackDamageInitiativeOnFullLife_UnitMods[unitIndex]  == nil then
+		_AttackDamageInitiativeOnFullLife_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_AttackDamageInitiativeOnFullLife_DisplayCalls[unitIndex]    = _unitAura_AttackDamageInitiativeOnFullLife_cnt(unit, _AttackDamageInitiativeOnFullLife_UnitMods[unitIndex])
+	_AttackDamageInitiativeOnFullLife_DisplayCalls[unitIndex]             = 0
+	_expected_AttackDamageInitiativeOnFullLife_DescTxtCalls[unitIndex]    = 1
+	_AttackDamageInitiativeOnFullLife_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _AttackLessPowerOnFullLife_UnitMods              = {}
@@ -2092,14 +2242,389 @@ function _modifCustomTxt_AttackLessPowerOnFullLife(unit, prev)
 end
 
 function _AttackLessPowerOnFullLife_modifCustomDescTxt_init(unit, unitIndex)
-		if _AttackLessPowerOnFullLife_UnitMods[unitIndex]  == nil then
-			_AttackLessPowerOnFullLife_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	if _AttackLessPowerOnFullLife_UnitMods[unitIndex]  == nil then
+		_AttackLessPowerOnFullLife_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_AttackLessPowerOnFullLife_DisplayCalls[unitIndex]    = _unitAura_AttackLessPowerOnFullLife_cnt(unit, _AttackLessPowerOnFullLife_UnitMods[unitIndex])
+	_AttackLessPowerOnFullLife_DisplayCalls[unitIndex]             = 0
+	_expected_AttackLessPowerOnFullLife_DescTxtCalls[unitIndex]    = 1
+	_AttackLessPowerOnFullLife_DescTxtCalls[unitIndex]             = 0
+	return 0
+end
+
+_ArmorOnFullLife_UnitMods              = {}
+_ArmorOnFullLife_DisplayCalls          = {}
+_ArmorOnFullLife_DescTxtCalls          = {}
+_expected_ArmorOnFullLife_DisplayCalls = {}
+_expected_ArmorOnFullLife_DescTxtCalls = {}
+
+function _modifDisplay_ArmorOnFullLife(unit, prev)
+	local v = unit.id.value
+	if _expected_ArmorOnFullLife_DisplayCalls[v] == nil then
+		_ArmorOnFullLife_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _ArmorOnFullLife_DisplayCalls[v] == 0 then
+		if _unitAura_ArmorOnFullLife_val(unit, _ArmorOnFullLife_UnitMods[v]) > 0 then
+			result = true
+		else
+			result = false
+			_ArmorOnFullLife_UnitMods[v]	   = nil
+			_expected_ArmorOnFullLife_DisplayCalls[v] = nil
+			_ArmorOnFullLife_DisplayCalls[v]          = nil
+			_expected_ArmorOnFullLife_DescTxtCalls[v] = nil
+			_ArmorOnFullLife_DescTxtCalls[v]          = nil
+			return result
 		end
-		_expected_AttackLessPowerOnFullLife_DisplayCalls[unitIndex]    = _unitAura_AttackLessPowerOnFullLife_cnt(unit, _AttackLessPowerOnFullLife_UnitMods[unitIndex])
-		_AttackLessPowerOnFullLife_DisplayCalls[unitIndex]             = 0
-		_expected_AttackLessPowerOnFullLife_DescTxtCalls[unitIndex]    = 1
-		_AttackLessPowerOnFullLife_DescTxtCalls[unitIndex]             = 0
-		return 0
+	else
+		result = false
+	end
+	_ArmorOnFullLife_DisplayCalls[v] = _ArmorOnFullLife_DisplayCalls[v] + 1
+	if _expected_ArmorOnFullLife_DisplayCalls[v] <= _ArmorOnFullLife_DisplayCalls[v] then
+		if _expected_ArmorOnFullLife_DescTxtCalls[v] == nil then
+			_ArmorOnFullLife_UnitMods[v]	   = nil
+		end
+		_expected_ArmorOnFullLife_DisplayCalls[v] = nil
+		_ArmorOnFullLife_DisplayCalls[v]          = nil
+	end
+	return result
+end
+
+function _modifCustomTxt_ArmorOnFullLife(unit, prev)
+	local v = unit.id.value
+	if _expected_ArmorOnFullLife_DescTxtCalls[v] == nil then
+		_ArmorOnFullLife_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _ArmorOnFullLife_DescTxtCalls[v] == 0 then
+		if _ArmorOnFullLife_UnitMods[v]  == nil then
+			_ArmorOnFullLife_UnitMods[v]  = _GroupInfo_UnitModifiers(unit)
+		end
+		local eff = _unitAura_ArmorOnFullLife_val(unit, _ArmorOnFullLife_UnitMods[v])
+		result = Id.new('x020tg'..tostring(4700 + eff))
+	else
+		result = prev
+	end
+	_ArmorOnFullLife_DescTxtCalls[v] = _ArmorOnFullLife_DescTxtCalls[v] + 1
+	if _expected_ArmorOnFullLife_DescTxtCalls[v] <= _ArmorOnFullLife_DescTxtCalls[v] then
+		if _expected_ArmorOnFullLife_DisplayCalls[v] == nil then
+			_ArmorOnFullLife_UnitMods[v]	   = nil
+		end
+		_expected_ArmorOnFullLife_DescTxtCalls[v] = nil
+		_ArmorOnFullLife_DescTxtCalls[v]          = nil
+	end
+	return result
+end
+
+function _ArmorOnFullLife_modifCustomDescTxt_init(unit, unitIndex)
+	if _ArmorOnFullLife_UnitMods[unitIndex]  == nil then
+		_ArmorOnFullLife_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_ArmorOnFullLife_DisplayCalls[unitIndex]    = _unitAura_ArmorOnFullLife_cnt(unit, _ArmorOnFullLife_UnitMods[unitIndex])
+	_ArmorOnFullLife_DisplayCalls[unitIndex]             = 0
+	_expected_ArmorOnFullLife_DescTxtCalls[unitIndex]    = 1
+	_ArmorOnFullLife_DescTxtCalls[unitIndex]             = 0
+	return 0
+end
+
+_AttackProtectionOnFullLife_UnitMods              = {}
+_AttackProtectionOnFullLife_DisplayCalls          = {}
+_AttackProtectionOnFullLife_DescTxtCalls          = {}
+_expected_AttackProtectionOnFullLife_DisplayCalls = {}
+_expected_AttackProtectionOnFullLife_DescTxtCalls = {}
+
+function _modifDisplay_AttackProtectionOnFullLife(unit, prev)
+	local v = unit.id.value
+	if _expected_AttackProtectionOnFullLife_DisplayCalls[v] == nil then
+		_AttackProtectionOnFullLife_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _AttackProtectionOnFullLife_DisplayCalls[v] == 0 then
+		if _unitAura_AttackProtectionOnFullLife_val(unit, _AttackProtectionOnFullLife_UnitMods[v]) > 0 then
+			result = true
+		else
+			result = false
+			_AttackProtectionOnFullLife_UnitMods[v]	   = nil
+			_expected_AttackProtectionOnFullLife_DisplayCalls[v] = nil
+			_AttackProtectionOnFullLife_DisplayCalls[v]          = nil
+			_expected_AttackProtectionOnFullLife_DescTxtCalls[v] = nil
+			_AttackProtectionOnFullLife_DescTxtCalls[v]          = nil
+			return result
+		end
+	else
+		result = false
+	end
+	_AttackProtectionOnFullLife_DisplayCalls[v] = _AttackProtectionOnFullLife_DisplayCalls[v] + 1
+	if _expected_AttackProtectionOnFullLife_DisplayCalls[v] <= _AttackProtectionOnFullLife_DisplayCalls[v] then
+		if _expected_AttackProtectionOnFullLife_DescTxtCalls[v] == nil then
+			_AttackProtectionOnFullLife_UnitMods[v]	   = nil
+		end
+		_expected_AttackProtectionOnFullLife_DisplayCalls[v] = nil
+		_AttackProtectionOnFullLife_DisplayCalls[v]          = nil
+	end
+	return result
+end
+
+function _modifCustomTxt_AttackProtectionOnFullLife(unit, prev)
+	local v = unit.id.value
+	if _expected_AttackProtectionOnFullLife_DescTxtCalls[v] == nil then
+		_AttackProtectionOnFullLife_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _AttackProtectionOnFullLife_DescTxtCalls[v] == 0 then
+		if _AttackProtectionOnFullLife_UnitMods[v]  == nil then
+			_AttackProtectionOnFullLife_UnitMods[v]  = _GroupInfo_UnitModifiers(unit)
+		end
+		local eff = _unitAura_AttackProtectionOnFullLife_val(unit, _AttackProtectionOnFullLife_UnitMods[v])
+		result = Id.new('x020tg'..tostring(4600 + eff))
+	else
+		result = prev
+	end
+	_AttackProtectionOnFullLife_DescTxtCalls[v] = _AttackProtectionOnFullLife_DescTxtCalls[v] + 1
+	if _expected_AttackProtectionOnFullLife_DescTxtCalls[v] <= _AttackProtectionOnFullLife_DescTxtCalls[v] then
+		if _expected_AttackProtectionOnFullLife_DisplayCalls[v] == nil then
+			_AttackProtectionOnFullLife_UnitMods[v]	   = nil
+		end
+		_expected_AttackProtectionOnFullLife_DescTxtCalls[v] = nil
+		_AttackProtectionOnFullLife_DescTxtCalls[v]          = nil
+	end
+	return result
+end
+
+function _AttackProtectionOnFullLife_modifCustomDescTxt_init(unit, unitIndex)
+	if _AttackProtectionOnFullLife_UnitMods[unitIndex]  == nil then
+		_AttackProtectionOnFullLife_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_AttackProtectionOnFullLife_DisplayCalls[unitIndex]    = _unitAura_AttackProtectionOnFullLife_cnt(unit, _AttackProtectionOnFullLife_UnitMods[unitIndex])
+	_AttackProtectionOnFullLife_DisplayCalls[unitIndex]             = 0
+	_expected_AttackProtectionOnFullLife_DescTxtCalls[unitIndex]    = 1
+	_AttackProtectionOnFullLife_DescTxtCalls[unitIndex]             = 0
+	return 0
+end
+
+_AttackProtectionPerLevel_UnitMods              = {}
+_AttackProtectionPerLevel_DisplayCalls          = {}
+_AttackProtectionPerLevel_DescTxtCalls          = {}
+_expected_AttackProtectionPerLevel_DisplayCalls = {}
+_expected_AttackProtectionPerLevel_DescTxtCalls = {}
+
+function _modifDisplay_AttackProtectionPerLevel(unit, prev)
+	local v = unit.id.value
+	if _expected_AttackProtectionPerLevel_DisplayCalls[v] == nil then
+		_AttackProtectionPerLevel_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _AttackProtectionPerLevel_DisplayCalls[v] == 0 then
+		if _unitAura_AttackProtectionPerLevel_val(unit, _AttackProtectionPerLevel_UnitMods[v]) > 0 then
+			result = true
+		else
+			result = false
+			_AttackProtectionPerLevel_UnitMods[v]	   = nil
+			_expected_AttackProtectionPerLevel_DisplayCalls[v] = nil
+			_AttackProtectionPerLevel_DisplayCalls[v]          = nil
+			_expected_AttackProtectionPerLevel_DescTxtCalls[v] = nil
+			_AttackProtectionPerLevel_DescTxtCalls[v]          = nil
+			return result
+		end
+	else
+		result = false
+	end
+	_AttackProtectionPerLevel_DisplayCalls[v] = _AttackProtectionPerLevel_DisplayCalls[v] + 1
+	if _expected_AttackProtectionPerLevel_DisplayCalls[v] <= _AttackProtectionPerLevel_DisplayCalls[v] then
+		if _expected_AttackProtectionPerLevel_DescTxtCalls[v] == nil then
+			_AttackProtectionPerLevel_UnitMods[v]	   = nil
+		end
+		_expected_AttackProtectionPerLevel_DisplayCalls[v] = nil
+		_AttackProtectionPerLevel_DisplayCalls[v]          = nil
+	end
+	return result
+end
+
+function _modifCustomTxt_AttackProtectionPerLevel(unit, prev)
+	local v = unit.id.value
+	if _expected_AttackProtectionPerLevel_DescTxtCalls[v] == nil then
+		_AttackProtectionPerLevel_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _AttackProtectionPerLevel_DescTxtCalls[v] == 0 then
+		if _AttackProtectionPerLevel_UnitMods[v]  == nil then
+			_AttackProtectionPerLevel_UnitMods[v]  = _GroupInfo_UnitModifiers(unit)
+		end
+		local eff = _unitAura_AttackProtectionPerLevel_val(unit, _AttackProtectionPerLevel_UnitMods[v])
+		result = Id.new('x020tg'..tostring(3600 + eff))
+	else
+		result = prev
+	end
+	_AttackProtectionPerLevel_DescTxtCalls[v] = _AttackProtectionPerLevel_DescTxtCalls[v] + 1
+	if _expected_AttackProtectionPerLevel_DescTxtCalls[v] <= _AttackProtectionPerLevel_DescTxtCalls[v] then
+		if _expected_AttackProtectionPerLevel_DisplayCalls[v] == nil then
+			_AttackProtectionPerLevel_UnitMods[v]	   = nil
+		end
+		_expected_AttackProtectionPerLevel_DescTxtCalls[v] = nil
+		_AttackProtectionPerLevel_DescTxtCalls[v]          = nil
+	end
+	return result
+end
+
+function _AttackProtectionPerLevel_modifCustomDescTxt_init(unit, unitIndex)
+	if _AttackProtectionPerLevel_UnitMods[unitIndex]  == nil then
+		_AttackProtectionPerLevel_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_AttackProtectionPerLevel_DisplayCalls[unitIndex]    = _unitAura_AttackProtectionPerLevel_cnt(unit, _AttackProtectionPerLevel_UnitMods[unitIndex])
+	_AttackProtectionPerLevel_DisplayCalls[unitIndex]             = 0
+	_expected_AttackProtectionPerLevel_DescTxtCalls[unitIndex]    = 1
+	_AttackProtectionPerLevel_DescTxtCalls[unitIndex]             = 0
+	return 0
+end
+
+_AttackLessDamageOnFullLife_UnitMods              = {}
+_AttackLessDamageOnFullLife_DisplayCalls          = {}
+_AttackLessDamageOnFullLife_DescTxtCalls          = {}
+_expected_AttackLessDamageOnFullLife_DisplayCalls = {}
+_expected_AttackLessDamageOnFullLife_DescTxtCalls = {}
+
+function _modifDisplay_AttackLessDamageOnFullLife(unit, prev)
+	local v = unit.id.value
+	if _expected_AttackLessDamageOnFullLife_DisplayCalls[v] == nil then
+		_AttackLessDamageOnFullLife_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _AttackLessDamageOnFullLife_DisplayCalls[v] == 0 then
+		if _unitAura_AttackLessDamageOnFullLife_val(unit, _AttackLessDamageOnFullLife_UnitMods[v]) > 0 then
+			result = true
+		else
+			result = false
+			_AttackLessDamageOnFullLife_UnitMods[v]	   = nil
+			_expected_AttackLessDamageOnFullLife_DisplayCalls[v] = nil
+			_AttackLessDamageOnFullLife_DisplayCalls[v]          = nil
+			_expected_AttackLessDamageOnFullLife_DescTxtCalls[v] = nil
+			_AttackLessDamageOnFullLife_DescTxtCalls[v]          = nil
+			return result
+		end
+	else
+		result = false
+	end
+	_AttackLessDamageOnFullLife_DisplayCalls[v] = _AttackLessDamageOnFullLife_DisplayCalls[v] + 1
+	if _expected_AttackLessDamageOnFullLife_DisplayCalls[v] <= _AttackLessDamageOnFullLife_DisplayCalls[v] then
+		if _expected_AttackLessDamageOnFullLife_DescTxtCalls[v] == nil then
+			_AttackLessDamageOnFullLife_UnitMods[v]	   = nil
+		end
+		_expected_AttackLessDamageOnFullLife_DisplayCalls[v] = nil
+		_AttackLessDamageOnFullLife_DisplayCalls[v]          = nil
+	end
+	return result
+end
+
+function _modifCustomTxt_AttackLessDamageOnFullLife(unit, prev)
+	local v = unit.id.value
+	if _expected_AttackLessDamageOnFullLife_DescTxtCalls[v] == nil then
+		_AttackLessDamageOnFullLife_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _AttackLessDamageOnFullLife_DescTxtCalls[v] == 0 then
+		if _AttackLessDamageOnFullLife_UnitMods[v]  == nil then
+			_AttackLessDamageOnFullLife_UnitMods[v]  = _GroupInfo_UnitModifiers(unit)
+		end
+		local eff = _unitAura_AttackLessDamageOnFullLife_val(unit, _AttackLessDamageOnFullLife_UnitMods[v])
+		result = Id.new('x020tg'..tostring(2700 + eff))
+	else
+		result = prev
+	end
+	_AttackLessDamageOnFullLife_DescTxtCalls[v] = _AttackLessDamageOnFullLife_DescTxtCalls[v] + 1
+	if _expected_AttackLessDamageOnFullLife_DescTxtCalls[v] <= _AttackLessDamageOnFullLife_DescTxtCalls[v] then
+		if _expected_AttackLessDamageOnFullLife_DisplayCalls[v] == nil then
+			_AttackLessDamageOnFullLife_UnitMods[v]	   = nil
+		end
+		_expected_AttackLessDamageOnFullLife_DescTxtCalls[v] = nil
+		_AttackLessDamageOnFullLife_DescTxtCalls[v]          = nil
+	end
+	return result
+end
+
+function _AttackLessDamageOnFullLife_modifCustomDescTxt_init(unit, unitIndex)
+	if _AttackLessDamageOnFullLife_UnitMods[unitIndex]  == nil then
+		_AttackLessDamageOnFullLife_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_AttackLessDamageOnFullLife_DisplayCalls[unitIndex]    = _unitAura_AttackLessDamageOnFullLife_cnt(unit, _AttackLessDamageOnFullLife_UnitMods[unitIndex])
+	_AttackLessDamageOnFullLife_DisplayCalls[unitIndex]             = 0
+	_expected_AttackLessDamageOnFullLife_DescTxtCalls[unitIndex]    = 1
+	_AttackLessDamageOnFullLife_DescTxtCalls[unitIndex]             = 0
+	return 0
+end
+
+_MaxAttackCritDamage_UnitMods              = {}
+_MaxAttackCritDamage_DisplayCalls          = {}
+_MaxAttackCritDamage_DescTxtCalls          = {}
+_expected_MaxAttackCritDamage_DisplayCalls = {}
+_expected_MaxAttackCritDamage_DescTxtCalls = {}
+
+function _modifDisplay_MaxAttackCritDamage(unit, prev)
+	local v = unit.id.value
+	if _expected_MaxAttackCritDamage_DisplayCalls[v] == nil then
+		_MaxAttackCritDamage_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _MaxAttackCritDamage_DisplayCalls[v] == 0 then
+		if _unitAura_MaxAttackCritDamage_val(unit, _MaxAttackCritDamage_UnitMods[v]) > 0 then
+			result = true
+		else
+			result = false
+			_MaxAttackCritDamage_UnitMods[v]	   = nil
+			_expected_MaxAttackCritDamage_DisplayCalls[v] = nil
+			_MaxAttackCritDamage_DisplayCalls[v]          = nil
+			_expected_MaxAttackCritDamage_DescTxtCalls[v] = nil
+			_MaxAttackCritDamage_DescTxtCalls[v]          = nil
+			return result
+		end
+	else
+		result = false
+	end
+	_MaxAttackCritDamage_DisplayCalls[v] = _MaxAttackCritDamage_DisplayCalls[v] + 1
+	if _expected_MaxAttackCritDamage_DisplayCalls[v] <= _MaxAttackCritDamage_DisplayCalls[v] then
+		if _expected_MaxAttackCritDamage_DescTxtCalls[v] == nil then
+			_MaxAttackCritDamage_UnitMods[v]	   = nil
+		end
+		_expected_MaxAttackCritDamage_DisplayCalls[v] = nil
+		_MaxAttackCritDamage_DisplayCalls[v]          = nil
+	end
+	return result
+end
+
+function _modifCustomTxt_MaxAttackCritDamage(unit, prev)
+	local v = unit.id.value
+	if _expected_MaxAttackCritDamage_DescTxtCalls[v] == nil then
+		_MaxAttackCritDamage_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _MaxAttackCritDamage_DescTxtCalls[v] == 0 then
+		if _MaxAttackCritDamage_UnitMods[v]  == nil then
+			_MaxAttackCritDamage_UnitMods[v]  = _GroupInfo_UnitModifiers(unit)
+		end
+		local eff = _unitAura_MaxAttackCritDamage_val(unit, _MaxAttackCritDamage_UnitMods[v])
+		result = Id.new('x020tg'..tostring(2300 + eff))
+	else
+		result = prev
+	end
+	_MaxAttackCritDamage_DescTxtCalls[v] = _MaxAttackCritDamage_DescTxtCalls[v] + 1
+	if _expected_MaxAttackCritDamage_DescTxtCalls[v] <= _MaxAttackCritDamage_DescTxtCalls[v] then
+		if _expected_MaxAttackCritDamage_DisplayCalls[v] == nil then
+			_MaxAttackCritDamage_UnitMods[v]	   = nil
+		end
+		_expected_MaxAttackCritDamage_DescTxtCalls[v] = nil
+		_MaxAttackCritDamage_DescTxtCalls[v]          = nil
+	end
+	return result
+end
+
+function _MaxAttackCritDamage_modifCustomDescTxt_init(unit, unitIndex)
+	if _MaxAttackCritDamage_UnitMods[unitIndex]  == nil then
+		_MaxAttackCritDamage_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_MaxAttackCritDamage_DisplayCalls[unitIndex]    = _unitAura_MaxAttackCritDamage_cnt(unit, _MaxAttackCritDamage_UnitMods[unitIndex])
+	_MaxAttackCritDamage_DisplayCalls[unitIndex]             = 0
+	_expected_MaxAttackCritDamage_DescTxtCalls[unitIndex]    = 1
+	_MaxAttackCritDamage_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _AttackProtection_UnitMods              = {}
@@ -2167,14 +2692,14 @@ function _modifCustomTxt_AttackProtection(unit, prev)
 end
 
 function _AttackProtection_modifCustomDescTxt_init(unit, unitIndex)
-		if _AttackProtection_UnitMods[unitIndex]  == nil then
-			_AttackProtection_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_AttackProtection_DisplayCalls[unitIndex]    = _unitAura_AttackProtection_cnt(unit, _AttackProtection_UnitMods[unitIndex])
-		_AttackProtection_DisplayCalls[unitIndex]             = 0
-		_expected_AttackProtection_DescTxtCalls[unitIndex]    = 1
-		_AttackProtection_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _AttackProtection_UnitMods[unitIndex]  == nil then
+		_AttackProtection_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_AttackProtection_DisplayCalls[unitIndex]    = _unitAura_AttackProtection_cnt(unit, _AttackProtection_UnitMods[unitIndex])
+	_AttackProtection_DisplayCalls[unitIndex]             = 0
+	_expected_AttackProtection_DescTxtCalls[unitIndex]    = 1
+	_AttackProtection_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _CowardiceBig_UnitMods              = {}
@@ -2242,14 +2767,14 @@ function _modifCustomTxt_CowardiceBig(unit, prev)
 end
 
 function _CowardiceBig_modifCustomDescTxt_init(unit, unitIndex)
-		if _CowardiceBig_UnitMods[unitIndex]  == nil then
-			_CowardiceBig_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_CowardiceBig_DisplayCalls[unitIndex]    = _unitAura_CowardiceBig_cnt(unit, _CowardiceBig_UnitMods[unitIndex])
-		_CowardiceBig_DisplayCalls[unitIndex]             = 0
-		_expected_CowardiceBig_DescTxtCalls[unitIndex]    = 1
-		_CowardiceBig_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _CowardiceBig_UnitMods[unitIndex]  == nil then
+		_CowardiceBig_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_CowardiceBig_DisplayCalls[unitIndex]    = _unitAura_CowardiceBig_cnt(unit, _CowardiceBig_UnitMods[unitIndex])
+	_CowardiceBig_DisplayCalls[unitIndex]             = 0
+	_expected_CowardiceBig_DescTxtCalls[unitIndex]    = 1
+	_CowardiceBig_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _Cannibalism_UnitMods              = {}
@@ -2317,14 +2842,14 @@ function _modifCustomTxt_Cannibalism(unit, prev)
 end
 
 function _Cannibalism_modifCustomDescTxt_init(unit, unitIndex)
-		if _Cannibalism_UnitMods[unitIndex]  == nil then
-			_Cannibalism_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_Cannibalism_DisplayCalls[unitIndex]    = _unitAura_Cannibalism_cnt(unit, _Cannibalism_UnitMods[unitIndex])
-		_Cannibalism_DisplayCalls[unitIndex]             = 0
-		_expected_Cannibalism_DescTxtCalls[unitIndex]    = 1
-		_Cannibalism_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _Cannibalism_UnitMods[unitIndex]  == nil then
+		_Cannibalism_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_Cannibalism_DisplayCalls[unitIndex]    = _unitAura_Cannibalism_cnt(unit, _Cannibalism_UnitMods[unitIndex])
+	_Cannibalism_DisplayCalls[unitIndex]             = 0
+	_expected_Cannibalism_DescTxtCalls[unitIndex]    = 1
+	_Cannibalism_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _VampirismPerCorpse_UnitMods              = {}
@@ -2392,14 +2917,14 @@ function _modifCustomTxt_VampirismPerCorpse(unit, prev)
 end
 
 function _VampirismPerCorpse_modifCustomDescTxt_init(unit, unitIndex)
-		if _VampirismPerCorpse_UnitMods[unitIndex]  == nil then
-			_VampirismPerCorpse_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_VampirismPerCorpse_DisplayCalls[unitIndex]    = _unitAura_VampirismPerCorpse_cnt(unit, _VampirismPerCorpse_UnitMods[unitIndex])
-		_VampirismPerCorpse_DisplayCalls[unitIndex]             = 0
-		_expected_VampirismPerCorpse_DescTxtCalls[unitIndex]    = 1
-		_VampirismPerCorpse_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _VampirismPerCorpse_UnitMods[unitIndex]  == nil then
+		_VampirismPerCorpse_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_VampirismPerCorpse_DisplayCalls[unitIndex]    = _unitAura_VampirismPerCorpse_cnt(unit, _VampirismPerCorpse_UnitMods[unitIndex])
+	_VampirismPerCorpse_DisplayCalls[unitIndex]             = 0
+	_expected_VampirismPerCorpse_DescTxtCalls[unitIndex]    = 1
+	_VampirismPerCorpse_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _DrainLevelResistance_UnitMods              = {}
@@ -2467,14 +2992,14 @@ function _modifCustomTxt_DrainLevelResistance(unit, prev)
 end
 
 function _DrainLevelResistance_modifCustomDescTxt_init(unit, unitIndex)
-		if _DrainLevelResistance_UnitMods[unitIndex]  == nil then
-			_DrainLevelResistance_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
-		end
-		_expected_DrainLevelResistance_DisplayCalls[unitIndex]    = _unitAura_DrainLevelResistance_cnt(unit, _DrainLevelResistance_UnitMods[unitIndex])
-		_DrainLevelResistance_DisplayCalls[unitIndex]             = 0
-		_expected_DrainLevelResistance_DescTxtCalls[unitIndex]    = 1
-		_DrainLevelResistance_DescTxtCalls[unitIndex]             = 0
-		return 0
+	if _DrainLevelResistance_UnitMods[unitIndex]  == nil then
+		_DrainLevelResistance_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_DrainLevelResistance_DisplayCalls[unitIndex]    = _unitAura_DrainLevelResistance_cnt(unit, _DrainLevelResistance_UnitMods[unitIndex])
+	_DrainLevelResistance_DisplayCalls[unitIndex]             = 0
+	_expected_DrainLevelResistance_DescTxtCalls[unitIndex]    = 1
+	_DrainLevelResistance_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 _HitPointPerCorpse_UnitMods              = {}
@@ -2542,14 +3067,614 @@ function _modifCustomTxt_HitPointPerCorpse(unit, prev)
 end
 
 function _HitPointPerCorpse_modifCustomDescTxt_init(unit, unitIndex)
-		if _HitPointPerCorpse_UnitMods[unitIndex]  == nil then
-			_HitPointPerCorpse_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	if _HitPointPerCorpse_UnitMods[unitIndex]  == nil then
+		_HitPointPerCorpse_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_HitPointPerCorpse_DisplayCalls[unitIndex]    = _unitAura_HitPointPerCorpse_cnt(unit, _HitPointPerCorpse_UnitMods[unitIndex])
+	_HitPointPerCorpse_DisplayCalls[unitIndex]             = 0
+	_expected_HitPointPerCorpse_DescTxtCalls[unitIndex]    = 1
+	_HitPointPerCorpse_DescTxtCalls[unitIndex]             = 0
+	return 0
+end
+
+_AttackProtectionIgnorance_UnitMods              = {}
+_AttackProtectionIgnorance_DisplayCalls          = {}
+_AttackProtectionIgnorance_DescTxtCalls          = {}
+_expected_AttackProtectionIgnorance_DisplayCalls = {}
+_expected_AttackProtectionIgnorance_DescTxtCalls = {}
+
+function _modifDisplay_AttackProtectionIgnorance(unit, prev)
+	local v = unit.id.value
+	if _expected_AttackProtectionIgnorance_DisplayCalls[v] == nil then
+		_AttackProtectionIgnorance_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _AttackProtectionIgnorance_DisplayCalls[v] == 0 then
+		if _unitAura_AttackProtectionIgnorance_val(unit, _AttackProtectionIgnorance_UnitMods[v]) > 0 then
+			result = true
+		else
+			result = false
+			_AttackProtectionIgnorance_UnitMods[v]	   = nil
+			_expected_AttackProtectionIgnorance_DisplayCalls[v] = nil
+			_AttackProtectionIgnorance_DisplayCalls[v]          = nil
+			_expected_AttackProtectionIgnorance_DescTxtCalls[v] = nil
+			_AttackProtectionIgnorance_DescTxtCalls[v]          = nil
+			return result
 		end
-		_expected_HitPointPerCorpse_DisplayCalls[unitIndex]    = _unitAura_HitPointPerCorpse_cnt(unit, _HitPointPerCorpse_UnitMods[unitIndex])
-		_HitPointPerCorpse_DisplayCalls[unitIndex]             = 0
-		_expected_HitPointPerCorpse_DescTxtCalls[unitIndex]    = 1
-		_HitPointPerCorpse_DescTxtCalls[unitIndex]             = 0
-		return 0
+	else
+		result = false
+	end
+	_AttackProtectionIgnorance_DisplayCalls[v] = _AttackProtectionIgnorance_DisplayCalls[v] + 1
+	if _expected_AttackProtectionIgnorance_DisplayCalls[v] <= _AttackProtectionIgnorance_DisplayCalls[v] then
+		if _expected_AttackProtectionIgnorance_DescTxtCalls[v] == nil then
+			_AttackProtectionIgnorance_UnitMods[v]	   = nil
+		end
+		_expected_AttackProtectionIgnorance_DisplayCalls[v] = nil
+		_AttackProtectionIgnorance_DisplayCalls[v]          = nil
+	end
+	return result
+end
+
+function _modifCustomTxt_AttackProtectionIgnorance(unit, prev)
+	local v = unit.id.value
+	if _expected_AttackProtectionIgnorance_DescTxtCalls[v] == nil then
+		_AttackProtectionIgnorance_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _AttackProtectionIgnorance_DescTxtCalls[v] == 0 then
+		if _AttackProtectionIgnorance_UnitMods[v]  == nil then
+			_AttackProtectionIgnorance_UnitMods[v]  = _GroupInfo_UnitModifiers(unit)
+		end
+		local eff = _unitAura_AttackProtectionIgnorance_val(unit, _AttackProtectionIgnorance_UnitMods[v])
+		result = Id.new('x012tg1047')
+	else
+		result = prev
+	end
+	_AttackProtectionIgnorance_DescTxtCalls[v] = _AttackProtectionIgnorance_DescTxtCalls[v] + 1
+	if _expected_AttackProtectionIgnorance_DescTxtCalls[v] <= _AttackProtectionIgnorance_DescTxtCalls[v] then
+		if _expected_AttackProtectionIgnorance_DisplayCalls[v] == nil then
+			_AttackProtectionIgnorance_UnitMods[v]	   = nil
+		end
+		_expected_AttackProtectionIgnorance_DescTxtCalls[v] = nil
+		_AttackProtectionIgnorance_DescTxtCalls[v]          = nil
+	end
+	return result
+end
+
+function _AttackProtectionIgnorance_modifCustomDescTxt_init(unit, unitIndex)
+	if _AttackProtectionIgnorance_UnitMods[unitIndex]  == nil then
+		_AttackProtectionIgnorance_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_AttackProtectionIgnorance_DisplayCalls[unitIndex]    = _unitAura_AttackProtectionIgnorance_cnt(unit, _AttackProtectionIgnorance_UnitMods[unitIndex])
+	_AttackProtectionIgnorance_DisplayCalls[unitIndex]             = 0
+	_expected_AttackProtectionIgnorance_DescTxtCalls[unitIndex]    = 1
+	_AttackProtectionIgnorance_DescTxtCalls[unitIndex]             = 0
+	return 0
+end
+
+_SpellDebuffResistance_UnitMods              = {}
+_SpellDebuffResistance_DisplayCalls          = {}
+_SpellDebuffResistance_DescTxtCalls          = {}
+_expected_SpellDebuffResistance_DisplayCalls = {}
+_expected_SpellDebuffResistance_DescTxtCalls = {}
+
+function _modifDisplay_SpellDebuffResistance(unit, prev)
+	local v = unit.id.value
+	if _expected_SpellDebuffResistance_DisplayCalls[v] == nil then
+		_SpellDebuffResistance_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _SpellDebuffResistance_DisplayCalls[v] == 0 then
+		if _unitAura_SpellDebuffResistance_val(unit, _SpellDebuffResistance_UnitMods[v]) > 0 then
+			result = true
+		else
+			result = false
+			_SpellDebuffResistance_UnitMods[v]	   = nil
+			_expected_SpellDebuffResistance_DisplayCalls[v] = nil
+			_SpellDebuffResistance_DisplayCalls[v]          = nil
+			_expected_SpellDebuffResistance_DescTxtCalls[v] = nil
+			_SpellDebuffResistance_DescTxtCalls[v]          = nil
+			return result
+		end
+	else
+		result = false
+	end
+	_SpellDebuffResistance_DisplayCalls[v] = _SpellDebuffResistance_DisplayCalls[v] + 1
+	if _expected_SpellDebuffResistance_DisplayCalls[v] <= _SpellDebuffResistance_DisplayCalls[v] then
+		if _expected_SpellDebuffResistance_DescTxtCalls[v] == nil then
+			_SpellDebuffResistance_UnitMods[v]	   = nil
+		end
+		_expected_SpellDebuffResistance_DisplayCalls[v] = nil
+		_SpellDebuffResistance_DisplayCalls[v]          = nil
+	end
+	return result
+end
+
+function _modifCustomTxt_SpellDebuffResistance(unit, prev)
+	local v = unit.id.value
+	if _expected_SpellDebuffResistance_DescTxtCalls[v] == nil then
+		_SpellDebuffResistance_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _SpellDebuffResistance_DescTxtCalls[v] == 0 then
+		if _SpellDebuffResistance_UnitMods[v]  == nil then
+			_SpellDebuffResistance_UnitMods[v]  = _GroupInfo_UnitModifiers(unit)
+		end
+		local eff = _unitAura_SpellDebuffResistance_val(unit, _SpellDebuffResistance_UnitMods[v])
+		result = Id.new('x010tg'..tostring(3800 + eff))
+	else
+		result = prev
+	end
+	_SpellDebuffResistance_DescTxtCalls[v] = _SpellDebuffResistance_DescTxtCalls[v] + 1
+	if _expected_SpellDebuffResistance_DescTxtCalls[v] <= _SpellDebuffResistance_DescTxtCalls[v] then
+		if _expected_SpellDebuffResistance_DisplayCalls[v] == nil then
+			_SpellDebuffResistance_UnitMods[v]	   = nil
+		end
+		_expected_SpellDebuffResistance_DescTxtCalls[v] = nil
+		_SpellDebuffResistance_DescTxtCalls[v]          = nil
+	end
+	return result
+end
+
+function _SpellDebuffResistance_modifCustomDescTxt_init(unit, unitIndex)
+	if _SpellDebuffResistance_UnitMods[unitIndex]  == nil then
+		_SpellDebuffResistance_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_SpellDebuffResistance_DisplayCalls[unitIndex]    = _unitAura_SpellDebuffResistance_cnt(unit, _SpellDebuffResistance_UnitMods[unitIndex])
+	_SpellDebuffResistance_DisplayCalls[unitIndex]             = 0
+	_expected_SpellDebuffResistance_DescTxtCalls[unitIndex]    = 1
+	_SpellDebuffResistance_DescTxtCalls[unitIndex]             = 0
+	return 0
+end
+
+_SpellDebuffResistanceAura_UnitMods              = {}
+_SpellDebuffResistanceAura_DisplayCalls          = {}
+_SpellDebuffResistanceAura_DescTxtCalls          = {}
+_expected_SpellDebuffResistanceAura_DisplayCalls = {}
+_expected_SpellDebuffResistanceAura_DescTxtCalls = {}
+
+function _modifDisplay_SpellDebuffResistanceAura(unit, prev)
+	local v = unit.id.value
+	if _expected_SpellDebuffResistanceAura_DisplayCalls[v] == nil then
+		_SpellDebuffResistanceAura_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _SpellDebuffResistanceAura_DisplayCalls[v] == 0 then
+		if _unitAura_SpellDebuffResistanceAura_val(unit, _SpellDebuffResistanceAura_UnitMods[v]) > 0 then
+			result = true
+		else
+			result = false
+			_SpellDebuffResistanceAura_UnitMods[v]	   = nil
+			_expected_SpellDebuffResistanceAura_DisplayCalls[v] = nil
+			_SpellDebuffResistanceAura_DisplayCalls[v]          = nil
+			_expected_SpellDebuffResistanceAura_DescTxtCalls[v] = nil
+			_SpellDebuffResistanceAura_DescTxtCalls[v]          = nil
+			return result
+		end
+	else
+		result = false
+	end
+	_SpellDebuffResistanceAura_DisplayCalls[v] = _SpellDebuffResistanceAura_DisplayCalls[v] + 1
+	if _expected_SpellDebuffResistanceAura_DisplayCalls[v] <= _SpellDebuffResistanceAura_DisplayCalls[v] then
+		if _expected_SpellDebuffResistanceAura_DescTxtCalls[v] == nil then
+			_SpellDebuffResistanceAura_UnitMods[v]	   = nil
+		end
+		_expected_SpellDebuffResistanceAura_DisplayCalls[v] = nil
+		_SpellDebuffResistanceAura_DisplayCalls[v]          = nil
+	end
+	return result
+end
+
+function _modifCustomTxt_SpellDebuffResistanceAura(unit, prev)
+	local v = unit.id.value
+	if _expected_SpellDebuffResistanceAura_DescTxtCalls[v] == nil then
+		_SpellDebuffResistanceAura_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _SpellDebuffResistanceAura_DescTxtCalls[v] == 0 then
+		if _SpellDebuffResistanceAura_UnitMods[v]  == nil then
+			_SpellDebuffResistanceAura_UnitMods[v]  = _GroupInfo_UnitModifiers(unit)
+		end
+		local eff = _unitAura_SpellDebuffResistanceAura_val(unit, _SpellDebuffResistanceAura_UnitMods[v])
+		result = Id.new('x010tg'..tostring(3500 + eff))
+	else
+		result = prev
+	end
+	_SpellDebuffResistanceAura_DescTxtCalls[v] = _SpellDebuffResistanceAura_DescTxtCalls[v] + 1
+	if _expected_SpellDebuffResistanceAura_DescTxtCalls[v] <= _SpellDebuffResistanceAura_DescTxtCalls[v] then
+		if _expected_SpellDebuffResistanceAura_DisplayCalls[v] == nil then
+			_SpellDebuffResistanceAura_UnitMods[v]	   = nil
+		end
+		_expected_SpellDebuffResistanceAura_DescTxtCalls[v] = nil
+		_SpellDebuffResistanceAura_DescTxtCalls[v]          = nil
+	end
+	return result
+end
+
+function _SpellDebuffResistanceAura_modifCustomDescTxt_init(unit, unitIndex)
+	if _SpellDebuffResistanceAura_UnitMods[unitIndex]  == nil then
+		_SpellDebuffResistanceAura_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_SpellDebuffResistanceAura_DisplayCalls[unitIndex]    = _unitAura_SpellDebuffResistanceAura_cnt(unit, _SpellDebuffResistanceAura_UnitMods[unitIndex])
+	_SpellDebuffResistanceAura_DisplayCalls[unitIndex]             = 0
+	_expected_SpellDebuffResistanceAura_DescTxtCalls[unitIndex]    = 1
+	_SpellDebuffResistanceAura_DescTxtCalls[unitIndex]             = 0
+	return 0
+end
+
+_SplashDamage_UnitMods              = {}
+_SplashDamage_DisplayCalls          = {}
+_SplashDamage_DescTxtCalls          = {}
+_expected_SplashDamage_DisplayCalls = {}
+_expected_SplashDamage_DescTxtCalls = {}
+
+function _modifDisplay_SplashDamage(unit, prev)
+	local v = unit.id.value
+	if _expected_SplashDamage_DisplayCalls[v] == nil then
+		_SplashDamage_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _SplashDamage_DisplayCalls[v] == 0 then
+		if _unitAura_SplashDamage_val(unit, _SplashDamage_UnitMods[v]) > 0 then
+			result = true
+		else
+			result = false
+			_SplashDamage_UnitMods[v]	   = nil
+			_expected_SplashDamage_DisplayCalls[v] = nil
+			_SplashDamage_DisplayCalls[v]          = nil
+			_expected_SplashDamage_DescTxtCalls[v] = nil
+			_SplashDamage_DescTxtCalls[v]          = nil
+			return result
+		end
+	else
+		result = false
+	end
+	_SplashDamage_DisplayCalls[v] = _SplashDamage_DisplayCalls[v] + 1
+	if _expected_SplashDamage_DisplayCalls[v] <= _SplashDamage_DisplayCalls[v] then
+		if _expected_SplashDamage_DescTxtCalls[v] == nil then
+			_SplashDamage_UnitMods[v]	   = nil
+		end
+		_expected_SplashDamage_DisplayCalls[v] = nil
+		_SplashDamage_DisplayCalls[v]          = nil
+	end
+	return result
+end
+
+function _modifCustomTxt_SplashDamage(unit, prev)
+	local v = unit.id.value
+	if _expected_SplashDamage_DescTxtCalls[v] == nil then
+		_SplashDamage_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _SplashDamage_DescTxtCalls[v] == 0 then
+		if _SplashDamage_UnitMods[v]  == nil then
+			_SplashDamage_UnitMods[v]  = _GroupInfo_UnitModifiers(unit)
+		end
+		local eff = _unitAura_SplashDamage_val(unit, _SplashDamage_UnitMods[v])
+		result = Id.new('x010tg'..tostring(3300 + eff))
+	else
+		result = prev
+	end
+	_SplashDamage_DescTxtCalls[v] = _SplashDamage_DescTxtCalls[v] + 1
+	if _expected_SplashDamage_DescTxtCalls[v] <= _SplashDamage_DescTxtCalls[v] then
+		if _expected_SplashDamage_DisplayCalls[v] == nil then
+			_SplashDamage_UnitMods[v]	   = nil
+		end
+		_expected_SplashDamage_DescTxtCalls[v] = nil
+		_SplashDamage_DescTxtCalls[v]          = nil
+	end
+	return result
+end
+
+function _SplashDamage_modifCustomDescTxt_init(unit, unitIndex)
+	if _SplashDamage_UnitMods[unitIndex]  == nil then
+		_SplashDamage_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_SplashDamage_DisplayCalls[unitIndex]    = _unitAura_SplashDamage_cnt(unit, _SplashDamage_UnitMods[unitIndex])
+	_SplashDamage_DisplayCalls[unitIndex]             = 0
+	_expected_SplashDamage_DescTxtCalls[unitIndex]    = 1
+	_SplashDamage_DescTxtCalls[unitIndex]             = 0
+	return 0
+end
+
+_SpellBuffLowerEffect_UnitMods              = {}
+_SpellBuffLowerEffect_DisplayCalls          = {}
+_SpellBuffLowerEffect_DescTxtCalls          = {}
+_expected_SpellBuffLowerEffect_DisplayCalls = {}
+_expected_SpellBuffLowerEffect_DescTxtCalls = {}
+
+function _modifDisplay_SpellBuffLowerEffect(unit, prev)
+	local v = unit.id.value
+	if _expected_SpellBuffLowerEffect_DisplayCalls[v] == nil then
+		_SpellBuffLowerEffect_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _SpellBuffLowerEffect_DisplayCalls[v] == 0 then
+		if _unitAura_SpellBuffLowerEffect_val(unit, _SpellBuffLowerEffect_UnitMods[v]) ~= 0 then
+			result = true
+		else
+			result = false
+			_SpellBuffLowerEffect_UnitMods[v]	   = nil
+			_expected_SpellBuffLowerEffect_DisplayCalls[v] = nil
+			_SpellBuffLowerEffect_DisplayCalls[v]          = nil
+			_expected_SpellBuffLowerEffect_DescTxtCalls[v] = nil
+			_SpellBuffLowerEffect_DescTxtCalls[v]          = nil
+			return result
+		end
+	else
+		result = false
+	end
+	_SpellBuffLowerEffect_DisplayCalls[v] = _SpellBuffLowerEffect_DisplayCalls[v] + 1
+	if _expected_SpellBuffLowerEffect_DisplayCalls[v] <= _SpellBuffLowerEffect_DisplayCalls[v] then
+		if _expected_SpellBuffLowerEffect_DescTxtCalls[v] == nil then
+			_SpellBuffLowerEffect_UnitMods[v]	   = nil
+		end
+		_expected_SpellBuffLowerEffect_DisplayCalls[v] = nil
+		_SpellBuffLowerEffect_DisplayCalls[v]          = nil
+	end
+	return result
+end
+
+function _modifCustomTxt_SpellBuffLowerEffect(unit, prev)
+	local v = unit.id.value
+	if _expected_SpellBuffLowerEffect_DescTxtCalls[v] == nil then
+		_SpellBuffLowerEffect_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _SpellBuffLowerEffect_DescTxtCalls[v] == 0 then
+		if _SpellBuffLowerEffect_UnitMods[v]  == nil then
+			_SpellBuffLowerEffect_UnitMods[v]  = _GroupInfo_UnitModifiers(unit)
+		end
+		local eff = _unitAura_SpellBuffLowerEffect_val(unit, _SpellBuffLowerEffect_UnitMods[v])
+		result = Id.new('x010tg'..tostring(5000 + eff))
+	else
+		result = prev
+	end
+	_SpellBuffLowerEffect_DescTxtCalls[v] = _SpellBuffLowerEffect_DescTxtCalls[v] + 1
+	if _expected_SpellBuffLowerEffect_DescTxtCalls[v] <= _SpellBuffLowerEffect_DescTxtCalls[v] then
+		if _expected_SpellBuffLowerEffect_DisplayCalls[v] == nil then
+			_SpellBuffLowerEffect_UnitMods[v]	   = nil
+		end
+		_expected_SpellBuffLowerEffect_DescTxtCalls[v] = nil
+		_SpellBuffLowerEffect_DescTxtCalls[v]          = nil
+	end
+	return result
+end
+
+function _SpellBuffLowerEffect_modifCustomDescTxt_init(unit, unitIndex)
+	if _SpellBuffLowerEffect_UnitMods[unitIndex]  == nil then
+		_SpellBuffLowerEffect_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_SpellBuffLowerEffect_DisplayCalls[unitIndex]    = _unitAura_SpellBuffLowerEffect_cnt(unit, _SpellBuffLowerEffect_UnitMods[unitIndex])
+	_SpellBuffLowerEffect_DisplayCalls[unitIndex]             = 0
+	_expected_SpellBuffLowerEffect_DescTxtCalls[unitIndex]    = 1
+	_SpellBuffLowerEffect_DescTxtCalls[unitIndex]             = 0
+	return 0
+end
+
+_NonDirectDamageAttackAccuracy_UnitMods              = {}
+_NonDirectDamageAttackAccuracy_DisplayCalls          = {}
+_NonDirectDamageAttackAccuracy_DescTxtCalls          = {}
+_expected_NonDirectDamageAttackAccuracy_DisplayCalls = {}
+_expected_NonDirectDamageAttackAccuracy_DescTxtCalls = {}
+
+function _modifDisplay_NonDirectDamageAttackAccuracy(unit, prev)
+	local v = unit.id.value
+	if _expected_NonDirectDamageAttackAccuracy_DisplayCalls[v] == nil then
+		_NonDirectDamageAttackAccuracy_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _NonDirectDamageAttackAccuracy_DisplayCalls[v] == 0 then
+		if _unitAura_NonDirectDamageAttackAccuracy_txt(unit, _NonDirectDamageAttackAccuracy_UnitMods[v]) > 0 then
+			result = true
+		else
+			result = false
+			_NonDirectDamageAttackAccuracy_UnitMods[v]	   = nil
+			_expected_NonDirectDamageAttackAccuracy_DisplayCalls[v] = nil
+			_NonDirectDamageAttackAccuracy_DisplayCalls[v]          = nil
+			_expected_NonDirectDamageAttackAccuracy_DescTxtCalls[v] = nil
+			_NonDirectDamageAttackAccuracy_DescTxtCalls[v]          = nil
+			return result
+		end
+	else
+		result = false
+	end
+	_NonDirectDamageAttackAccuracy_DisplayCalls[v] = _NonDirectDamageAttackAccuracy_DisplayCalls[v] + 1
+	if _expected_NonDirectDamageAttackAccuracy_DisplayCalls[v] <= _NonDirectDamageAttackAccuracy_DisplayCalls[v] then
+		if _expected_NonDirectDamageAttackAccuracy_DescTxtCalls[v] == nil then
+			_NonDirectDamageAttackAccuracy_UnitMods[v]	   = nil
+		end
+		_expected_NonDirectDamageAttackAccuracy_DisplayCalls[v] = nil
+		_NonDirectDamageAttackAccuracy_DisplayCalls[v]          = nil
+	end
+	return result
+end
+
+function _modifCustomTxt_NonDirectDamageAttackAccuracy(unit, prev)
+	local v = unit.id.value
+	if _expected_NonDirectDamageAttackAccuracy_DescTxtCalls[v] == nil then
+		_NonDirectDamageAttackAccuracy_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _NonDirectDamageAttackAccuracy_DescTxtCalls[v] == 0 then
+		if _NonDirectDamageAttackAccuracy_UnitMods[v]  == nil then
+			_NonDirectDamageAttackAccuracy_UnitMods[v]  = _GroupInfo_UnitModifiers(unit)
+		end
+		local eff = _unitAura_NonDirectDamageAttackAccuracy_txt(unit, _NonDirectDamageAttackAccuracy_UnitMods[v])
+		result = Id.new('x020tg'..tostring(5300 + eff))
+	else
+		result = prev
+	end
+	_NonDirectDamageAttackAccuracy_DescTxtCalls[v] = _NonDirectDamageAttackAccuracy_DescTxtCalls[v] + 1
+	if _expected_NonDirectDamageAttackAccuracy_DescTxtCalls[v] <= _NonDirectDamageAttackAccuracy_DescTxtCalls[v] then
+		if _expected_NonDirectDamageAttackAccuracy_DisplayCalls[v] == nil then
+			_NonDirectDamageAttackAccuracy_UnitMods[v]	   = nil
+		end
+		_expected_NonDirectDamageAttackAccuracy_DescTxtCalls[v] = nil
+		_NonDirectDamageAttackAccuracy_DescTxtCalls[v]          = nil
+	end
+	return result
+end
+
+function _NonDirectDamageAttackAccuracy_modifCustomDescTxt_init(unit, unitIndex)
+	if _NonDirectDamageAttackAccuracy_UnitMods[unitIndex]  == nil then
+		_NonDirectDamageAttackAccuracy_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_NonDirectDamageAttackAccuracy_DisplayCalls[unitIndex]    = _unitAura_NonDirectDamageAttackAccuracy_cnt(unit, _NonDirectDamageAttackAccuracy_UnitMods[unitIndex])
+	_NonDirectDamageAttackAccuracy_DisplayCalls[unitIndex]             = 0
+	_expected_NonDirectDamageAttackAccuracy_DescTxtCalls[unitIndex]    = 1
+	_NonDirectDamageAttackAccuracy_DescTxtCalls[unitIndex]             = 0
+	return 0
+end
+
+_GlobalMagicSummonCritAndAccuracy_UnitMods              = {}
+_GlobalMagicSummonCritAndAccuracy_DisplayCalls          = {}
+_GlobalMagicSummonCritAndAccuracy_DescTxtCalls          = {}
+_expected_GlobalMagicSummonCritAndAccuracy_DisplayCalls = {}
+_expected_GlobalMagicSummonCritAndAccuracy_DescTxtCalls = {}
+
+function _modifDisplay_GlobalMagicSummonCritAndAccuracy(unit, prev)
+	local v = unit.id.value
+	if _expected_GlobalMagicSummonCritAndAccuracy_DisplayCalls[v] == nil then
+		_GlobalMagicSummonCritAndAccuracy_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _GlobalMagicSummonCritAndAccuracy_DisplayCalls[v] == 0 then
+		if _unitAura_GlobalMagicSummonCritAndAccuracy_txt(unit, _GlobalMagicSummonCritAndAccuracy_UnitMods[v]) > 0 then
+			result = true
+		else
+			result = false
+			_GlobalMagicSummonCritAndAccuracy_UnitMods[v]	   = nil
+			_expected_GlobalMagicSummonCritAndAccuracy_DisplayCalls[v] = nil
+			_GlobalMagicSummonCritAndAccuracy_DisplayCalls[v]          = nil
+			_expected_GlobalMagicSummonCritAndAccuracy_DescTxtCalls[v] = nil
+			_GlobalMagicSummonCritAndAccuracy_DescTxtCalls[v]          = nil
+			return result
+		end
+	else
+		result = false
+	end
+	_GlobalMagicSummonCritAndAccuracy_DisplayCalls[v] = _GlobalMagicSummonCritAndAccuracy_DisplayCalls[v] + 1
+	if _expected_GlobalMagicSummonCritAndAccuracy_DisplayCalls[v] <= _GlobalMagicSummonCritAndAccuracy_DisplayCalls[v] then
+		if _expected_GlobalMagicSummonCritAndAccuracy_DescTxtCalls[v] == nil then
+			_GlobalMagicSummonCritAndAccuracy_UnitMods[v]	   = nil
+		end
+		_expected_GlobalMagicSummonCritAndAccuracy_DisplayCalls[v] = nil
+		_GlobalMagicSummonCritAndAccuracy_DisplayCalls[v]          = nil
+	end
+	return result
+end
+
+function _modifCustomTxt_GlobalMagicSummonCritAndAccuracy(unit, prev)
+	local v = unit.id.value
+	if _expected_GlobalMagicSummonCritAndAccuracy_DescTxtCalls[v] == nil then
+		_GlobalMagicSummonCritAndAccuracy_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _GlobalMagicSummonCritAndAccuracy_DescTxtCalls[v] == 0 then
+		if _GlobalMagicSummonCritAndAccuracy_UnitMods[v]  == nil then
+			_GlobalMagicSummonCritAndAccuracy_UnitMods[v]  = _GroupInfo_UnitModifiers(unit)
+		end
+		local eff = _unitAura_GlobalMagicSummonCritAndAccuracy_txt(unit, _GlobalMagicSummonCritAndAccuracy_UnitMods[v])
+		result = Id.new('x020tg'..tostring(5600 + eff))
+	else
+		result = prev
+	end
+	_GlobalMagicSummonCritAndAccuracy_DescTxtCalls[v] = _GlobalMagicSummonCritAndAccuracy_DescTxtCalls[v] + 1
+	if _expected_GlobalMagicSummonCritAndAccuracy_DescTxtCalls[v] <= _GlobalMagicSummonCritAndAccuracy_DescTxtCalls[v] then
+		if _expected_GlobalMagicSummonCritAndAccuracy_DisplayCalls[v] == nil then
+			_GlobalMagicSummonCritAndAccuracy_UnitMods[v]	   = nil
+		end
+		_expected_GlobalMagicSummonCritAndAccuracy_DescTxtCalls[v] = nil
+		_GlobalMagicSummonCritAndAccuracy_DescTxtCalls[v]          = nil
+	end
+	return result
+end
+
+function _GlobalMagicSummonCritAndAccuracy_modifCustomDescTxt_init(unit, unitIndex)
+	if _GlobalMagicSummonCritAndAccuracy_UnitMods[unitIndex]  == nil then
+		_GlobalMagicSummonCritAndAccuracy_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_GlobalMagicSummonCritAndAccuracy_DisplayCalls[unitIndex]    = _unitAura_GlobalMagicSummonCritAndAccuracy_cnt(unit, _GlobalMagicSummonCritAndAccuracy_UnitMods[unitIndex])
+	_GlobalMagicSummonCritAndAccuracy_DisplayCalls[unitIndex]             = 0
+	_expected_GlobalMagicSummonCritAndAccuracy_DescTxtCalls[unitIndex]    = 1
+	_GlobalMagicSummonCritAndAccuracy_DescTxtCalls[unitIndex]             = 0
+	return 0
+end
+
+_GlobalNegotiate_UnitMods              = {}
+_GlobalNegotiate_DisplayCalls          = {}
+_GlobalNegotiate_DescTxtCalls          = {}
+_expected_GlobalNegotiate_DisplayCalls = {}
+_expected_GlobalNegotiate_DescTxtCalls = {}
+
+function _modifDisplay_GlobalNegotiate(unit, prev)
+	local v = unit.id.value
+	if _expected_GlobalNegotiate_DisplayCalls[v] == nil then
+		_GlobalNegotiate_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _GlobalNegotiate_DisplayCalls[v] == 0 then
+		if _unitAura_GlobalNegotiate_txt(unit, _GlobalNegotiate_UnitMods[v]) > 0 then
+			result = true
+		else
+			result = false
+			_GlobalNegotiate_UnitMods[v]	   = nil
+			_expected_GlobalNegotiate_DisplayCalls[v] = nil
+			_GlobalNegotiate_DisplayCalls[v]          = nil
+			_expected_GlobalNegotiate_DescTxtCalls[v] = nil
+			_GlobalNegotiate_DescTxtCalls[v]          = nil
+			return result
+		end
+	else
+		result = false
+	end
+	_GlobalNegotiate_DisplayCalls[v] = _GlobalNegotiate_DisplayCalls[v] + 1
+	if _expected_GlobalNegotiate_DisplayCalls[v] <= _GlobalNegotiate_DisplayCalls[v] then
+		if _expected_GlobalNegotiate_DescTxtCalls[v] == nil then
+			_GlobalNegotiate_UnitMods[v]	   = nil
+		end
+		_expected_GlobalNegotiate_DisplayCalls[v] = nil
+		_GlobalNegotiate_DisplayCalls[v]          = nil
+	end
+	return result
+end
+
+function _modifCustomTxt_GlobalNegotiate(unit, prev)
+	local v = unit.id.value
+	if _expected_GlobalNegotiate_DescTxtCalls[v] == nil then
+		_GlobalNegotiate_modifCustomDescTxt_init(unit, v)
+	end
+	local result
+	if _GlobalNegotiate_DescTxtCalls[v] == 0 then
+		if _GlobalNegotiate_UnitMods[v]  == nil then
+			_GlobalNegotiate_UnitMods[v]  = _GroupInfo_UnitModifiers(unit)
+		end
+		local eff = _unitAura_GlobalNegotiate_txt(unit, _GlobalNegotiate_UnitMods[v])
+		result = Id.new('x020tg'..tostring(5700 + eff))
+	else
+		result = prev
+	end
+	_GlobalNegotiate_DescTxtCalls[v] = _GlobalNegotiate_DescTxtCalls[v] + 1
+	if _expected_GlobalNegotiate_DescTxtCalls[v] <= _GlobalNegotiate_DescTxtCalls[v] then
+		if _expected_GlobalNegotiate_DisplayCalls[v] == nil then
+			_GlobalNegotiate_UnitMods[v]	   = nil
+		end
+		_expected_GlobalNegotiate_DescTxtCalls[v] = nil
+		_GlobalNegotiate_DescTxtCalls[v]          = nil
+	end
+	return result
+end
+
+function _GlobalNegotiate_modifCustomDescTxt_init(unit, unitIndex)
+	if _GlobalNegotiate_UnitMods[unitIndex]  == nil then
+		_GlobalNegotiate_UnitMods[unitIndex]  = _GroupInfo_UnitModifiers(unit)
+	end
+	_expected_GlobalNegotiate_DisplayCalls[unitIndex]    = _unitAura_GlobalNegotiate_cnt(unit, _GlobalNegotiate_UnitMods[unitIndex])
+	_GlobalNegotiate_DisplayCalls[unitIndex]             = 0
+	_expected_GlobalNegotiate_DescTxtCalls[unitIndex]    = 1
+	_GlobalNegotiate_DescTxtCalls[unitIndex]             = 0
+	return 0
 end
 
 function _modifDisplay_Clear(idValue)
@@ -2648,6 +3773,16 @@ function _modifDisplay_Clear(idValue)
 	_LowerDamageResist_DescTxtCalls[idValue] = nil
 	_expected_LowerDamageResist_DisplayCalls[idValue] = nil
 	_expected_LowerDamageResist_DescTxtCalls[idValue] = nil
+	_FearResist_UnitMods[idValue] = nil
+	_FearResist_DisplayCalls[idValue] = nil
+	_FearResist_DescTxtCalls[idValue] = nil
+	_expected_FearResist_DisplayCalls[idValue] = nil
+	_expected_FearResist_DescTxtCalls[idValue] = nil
+	_PetrifyResist_UnitMods[idValue] = nil
+	_PetrifyResist_DisplayCalls[idValue] = nil
+	_PetrifyResist_DescTxtCalls[idValue] = nil
+	_expected_PetrifyResist_DisplayCalls[idValue] = nil
+	_expected_PetrifyResist_DescTxtCalls[idValue] = nil
 	_PerLostHP_Armor_UnitMods[idValue] = nil
 	_PerLostHP_Armor_DisplayCalls[idValue] = nil
 	_PerLostHP_Armor_DescTxtCalls[idValue] = nil
@@ -2693,6 +3828,31 @@ function _modifDisplay_Clear(idValue)
 	_AttackLessPowerOnFullLife_DescTxtCalls[idValue] = nil
 	_expected_AttackLessPowerOnFullLife_DisplayCalls[idValue] = nil
 	_expected_AttackLessPowerOnFullLife_DescTxtCalls[idValue] = nil
+	_ArmorOnFullLife_UnitMods[idValue] = nil
+	_ArmorOnFullLife_DisplayCalls[idValue] = nil
+	_ArmorOnFullLife_DescTxtCalls[idValue] = nil
+	_expected_ArmorOnFullLife_DisplayCalls[idValue] = nil
+	_expected_ArmorOnFullLife_DescTxtCalls[idValue] = nil
+	_AttackProtectionOnFullLife_UnitMods[idValue] = nil
+	_AttackProtectionOnFullLife_DisplayCalls[idValue] = nil
+	_AttackProtectionOnFullLife_DescTxtCalls[idValue] = nil
+	_expected_AttackProtectionOnFullLife_DisplayCalls[idValue] = nil
+	_expected_AttackProtectionOnFullLife_DescTxtCalls[idValue] = nil
+	_AttackProtectionPerLevel_UnitMods[idValue] = nil
+	_AttackProtectionPerLevel_DisplayCalls[idValue] = nil
+	_AttackProtectionPerLevel_DescTxtCalls[idValue] = nil
+	_expected_AttackProtectionPerLevel_DisplayCalls[idValue] = nil
+	_expected_AttackProtectionPerLevel_DescTxtCalls[idValue] = nil
+	_AttackLessDamageOnFullLife_UnitMods[idValue] = nil
+	_AttackLessDamageOnFullLife_DisplayCalls[idValue] = nil
+	_AttackLessDamageOnFullLife_DescTxtCalls[idValue] = nil
+	_expected_AttackLessDamageOnFullLife_DisplayCalls[idValue] = nil
+	_expected_AttackLessDamageOnFullLife_DescTxtCalls[idValue] = nil
+	_MaxAttackCritDamage_UnitMods[idValue] = nil
+	_MaxAttackCritDamage_DisplayCalls[idValue] = nil
+	_MaxAttackCritDamage_DescTxtCalls[idValue] = nil
+	_expected_MaxAttackCritDamage_DisplayCalls[idValue] = nil
+	_expected_MaxAttackCritDamage_DescTxtCalls[idValue] = nil
 	_AttackProtection_UnitMods[idValue] = nil
 	_AttackProtection_DisplayCalls[idValue] = nil
 	_AttackProtection_DescTxtCalls[idValue] = nil
@@ -2723,5 +3883,45 @@ function _modifDisplay_Clear(idValue)
 	_HitPointPerCorpse_DescTxtCalls[idValue] = nil
 	_expected_HitPointPerCorpse_DisplayCalls[idValue] = nil
 	_expected_HitPointPerCorpse_DescTxtCalls[idValue] = nil
+	_AttackProtectionIgnorance_UnitMods[idValue] = nil
+	_AttackProtectionIgnorance_DisplayCalls[idValue] = nil
+	_AttackProtectionIgnorance_DescTxtCalls[idValue] = nil
+	_expected_AttackProtectionIgnorance_DisplayCalls[idValue] = nil
+	_expected_AttackProtectionIgnorance_DescTxtCalls[idValue] = nil
+	_SpellDebuffResistance_UnitMods[idValue] = nil
+	_SpellDebuffResistance_DisplayCalls[idValue] = nil
+	_SpellDebuffResistance_DescTxtCalls[idValue] = nil
+	_expected_SpellDebuffResistance_DisplayCalls[idValue] = nil
+	_expected_SpellDebuffResistance_DescTxtCalls[idValue] = nil
+	_SpellDebuffResistanceAura_UnitMods[idValue] = nil
+	_SpellDebuffResistanceAura_DisplayCalls[idValue] = nil
+	_SpellDebuffResistanceAura_DescTxtCalls[idValue] = nil
+	_expected_SpellDebuffResistanceAura_DisplayCalls[idValue] = nil
+	_expected_SpellDebuffResistanceAura_DescTxtCalls[idValue] = nil
+	_SplashDamage_UnitMods[idValue] = nil
+	_SplashDamage_DisplayCalls[idValue] = nil
+	_SplashDamage_DescTxtCalls[idValue] = nil
+	_expected_SplashDamage_DisplayCalls[idValue] = nil
+	_expected_SplashDamage_DescTxtCalls[idValue] = nil
+	_SpellBuffLowerEffect_UnitMods[idValue] = nil
+	_SpellBuffLowerEffect_DisplayCalls[idValue] = nil
+	_SpellBuffLowerEffect_DescTxtCalls[idValue] = nil
+	_expected_SpellBuffLowerEffect_DisplayCalls[idValue] = nil
+	_expected_SpellBuffLowerEffect_DescTxtCalls[idValue] = nil
+	_NonDirectDamageAttackAccuracy_UnitMods[idValue] = nil
+	_NonDirectDamageAttackAccuracy_DisplayCalls[idValue] = nil
+	_NonDirectDamageAttackAccuracy_DescTxtCalls[idValue] = nil
+	_expected_NonDirectDamageAttackAccuracy_DisplayCalls[idValue] = nil
+	_expected_NonDirectDamageAttackAccuracy_DescTxtCalls[idValue] = nil
+	_GlobalMagicSummonCritAndAccuracy_UnitMods[idValue] = nil
+	_GlobalMagicSummonCritAndAccuracy_DisplayCalls[idValue] = nil
+	_GlobalMagicSummonCritAndAccuracy_DescTxtCalls[idValue] = nil
+	_expected_GlobalMagicSummonCritAndAccuracy_DisplayCalls[idValue] = nil
+	_expected_GlobalMagicSummonCritAndAccuracy_DescTxtCalls[idValue] = nil
+	_GlobalNegotiate_UnitMods[idValue] = nil
+	_GlobalNegotiate_DisplayCalls[idValue] = nil
+	_GlobalNegotiate_DescTxtCalls[idValue] = nil
+	_expected_GlobalNegotiate_DisplayCalls[idValue] = nil
+	_expected_GlobalNegotiate_DescTxtCalls[idValue] = nil
 	return 0
 end

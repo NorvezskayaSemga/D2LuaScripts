@@ -1,8 +1,8 @@
-package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\units\\?.lua"
+package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modifiers\\drawing\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\leaderMods\\?.lua;.\\Scripts\\modifiers\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\?.lua;.\\Scripts\\modifiers\\smns\\items\\?.lua;.\\Scripts\\modifiers\\smns\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\spells\\?.lua;.\\Scripts\\modifiers\\smns\\units\\?.lua;.\\Scripts\\modifiers\\spells\\?.lua;.\\Scripts\\modifiers\\units\\?.lua;.\\Scripts\\modifiers\\units\\bloodsorcerer\\?.lua;.\\Scripts\\modifiers\\units\\multiplicative_stats\\?.lua;.\\Scripts\\modifiers\\units\\torhoth\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\workshop\\?.lua;.\\Scripts\\workshop\\classes\\?.lua"
+require('baroness_info')
 require('mRnd')
 require('setValue')
 
-local newAttackType = {}
 local baronessParalizeTxt = Id.new("x000tg5078")
 local baronessPerkTxt1 = Id.new("x010tg1807")
 local baronessPerkTxt2 = Id.new("x010tg1808")
@@ -32,36 +32,20 @@ function getModifierDescTxt(unit, prev)
 	return prev
 end
 
-function getAttackClass(unit, prev)
-	local id = unit.id.value
-	if unit.impl.level > 2 and prev == Attack.Fear then
-		newAttackType[id] = Attack.Paralyze
-		return Attack.Paralyze
-	end
-	newAttackType[id] = -1
-	return prev
-end
-
 function getAttackInfinite(unit, prev)
-	local id = unit.id.value
-	if newAttackType[id] == Attack.Paralyze then
-		local chance = 10 * ( unit.impl.level - unit.baseImpl.level )
+	local uimpl = getScenario():getUnit(unit.id).impl
+	local atype = uimpl.attack1.type
+	if atype == Attack.Paralyze then
+		local chance = 10 * ( uimpl.level - unit.baseImpl.level )
 		return _mRnd_simpleRndEvent(chance)
 	end
 	return prev
 end
 
-function getAttackPower(unit, prev)
-	local id = unit.id.value
-	if newAttackType[id] == Attack.Paralyze then
-		return svMultimplyPower1(unit, prev, -0.125)
-	end
-	return prev
-end
-
 function getAttackNameTxt(unit, prev)
-	local id = unit.id.value
-	if newAttackType[id] == Attack.Paralyze then
+	local uimpl = getScenario():getUnit(unit.id).impl
+	local atype = uimpl.attack1.type
+	if atype == Attack.Paralyze then
 		return baronessParalizeTxt
 	end
 	return prev

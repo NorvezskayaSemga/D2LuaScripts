@@ -1,4 +1,12 @@
---[[ Settings for Disciples 2 Rise of the Elves v3.01 mss32 proxy dll ]]--
+--[[
+Settings for Disciples 2 Rise of the Elves v3.01 mss32 proxy dll
+Most settings correspond to features. Refer to the documentation for more information:
+https://github.com/VladimirMakeev/D2ModdingToolset#features
+If you got this file from the GitHub repository, settings have their default values specified.
+If you omit any setting it will have its default value.
+Most settings have their default values correspond to the vanilla game,
+except for quality-of-life like showBanners / showResources and bug fixes like fixEffectiveHpFormula.
+--]] 
 
 settings = {
 	-- Show troops banners
@@ -9,7 +17,7 @@ settings = {
 	showLandConverted = false,
 
 	-- Allow scenarios with prebuilt capital cities
-	preserveCapitalBuildings = false,
+	preserveCapitalBuildings = true,
 	-- Start with pre built temple in capital for warrior lord
 	buildTempleForWarriorLord = true,
 	-- Maximum number of items the player is allowed to transfer
@@ -106,7 +114,39 @@ settings = {
 		},
 		outlineColor = {
 			red = 0, green = 0, blue = 0
-		}
+		},
+		
+		-- Movement cost on water tiles
+		water = {
+			-- Default movement cost
+			default = 5,
+			-- Movement cost for non water-only stacks with dead leader
+			withDeadLeader = 10,
+			-- Movement cost for stacks with water movement bonus
+			withBonus = 3,
+			-- Movement cost for water-only stacks
+			waterOnly = 3,
+		},
+		
+		-- Movement cost on forest tiles
+		forest = {
+			-- Default movement cost
+			default = 5,
+			-- Movement cost for stacks with dead leader
+			withDeadLeader = 10,
+			-- Movement cost for stacks with forest movement bonus 
+			withBonus = 3,
+		},
+		
+		-- Movement cost on plain tiles
+		plain = {
+			-- Default movement cost
+			default = 3,
+			-- Movement cost for stacks with dead leader
+			withDeadLeader = 6,
+			-- Movement cost for stacks without plain movement bonus on road tiles
+			onRoad = 2,
+		},
 	},
 
 	-- If true, switches attacks miss check to a single random value roll
@@ -119,21 +159,21 @@ settings = {
 	unitEncyclopedia = {
 		-- Additional display of some stats bonuses, regeneration, xp reward for killing, etc.
 		detailedUnitDescription = true,
-
+		
 		-- Additional display of some stats bonuses, drain, critical hit, custom attack ratios, etc.
 		detailedAttackDescription = true,
-
+		
 		-- Additional display of dynamic upgrade values (only for unit type encyclopedia to avoid clutter)
-                -- Enable detailedUnitDescription and/or detailedAttackDescription to show upgrade values for corresponding stats
-                displayDynamicUpgradeValues = true,
-           
-                -- Additional display of bonus hit points
-                -- Requires detailedUnitDescription
-                displayBonusHp = true,
-           
-                -- Additional display of experience points reduction
-                -- Requires detailedUnitDescription
-                displayBonusXp = true,
+		-- Enable detailedUnitDescription and/or detailedAttackDescription to show upgrade values for corresponding stats
+		displayDynamicUpgradeValues = true,
+		
+		-- Additional display of bonus hit points
+		-- Requires detailedUnitDescription
+		displayBonusHp = true,
+		
+		-- Additional display of experience points reduction
+		-- Requires detailedUnitDescription
+		displayBonusXp = true,
 	},
 	
 	-- Fix effective unit hp computation
@@ -158,16 +198,26 @@ settings = {
 		-- By default, the game picks single highest value, then sums it with lord, terrain and city bonuses.
 		cumulativeUnitRegeneration = true,
 		
-        	-- Enables 'modifiersChanged' notification for custom-modifiers scripts.
-        	-- Keep it disabled if you don't need it to improve general performance.
-        	notifyModifiersChanged = true,
-        	
-        	-- Enables 'onModifierAdded' / 'onModifierRemoved' notifications for custom-modifiers scripts.
-	        -- Keep it disabled if you don't need it - to improve general performance.
-	        notifyModifierAdded = true,
-	        notifyModifierRemoved = true,
+		-- Enables 'modifiersChanged' notification for custom-modifiers scripts.
+		-- Keep it disabled if you don't need it to improve general performance.
+		notifyModifiersChanged = true,
+		
+		-- Enables 'onModifierAdded' / 'onModifierRemoved' notifications for custom-modifiers scripts.
+		-- Keep it disabled if you don't need it - to improve general performance.
+		notifyModifierAdded = true,
+		notifyModifierRemoved = true,
+		
+		-- Validate current HP / XP of units when their group changes (units added, removed, rearranged, etc.)
+		-- to resolve issues with custom HP / XP modifiers, that depend on other units (like auras in MNS mod).
+		-- Keep it disabled if you don't need it to improve general performance.
+		validateUnitsOnGroupChanged = true,
 	},
 
+	battle = {
+		-- Allows retreated units to upgrade (the behavior is bugged in vanilla causing non-constant and opaque behaviour)
+		allowRetreatedUnitsToUpgrade = true,
+	},
+	
 	-- Create mss32 proxy dll log files with debug info
 	debugHooks = true,
 }

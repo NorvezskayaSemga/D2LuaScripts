@@ -12,6 +12,8 @@ function _selector_getTargets(methodName, attacker, selected, allies, targets, t
 		result = _attack_AllAdjacent(attacker, selected, allies, targets, targetsAreAllies, item, battle)
 	elseif methodName == "_attack_Area2x2" then
 		result = _attack_Area2x2(attacker, selected, allies, targets, targetsAreAllies, item, battle)
+	elseif methodName == "_attack_Area2x2melee" then
+		result = _attack_Area2x2melee(attacker, selected, allies, targets, targetsAreAllies, item, battle)
 	elseif  methodName == "_attack_Column" then
 		result = _attack_Column(attacker, selected, allies, targets, targetsAreAllies, item, battle)
 	elseif  methodName == "_attack_Line" then

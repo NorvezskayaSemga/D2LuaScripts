@@ -17,5 +17,5 @@ function canApplyAsBoostSpell()
 end
 
 function getLowerCost(unit, prev)
-	return prev + 15
+	return svFlatEffectLowerCost_Spell(unit, prev, 15)
 end

@@ -16,9 +16,20 @@ function getAttackReach(unit, prev)
 end
 
 function getAttackDamRatio(unit, prev)
-	return math.min(50, 2 * (unit.impl.level - 1))
+	return svFlatEffectSplash1(unit, 
+				   prev - unit.baseImpl.attack1.damageRatio, 
+				   math.min(50, 2 * (unit.impl.level - 1)))
 end
 
 function getAttack2DamRatio(unit, prev)
-	return getAttackDamRatio(unit, prev)
+	local r
+	local a = unit.baseImpl.attack2
+	if a ~= nil then
+		r = a.damageRatio
+	else
+		r = 0
+	end
+	return svFlatEffectSplash2(unit, 
+				   prev - r, 
+				   math.min(50, 2 * (unit.impl.level - 1)))
 end

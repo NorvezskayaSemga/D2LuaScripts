@@ -9,7 +9,7 @@ function getModifierDescTxt(unit, prev)
 end
 
 function getImmuneToSource(unit, source, prev)
-	if source == Source.Weapon and prev ~= Immune.Always then
+	if source == Source.Weapon and prev == Immune.NotImmune then
 		return Immune.Once
 	end	
 	return prev

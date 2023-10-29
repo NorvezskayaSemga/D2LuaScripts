@@ -99,7 +99,4 @@ function _getUnitImplLevel(baseImpl, exp, bonusLevel)
 	return lvl
 end
 
-function _levelCap(lvl)
-	return math.min(76, lvl)
-end
 

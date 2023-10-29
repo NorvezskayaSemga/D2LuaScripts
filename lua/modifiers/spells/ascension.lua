@@ -1,5 +1,6 @@
-package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\units\\?.lua"
+package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modifiers\\drawing\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\leaderMods\\?.lua;.\\Scripts\\modifiers\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\?.lua;.\\Scripts\\modifiers\\smns\\items\\?.lua;.\\Scripts\\modifiers\\smns\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\spells\\?.lua;.\\Scripts\\modifiers\\smns\\units\\?.lua;.\\Scripts\\modifiers\\spells\\?.lua;.\\Scripts\\modifiers\\units\\?.lua;.\\Scripts\\modifiers\\units\\bloodsorcerer\\?.lua;.\\Scripts\\modifiers\\units\\multiplicative_stats\\?.lua;.\\Scripts\\modifiers\\units\\torhoth\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\workshop\\?.lua;.\\Scripts\\workshop\\classes\\?.lua"
 require('setValue')
+require('unitAura')
 
 function getModifierDisplay(unit, prev)
 	return prev
@@ -18,57 +19,87 @@ function canApplyAsBoostSpell()
 end
 
 function getHitPoint(unit, prev)
-	return svMultimplyHitPoint(unit, prev, 0.2)
+	-- _get_Group_and_Mods(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)	
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	return svMultimplyHitPoint(unit, prev, 0.2 * spellBuffMultiplier)
 end
 
 function getArmor(unit, prev)
-	return prev + 30
+	return svFlatEffectArmor_Spell(unit, prev, 30)
 end
 
-function getImmuneToSource(unit, source, prev)
-	if source ~= Source.Life and prev ~= Immune.Always then
-		return Immune.Once
-	end
-	return prev
-end
+-- function getImmuneToSource(unit, source, prev)
+-- 	if source ~= Source.Life then
+-- 		return svSourceImmunityClass(unit, source, prev, Immune.Once)
+-- 	end
+-- 	return prev
+-- end
 
 function getNegotiate(unit, prev)
-	return prev + 40
+	-- _get_Group_and_Mods(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)	
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	return prev + 40 * spellBuffMultiplier
 end
 
 function getAttackInitiative(unit, prev)
-	return svMultimplyInitiative(unit, prev, 0.2)
+	return svMultimplyInitiative_Spell(unit, prev, 0.2)
 end
 
 function getAttackPower(unit, prev)
-	return svMultimplyPower1(unit, prev, 0.2)
+	return svMultimplyPower1_Spell(unit, prev, 0.2)
 end
 
 function getAttackHeal(unit, prev)
-	return svMultimplyHeal1(unit, prev, 0.4)
+	return svMultimplyHeal1_Spell(unit, prev, 0.4)
 end
 
 function getAttack2Power(unit, prev)
-	return svMultimplyPower2(unit, prev, 0.2)
+	return svMultimplyPower2_Spell(unit, prev, 0.2)
 end
 
 function getAttack2Heal(unit, prev)
-	return svMultimplyHeal2(unit, prev, 0.4)
+	return svMultimplyHeal2_Spell(unit, prev, 0.4)
 end
 
 function getAttackCritHit(unit, prev)
-    return true
+    if prev then
+    	return prev
+    end
+    _get_Group_and_Mods(unit)
+    local mods = _GroupInfo_UnitModifiers(unit)	
+    local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+    local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+    if spellBuffMultiplier > 0 then
+    	return true
+    else
+    	return prev
+    end
 end
 
 function getAttackCritDamage(unit, prev)
-    return svAddCrit1Damage(unit, prev, 40)
+    return svAddCrit1Damage_Spell(unit, prev, 40)
 end
 
 function getAttack2CritHit(unit, prev)
-    return true
+    if prev then
+    	return prev
+    end
+    _get_Group_and_Mods(unit)
+    local mods = _GroupInfo_UnitModifiers(unit)	
+    local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+    local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+    if spellBuffMultiplier > 0 then
+    	return true
+    else
+    	return prev
+    end
 end
 
 function getAttack2CritDamage(unit, prev)
-    return svAddCrit2Damage(unit, prev, 40)
+    return svAddCrit2Damage_Spell(unit, prev, 40)
 end
 

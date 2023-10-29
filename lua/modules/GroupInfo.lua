@@ -1,7 +1,8 @@
-package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modifiers\\units\\?.lua;.\\Scripts\\modules\\smns\\?.lua"
+package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modifiers\\drawing\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\leaderMods\\?.lua;.\\Scripts\\modifiers\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\?.lua;.\\Scripts\\modifiers\\smns\\items\\?.lua;.\\Scripts\\modifiers\\smns\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\spells\\?.lua;.\\Scripts\\modifiers\\smns\\units\\?.lua;.\\Scripts\\modifiers\\spells\\?.lua;.\\Scripts\\modifiers\\units\\?.lua;.\\Scripts\\modifiers\\units\\bloodsorcerer\\?.lua;.\\Scripts\\modifiers\\units\\multiplicative_stats\\?.lua;.\\Scripts\\modifiers\\units\\torhoth\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\workshop\\?.lua;.\\Scripts\\workshop\\classes\\?.lua"
 require('smallEnthInfo')
 require('RangeInfo')
 require('common')
+require('game_constants')
 
 _terrainToPlayerRace = {}
 _terrainToPlayerRace[Terrain.Human] = Race.Human
@@ -247,12 +248,19 @@ function _GroupInfo_UnitHasModifierValue(unit, modID)
 		_GroupInfo_cacheModifiers(unit, unitValue)
 	end
  	local mods = cachedUnitModsDictionaryValueAmount[unitValue]
+ 	if mods == nil then
+		_GroupInfo_cacheModifiers(unit, unitValue)
+ 		mods = cachedUnitModsDictionaryValueAmount[unitValue]
+ 	end
 	return mods[modID] ~= nil
 end
 
 function _GroupInfo_UnitModifiers(unit)
 	local unitValue = unit.id.value
 	if unitModifiersChanged[unitValue] then
+		_GroupInfo_cacheModifiers(unit, unitValue)
+	end
+	if cachedUnitModsDictionaryValueAmount[unitValue] == nil then
 		_GroupInfo_cacheModifiers(unit, unitValue)
 	end
 	return cachedUnitModsDictionaryValueAmount[unitValue]
@@ -271,30 +279,18 @@ end
 groupSearchResultType = {}
 groupSearchResult = {}
 unitGroupPos = {}
-unitSize = {}
-
-function _GroupInfo_getUnitSize(unit)
-	local v = unit.id.value
-	local s = unitSize[v]
-	if s == nil then
-		s = unit.baseImpl.small
-		unitSize[v] = s
-	end
-	return s
-end
 
 searches = 0
 function _GroupInfo_getUnitStack(unit)
-	local uidb = unit.id
-	local uidv = uidb.value
+	local uidv = unit.id.value
 	local ownerID = groupSearchResult[uidv]
 	local owner = nil
 	if ownerID ~= nil then
 		local gtype = groupSearchResultType[uidv]
-		if gtype == 1 then
+		if gtype == OwnerTypeStack then
 			owner = scenario:getStack(ownerID)
 			if owner ~= nil then
-				if not stackContainsUnit(owner, uidb, uidv) then
+				if not owner.group:hasUnit(unit) then
 					owner = nil
 				end
 			end
@@ -308,32 +304,34 @@ function _GroupInfo_getUnitStack(unit)
 	end
 	return owner
 end
+function _GroupInfo_getUnitOwner_Fast(unit)
+	return unitOwner, unitOwnerType
+end
 
 function _GroupInfo_getUnitGroup(unit)
-	local uidb = unit.id
-	local uidv = uidb.value
+	local uidv = unit.id.value
 	local ownerID = groupSearchResult[uidv]
 	local owner = nil
 	if ownerID ~= nil then
 		local gtype = groupSearchResultType[uidv]
-		if gtype == 1 then
+		if gtype == OwnerTypeStack then
 			owner = scenario:getStack(ownerID)
 			if owner ~= nil then
-				if not stackContainsUnit(owner, uidb, uidv) then
+				if not owner.group:hasUnit(unit) then
 					owner = nil
 				end
 			end
-		elseif gtype == 2 then
+		elseif gtype == OwnerTypeFort then
 			owner = scenario:getFort(ownerID)
 			if owner ~= nil then
-				if not cityContainsUnit(owner, uidb, uidv) then
+				if not owner.group:hasUnit(unit) then
 					owner = nil
 				end
 			end
-		elseif gtype == 3 then
+		elseif gtype == OwnerTypeRuin then
 			owner = scenario:getRuin(ownerID)
 			if owner ~= nil then
-				if not ruinContainsUnit(owner, uidb, uidv) then
+				if not owner.group:hasUnit(unit) then
 					owner = nil
 				end
 			end
@@ -372,7 +370,7 @@ function _GroupInfo_getLastFoundGroupPlayer()
 	return _GroupInfo_getPlayer(unitOwnerType, unitOwner)
 end
 function _GroupInfo_getPlayer(uOwType, uOw)
-	if (uOwType == 1 or uOwType == 2) and uOw ~= nil then
+	if (uOwType == OwnerTypeStack or uOwType == OwnerTypeFort) and uOw ~= nil then
 		return uOw.owner
 	end
 	return nil
@@ -381,17 +379,17 @@ end
 function makeUnitStackLink(stack)
 	local id = stack.id
 	local group = stack.group
-	return makeUnitGroupLink(group, id, 1)
+	return makeUnitGroupLink(group, id, OwnerTypeStack)
 end
 function makeUnitCityLink(city)
 	local id = city.id
 	local group = city.group
-	return makeUnitGroupLink(group, id, 2)
+	return makeUnitGroupLink(group, id, OwnerTypeFort)
 end
 function makeUnitRuinLink(ruin)
 	local id = ruin.id
 	local group = ruin.group
-	return makeUnitGroupLink(group, id, 3)
+	return makeUnitGroupLink(group, id, OwnerTypeRuin)
 end
 
 function makeUnitGroupLink(group, ownerID, ownerType)
@@ -410,51 +408,20 @@ function makeUnitGroupLink(group, ownerID, ownerType)
 	return 0
 end
 
-function stackContainsUnit(stack, unitUniqID, unitUniqIDVal)
-	local group = stack.group
-	return groupContainsUnit(group, unitUniqID, unitUniqIDVal)
-end
-function cityContainsUnit(city, unitUniqID, unitUniqIDVal)
-	local group = city.group
-	return groupContainsUnit(group, unitUniqID, unitUniqIDVal)
-end
-function ruinContainsUnit(ruin, unitUniqID, unitUniqIDVal)
-	local group = ruin.group
-	return groupContainsUnit(group, unitUniqID, unitUniqIDVal)
-end
-
-function groupContainsUnit(group, unitUniqID, unitUniqIDVal)
-	local expectedSlot = unitGroupPos[unitUniqIDVal]
-	local slots = group.slots
-	local slot
-	local u
-	local uidv
-	if expectedSlot ~= nil then
-		slot = slots[expectedSlot]
-		if slot ~= nil then
-			u = slot.unit
-			if u ~= nil then
-				if unitUniqID == u.id then
-					return true
-				end
-			end
-		end
-	end
-	local result = false
-	for i = 1, #slots do
-		u = slots[i].unit
-		if u ~= nil then
-			uidv = u.id.value
-			unitGroupPos[uidv] = i
-			if uidv == unitUniqIDVal then
-				result = true
-			end
-		end
-	end
-	return result
-end
-
 function _GroupInfo_getCoveringUnit(unit, gotGroup)
+	return _GroupInfo_getSameColumnUnitWithPositionCondition(unit, gotGroup, 0, -1, true)
+end
+function _GroupInfo_getCoveredUnit(unit, gotGroup)
+	return _GroupInfo_getSameColumnUnitWithPositionCondition(unit, gotGroup, 1, 1, true)
+end
+function _GroupInfo_getCoveringUnitCorpse(unit, gotGroup)
+	return _GroupInfo_getSameColumnUnitWithPositionCondition(unit, gotGroup, 0, -1, false)
+end
+function _GroupInfo_getCoveredUnitCorpse(unit, gotGroup)
+	return _GroupInfo_getSameColumnUnitWithPositionCondition(unit, gotGroup, 1, 1, false)
+end
+function _GroupInfo_getSameColumnUnitWithPositionCondition(unit, gotGroup, breakConditionUnitLine, lineDelta, returnAliveUnit)
+
 	if not unit.impl.small then
 		return nil
 	end
@@ -484,7 +451,7 @@ function _GroupInfo_getCoveringUnit(unit, gotGroup)
 		if u ~= nil then
 			if u.id.value == unitIndex then
 				myLine = slot.line
-				if myLine == 0 then
+				if myLine == breakConditionUnitLine then
 					return nil
 				end
 				myColumn = slot.column
@@ -493,14 +460,28 @@ function _GroupInfo_getCoveringUnit(unit, gotGroup)
 			end
 		end
 	end
-	if upos[myLine - 1][myColumn] ~= nil and upos[myLine - 1][myColumn].hp > 0 then
-		return upos[myLine - 1][myColumn]
-	else
-		return nil
+	u = upos[myLine + lineDelta][myColumn]
+	if u ~= nil then
+		if returnAliveUnit then
+			if u.hp > 0 then
+				return u
+			end
+		else
+			if u.hp == 0 then
+				return u
+			end
+		end
 	end
+	return nil
 end
 
 function _GroupInfo_getSameColumnUnit(unit, gotGroup)
+	return _GroupInfo_getSameColumnUnitWithCondition(unit, gotGroup, true)
+end
+function _GroupInfo_getSameColumnUnitCorpse(unit, gotGroup)
+	return _GroupInfo_getSameColumnUnitWithCondition(unit, gotGroup, false)
+end
+function _GroupInfo_getSameColumnUnitWithCondition(unit, gotGroup, returnAliveUnit)
 	if not unit.impl.small then
 		return nil
 	end
@@ -536,16 +517,34 @@ function _GroupInfo_getSameColumnUnit(unit, gotGroup)
 			end
 		end
 	end
-	if upos[myLine - 1][myColumn] ~= nil and upos[myLine - 1][myColumn].hp > 0 then
-		return upos[myLine - 1][myColumn]
-	elseif upos[myLine + 1][myColumn] ~= nil and upos[myLine + 1][myColumn].hp > 0 then
-		return upos[myLine + 1][myColumn]
-	else
-		return nil
+	u = nil
+	if upos[myLine - 1] ~= nil then
+		u = upos[myLine - 1][myColumn]
 	end
+	if u == nil and upos[myLine + 1] ~= nil then
+		u = upos[myLine + 1][myColumn]
+	end
+	if u ~= nil then
+		if returnAliveUnit then
+			if u.hp > 0 then
+				return u
+			end
+		else
+			if u.hp == 0 then
+				return u
+			end
+		end
+	end
+	return nil
 end
 
 function _GroupInfo_getLeftAndRightNearestUnits(unit, gotGroup)
+	return _GroupInfo_getLeftAndRightNearestUnitsWithCondition(unit, gotGroup, true)
+end
+function _GroupInfo_getLeftAndRightNearestUnitsCorpse(unit, gotGroup)
+	return _GroupInfo_getLeftAndRightNearestUnitsWithCondition(unit, gotGroup, false)
+end
+function _GroupInfo_getLeftAndRightNearestUnitsWithCondition(unit, gotGroup, returnAliveUnit)
 	local g
 	if gotGroup then
 		g = unitGroup
@@ -579,18 +578,32 @@ function _GroupInfo_getLeftAndRightNearestUnits(unit, gotGroup)
 	end
 	if unit.impl.small then
 		for i = -1, 1, 2 do
-			if upos[myLine][myColumn + i] ~= nil and upos[myLine][myColumn + i].hp > 0 then
-				table.insert(result, upos[myLine][myColumn + i])
+			if upos[myLine][myColumn + i] ~= nil then
+				if returnAliveUnit then
+					if upos[myLine][myColumn + i].hp > 0 then
+						table.insert(result, upos[myLine][myColumn + i])
+					end
+				else
+					if upos[myLine][myColumn + i].hp == 0 then
+						table.insert(result, upos[myLine][myColumn + i])
+					end
+				end
 			end
 		end
 	else
 		for j = 0, 1, 1 do
 			for i = -1, 1, 2 do
-				if upos[j][myColumn + i] ~= nil and upos[j][myColumn + i].hp > 0 then
-					if upos[j][myColumn + i].impl.small then
-						table.insert(result, upos[j][myColumn + i])
-					elseif j == 0 then
-						table.insert(result, upos[j][myColumn + i])
+				if upos[j][myColumn + i] ~= nil then
+					if j == 0 or upos[j][myColumn + i].impl.small then
+						if returnAliveUnit then
+							if upos[j][myColumn + i].hp > 0 then
+								table.insert(result, upos[j][myColumn + i])
+							end
+						else
+							if upos[j][myColumn + i].hp == 0 then
+								table.insert(result, upos[j][myColumn + i])
+							end
+						end
 					end
 				end
 			end
@@ -623,6 +636,21 @@ function _GroupInfo_getGroupLeader(group)
 	return nil
 end
 
+function _GroupInfo_getGroupUnits(group)
+	local units = group.units
+	local result = {}
+	local u
+	for i = 1, #units do
+		u = units[i]
+		if u.original ~= nil then
+			table.insert(result, u.original)
+		else
+			table.insert(result, u)
+		end
+	end
+	return result
+end
+
 function _GroupInfo_getFrontlineBonusMultiplier(group)
 	local slots = group.slots
 	local s
@@ -647,7 +675,7 @@ function _GroupInfo_canUseFastRetreat(unit, gotGroup)
 	if gotGroup then
 		g = unitGroup
 	else
-		g = _GroupInfo_getUnitGroup(unit)	
+		g = _GroupInfo_getUnitGroup(unit)
 	end
 	
 	local units = g.units
@@ -700,4 +728,126 @@ function _GroupInfo_CanTakeUseScrolls(unitImpl)
 	else
 		return true
 	end
+end
+
+function _GroupInfo_GetObjectsWithGroups(minX, maxX, minY, maxY)
+	local stacks = {}
+	local ruins = {}
+	local forts = {}
+	local stack
+	local ruin
+	local fort
+	local addedStacks = {}
+	local addedForts  = {}
+	local addedRuins  = {}
+	local id
+	
+	local minX = math.max(minX, 0)
+	local maxX = math.min(maxX, scenario.size - 1)
+	local minY = math.max(minY, 0)
+	local maxY = math.min(maxY, scenario.size - 1)
+	
+	for j = minY, maxY do
+		for i = minX, maxX do
+			fort = scenario:getFort(i, j)
+			if fort ~= nil then
+				id = fort.id.value
+				if addedForts[id] == nil then
+					addedForts[id] = true
+					table.insert(forts, fort)
+					stack = fort.visitor
+					if stack ~= nil then
+						id = stack.id.value
+						if addedStacks[id] == nil then
+							addedStacks[id] = true
+							table.insert(stacks, stack)
+						end
+					end
+				end
+			else
+				stack = scenario:getStack(i, j)
+				if stack ~= nil then
+					id = stack.id.value
+					if addedStacks[id] == nil then
+						addedStacks[id] = true
+						table.insert(stacks, stack)
+					end
+				else
+					ruin = scenario:getRuin(i, j)
+					if ruin ~= nil and ruin.looter == nil then
+						id = ruin.id.value
+						if addedRuins[id] == nil then
+							addedRuins[id] = true
+							table.insert(ruins, ruin)
+						end
+					end
+				end
+			end
+		end
+	end
+	return stacks, ruins, forts
+end
+
+function _GroupInfo_printUnitStackInfo(unit)
+	_get_Group_and_Mods(unit)
+	local group = _GroupInfo_getCurrentGroup()
+	local player = _GroupInfo_getLastFoundGroupPlayer()
+	local units = _GroupInfo_getGroupUnits(group)
+	local leader = _GroupInfo_getCurrentGroupLeader()
+	
+	local owner = scenario:findStackByUnit(unit)
+	if owner == nil then
+		owner = scenario:findFortByUnit(unit)
+		if owner == nil then
+			owner = scenario:findRuinByUnit(unit)
+		end
+	end
+	
+	log('--------------------------------')
+	if player ~= nil then
+		log('player: '..tostring(player.race))
+	else
+		log('player: nil')
+	end
+	log('unit: id '..tostring(unit.id)..' base id '..tostring(unit.baseImpl.id))
+	log('position: X '..tostring(owner.position.x)..' Y '..tostring(owner.position.y))
+	if leader ~= nil then
+		log('stack leader: '..tostring(leader.id)..' base id '..tostring(leader.baseImpl.id))
+	else
+		log('stack leader: nil')
+	end
+	
+	for i = 1, #units do
+		log('stack unit '..i..': id '..tostring(units[i].id)..' base id '..tostring(units[i].baseImpl.id)..' hp '..tostring(units[i].hp))
+	end
+	return 0
+end
+
+
+function speedTest(unit)
+	local id = unit.id
+	local idv = unit.id.value
+	local t1, t2
+	local ugroup = _GroupInfo_getUnitGroup(unit)
+	local n = 1000000
+	local r = true
+	log('repeats: '..n)
+	--t1 =  os.clock()
+	--for i = 1, n do
+		--r = groupContainsUnit(ugroup, id, idv)
+	--end
+	--t2 =  os.clock()
+	--log('groupContainsUnit(ugroup, id, idv) time: '..tostring(t2 - t1))
+	t1 =  os.clock()
+	for i = 1, n do
+		r = ugroup:hasUnit(unit)
+	end
+	t2 =  os.clock()
+	log('ugroup:hasUnit(unit) time: '..tostring(t2 - t1))
+	t1 =  os.clock()
+	for i = 1, n do
+		r = ugroup:hasUnit(id)
+	end
+	t2 =  os.clock()
+	log('ugroup:hasUnit(id) time: '..tostring(t2 - t1))
 end

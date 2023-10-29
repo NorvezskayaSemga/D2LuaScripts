@@ -189,8 +189,8 @@ end
 
 function _common_IsOnFrontline(unit, allies)
 	local result = true
-	local uline  = unit.line
 	if unit.backline then
+		local uline = unit.line
 		for i = 1, #allies do
 			if allies[i].line < uline then
 				result = false
@@ -202,7 +202,7 @@ function _common_IsOnFrontline(unit, allies)
 end
 
 function _common_getBattleInitiative(unit, battle)
-	local ini = unit.impl.attack1.initiative
+	local ini = _common_getImplAttack1(unit.impl).initiative
 	local uid = unit.id
 	
 	if battle:getUnitStatus(uid, BattleStatus.LowerInitiative)
@@ -212,20 +212,26 @@ function _common_getBattleInitiative(unit, battle)
 	return ini
 end
 
+function _common_getImplAttack1(impl)
+	return (impl.altAttack or impl.attack1)
+end
+
 function _common_getUnitsInBattle(targets, battle)
 	local result = {}
 	if #targets > 0 then
-		local targetGroup, owner, ownerType = _GroupInfo_getUnitGroup(targets[1].unit)
-		local slots = targetGroup.slots
-		local unit
-		local uid
-		local n = 0
-		for i = 1, #slots do
-			unit = slots[i].unit
-			if unit ~= nil and unit.hp > 0 and not _GroupInfo_UnitHasModifierValue(unit, incorporeality_mod) then
-				uid = unit.id
-				if  not battle:getUnitStatus(uid, BattleStatus.Retreated)
-				and not battle:getUnitStatus(uid, BattleStatus.Hidden) then
+		local targetIndex = -1
+		for i = 1, #targets do
+			if targets[i].unit ~= nil then
+				targetIndex = i
+				break
+			end
+		end
+		if targetIndex > -1 then
+			local targetGroup, owner, ownerType = _GroupInfo_getUnitGroup(targets[targetIndex].unit)
+			local slots = targetGroup.slots
+			local n = 0
+			for i = 1, #slots do
+				if _common_IsInBattle(slots[i].unit, battle) then
 					n = n + 1
 					result[n] = slots[i]
 				end
@@ -233,5 +239,16 @@ function _common_getUnitsInBattle(targets, battle)
 		end
 	end
 	return result
+end
+
+function _common_IsInBattle(unit, battle)
+	if unit ~= nil and unit.hp > 0 and not _GroupInfo_UnitHasModifierValue(unit, incorporeality_mod) then
+		local uid = unit.id
+		if  not battle:getUnitStatus(uid, BattleStatus.Retreated)
+		and not battle:getUnitStatus(uid, BattleStatus.Hidden) then
+			return true
+		end
+	end
+	return false
 end
 

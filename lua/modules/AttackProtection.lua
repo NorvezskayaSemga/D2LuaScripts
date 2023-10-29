@@ -1,4 +1,4 @@
-package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modules\\smns\\?.lua"
+package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modifiers\\drawing\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\leaderMods\\?.lua;.\\Scripts\\modifiers\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\?.lua;.\\Scripts\\modifiers\\smns\\items\\?.lua;.\\Scripts\\modifiers\\smns\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\spells\\?.lua;.\\Scripts\\modifiers\\smns\\units\\?.lua;.\\Scripts\\modifiers\\spells\\?.lua;.\\Scripts\\modifiers\\units\\?.lua;.\\Scripts\\modifiers\\units\\bloodsorcerer\\?.lua;.\\Scripts\\modifiers\\units\\multiplicative_stats\\?.lua;.\\Scripts\\modifiers\\units\\torhoth\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\workshop\\?.lua;.\\Scripts\\workshop\\classes\\?.lua"
 require('GroupInfo')
 require('mRnd')
 require('unitAura')
@@ -7,7 +7,7 @@ require('named_mods')
 
 function _AttackProtection_ChangeTargets(attacker, targets, selectedTargets, battle)
 	local attackerMods = _GroupInfo_UnitModifiers(attacker.unit)
-	if _GroupInfo_UnitModifierAmount(attackerMods, ignoreprotection_mod) > 0 then
+	if _unitAura_AttackProtectionIgnorance_val(attacker.unit, attackerMods) > 0 then
 		return selectedTargets
 	end
 
@@ -17,6 +17,8 @@ function _AttackProtection_ChangeTargets(attacker, targets, selectedTargets, bat
 	local protector
 	local mods
 	local chance
+	local onFullHPEffect
+	local protectorOverlevel
 	local useRnd = _common_get_useRandom()
 	for c = 0, 2 do
 		unit      = selectedTargetsArray[1][c]
@@ -24,8 +26,15 @@ function _AttackProtection_ChangeTargets(attacker, targets, selectedTargets, bat
 		if unit ~= nil and protector == nil then
 			protector = targetsArray[0][c]
 			if protector ~= nil then
+				protectorOverlevel = protector.impl.level - protector.baseImpl.level
 				mods = _GroupInfo_UnitModifiers(protector)
-				chance = _unitAura_AttackProtection_val(unit, mods)
+				chance = _unitAura_AttackProtection_val(protector, mods)
+				       + 0.5 * _unitAura_AttackProtectionPerLevel_val(protector, mods) * protectorOverlevel
+				       + math.min( 25, 0.5 * _unitAura_AttackProtectionPerLevelCapped_val(protector, mods) * protectorOverlevel )
+				onFullHPEffect = _unitAura_AttackProtectionOnFullLife_val(protector, mods)
+				if onFullHPEffect ~= 0 and scenario:getUnit(protector.id).hpMax == protector.hp then
+					chance = chance + onFullHPEffect
+				end
 				if (useRnd or chance >= 100) and _mRnd_simpleRndEvent(chance) then
 					selectedTargets[selectedTargetsIndex[1][c]] = targets[targetsIndex[0][c]]
 				end

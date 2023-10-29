@@ -34,6 +34,46 @@ function _attack_Area2x2(attacker, selected, allies, targets, targetsAreAllies, 
 	return result
 end
 
+function _attack_Area2x2melee(attacker, selected, allies, targets, targetsAreAllies, item, battle)
+	local r = _attack_Area2x2(attacker, selected, allies, targets, targetsAreAllies, item, battle)
+	local d = {}
+	local minDist = nil
+	for i = 1, #r do
+		d[i] = math.abs(attacker.column - r[i].column) + 100 * r[i].line
+		if minDist == nil or d[i] < minDist then
+			minDist = d[i]
+		end
+	end
+	if d[1] == minDist then
+		return r
+	end
+	if minDist >= 100 then
+		for i = 1, #r do
+			d[i] = d[i] - 100
+		end
+		minDist = minDist - 100
+	end
+	if d[1] < 2 then
+		return r
+	end
+	local result = {}
+	local n = 1
+	for i = 1, #r do
+		if d[i] == minDist then
+			d[i]  = nil
+			result[n] = r[i]
+			break
+		end
+	end
+	for i = 1, #r do
+		if d[i] ~= nil then
+			n = n + 1
+			result[n] = r[i]
+		end
+	end
+	return result
+end
+
 function _attack_Column(attacker, selected, allies, targets, targetsAreAllies, item, battle)
 	local result = {selected}
 	result = _common_AddDelta(result, selected, targets, 0, 1, 1)
@@ -99,7 +139,7 @@ function _attack_SemgaAllNearestUncovered(attacker, selected, allies, targets, t
 	local targetGroup = _common_getUnitsInBattle(targets, battle)
 	if not _common_HasCover(targetGroup, selected) then
 		result = {selected}
-	elseif _common_useRandom and _mRnd_simpleRndEvent(pierceChance) then
+	elseif _mRnd_RndEventIfRndDisabled(pierceChance, _common_useRandom) then
 		result = {selected}
 	end
 	
@@ -108,7 +148,7 @@ function _attack_SemgaAllNearestUncovered(attacker, selected, allies, targets, t
     		if math.abs(targets[i].column - attacker.column) < r then
 			if not _common_HasCover(targetGroup, targets[i]) then
 				result = _common_AddDelta(result, targets[i], targets, 0, 0, 0)
-			elseif _common_useRandom and _mRnd_simpleRndEvent(pierceChance) then
+			elseif _mRnd_RndEventIfRndDisabled(pierceChance, _common_useRandom) then
 				result = _common_AddDelta(result, targets[i], targets, 0, 0, 0)
 			end
     		end
@@ -122,14 +162,14 @@ function _attack_SemgaAllUncovered(attacker, selected, allies, targets, targetsA
 	local targetGroup = _common_getUnitsInBattle(targets, battle)
 	if not _common_HasCover(targetGroup, selected) then
 		result = {selected}
-	elseif _common_useRandom and _mRnd_simpleRndEvent(pierceChance) then
+	elseif _mRnd_RndEventIfRndDisabled(pierceChance, _common_useRandom) then
 		result = {selected}
 	end
 	
 	for i = 1, #targets do
 		if not _common_HasCover(targetGroup, targets[i]) then
 			result = _common_AddDelta(result, targets[i], targets, 0, 0, 0)
-		elseif _common_useRandom and _mRnd_simpleRndEvent(pierceChance) then
+		elseif _mRnd_RndEventIfRndDisabled(pierceChance, _common_useRandom) then
 			result = _common_AddDelta(result, targets[i], targets, 0, 0, 0)
 		end
 	end
@@ -157,7 +197,13 @@ function _attack_SemgaCross(attacker, selected, allies, targets, targetsAreAllie
 	result = _common_AddDelta(result, selected, targets, 1, 0, 0)
 	result = _common_AddDelta(result, selected, targets, 0, -1, 0)
 	result = _common_AddDelta(result, selected, targets, -1, 0, 0)
-	if #result < 2 and not selected.unit.impl.small and attacker.unit.impl.attack1.reach == 19 then
+	local isSmall
+	if selected.unit ~= nil then
+		isSmall = selected.unit.impl.small
+	else
+		isSmall = true
+	end
+	if #result < 2 and not isSmall and attacker.unit.impl.attack1.reach == 19 then
 		result = _common_AddDelta(result, selected, targets, 1, 1, 0)
 		result = _common_AddDelta(result, selected, targets, -1, 1, 0)
 	end
@@ -211,7 +257,7 @@ end
 
 function _attack_SemgaPierceHit(attacker, selected, allies, targets, targetsAreAllies, item, battle)
 	local result = {selected}
- 	if _common_useRandom and _mRnd_simpleRndEvent(50) then
+ 	if _mRnd_RndEventIfRndDisabled(50, _common_useRandom) then
  		result = _common_AddDelta(result, selected, targets, 0, 1, 1)
 	end
 	return result
@@ -236,19 +282,16 @@ end
 
 function _attack_SemgaSinglePlusChancePerIni(attacker, selected, allies, targets, targetsAreAllies, item, battle, amount)
 	local result = {selected}
-	if not _common_useRandom then
-		return result
-	end
 	local overlevelsBonus = math.min(50, 5 * ( attacker.unit.impl.level - attacker.unit.baseImpl.level ) )
 	local deltaIni = 0
 	local chance = 0
 	local aIni = _common_getBattleInitiative(attacker.unit, battle)
 	
 	for i = 1, #targets do
-		if targets[i] ~= selected then
+		if targets[i] ~= selected and targets[i].unit ~= nil then
 			deltaIni = aIni - _common_getBattleInitiative(targets[i].unit, battle)
 			chance = amount * ( deltaIni + overlevelsBonus )
-			if _mRnd_simpleRndEvent(chance) then
+			if _mRnd_RndEventIfRndDisabled(chance, _common_useRandom) then
 				table.insert(result, targets[i])
 			end
 		end
@@ -323,7 +366,13 @@ end
 function _attack_SemgaTwoAnyInLine(attacker, selected, allies, targets, targetsAreAllies, item, battle)
 	local result = {selected}
 	result = _common_AddDelta(result, selected, targets, 1, 0, 1)
-	if #result < 2 and not selected.unit.impl.small then
+	local isSmall
+	if selected.unit ~= nil then
+		isSmall = selected.unit.impl.small
+	else
+		isSmall = true
+	end
+	if #result < 2 and not isSmall then
 		result = _common_AddDelta(result, selected, targets, 1, 1, 1)
 	end
 	return result

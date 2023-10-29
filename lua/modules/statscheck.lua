@@ -20,6 +20,12 @@ end
 function statsCheck_isShatterUnit(unit)
 	return statsCheck_isShatterUnitImpl(unit.impl)
 end
+function statsCheck_isDrainUnit(unit)
+	return statsCheck_isDrainUnitImpl(unit.impl)
+end
+function statsCheck_isDrainOverflowUnit(unit)
+	return statsCheck_isDrainOverflowUnitImpl(unit.impl)
+end
 
 function statsCheck_isDirectDmgUnitImpl(unitImpl)
 	if statsCheck_isDirectDmgAttack(unitImpl.attack1) then
@@ -62,6 +68,18 @@ function statsCheck_isShatterUnitImpl(unitImpl)
 		return true
 	end
 	return statsCheck_isShatterAttack(unitImpl.attack2)
+end
+function statsCheck_isDrainUnitImpl(unitImpl)
+	if statsCheck_isDrainAttack(unitImpl.attack1) then
+		return true
+	end
+	return statsCheck_isDrainAttack(unitImpl.attack2)
+end
+function statsCheck_isDrainOverflowUnitImpl(unitImpl)
+	if statsCheck_isDrainOverflowAttack(unitImpl.attack1) then
+		return true
+	end
+	return statsCheck_isDrainOverflowAttack(unitImpl.attack2)
 end
 
 function statsCheck_isDirectDmgAttack(attack)
@@ -106,11 +124,27 @@ function statsCheck_isShatterAttack(attack)
 	end
 	return statsCheck_isShatterType(attack.type)
 end
+function statsCheck_isDrainAttack(attack)
+	if attack == nil then
+		return false
+	end
+	return statsCheck_isDrainType(attack.type)
+end
+function statsCheck_isDrainOverflowAttack(attack)
+	if attack == nil then
+		return false
+	end
+	return statsCheck_isDrainOverflowType(attack.type)
+end
 
 function statsCheck_isDirectDmgType(attackType)
 	return attackType == Attack.Damage
 	    or attackType == Attack.Drain
 	    or attackType == Attack.DrainOverflow
+end
+function statsCheck_isHPRestoreType(attackType)
+	return attackType == Attack.Heal
+	    or attackType == Attack.BestowWards
 end
 function statsCheck_isHealType(attackType)
 	return attackType == Attack.Heal
@@ -144,3 +178,16 @@ end
 function statsCheck_isShatterType(attackType)
 	return attackType == Attack.Shatter
 end
+function statsCheck_isDrainType(attackType)
+	return attackType == Attack.Drain
+end
+function statsCheck_isDrainOverflowType(attackType)
+	return attackType == Attack.DrainOverflow
+end
+function statsCheck_isPowerAppliable(attackType)
+	return statsCheck_isDirectDmgType(attackType)
+	    or statsCheck_isCurseType(attackType)
+	    or statsCheck_isDoTType(attackType)
+	    or statsCheck_isShatterType(attackType)
+end
+

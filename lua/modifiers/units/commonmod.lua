@@ -1,4 +1,4 @@
-package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\units\\?.lua"
+package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modifiers\\drawing\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\leaderMods\\?.lua;.\\Scripts\\modifiers\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\?.lua;.\\Scripts\\modifiers\\smns\\items\\?.lua;.\\Scripts\\modifiers\\smns\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\spells\\?.lua;.\\Scripts\\modifiers\\smns\\units\\?.lua;.\\Scripts\\modifiers\\spells\\?.lua;.\\Scripts\\modifiers\\units\\?.lua;.\\Scripts\\modifiers\\units\\bloodsorcerer\\?.lua;.\\Scripts\\modifiers\\units\\multiplicative_stats\\?.lua;.\\Scripts\\modifiers\\units\\torhoth\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\workshop\\?.lua;.\\Scripts\\workshop\\classes\\?.lua"
 require "unitAura"
 require "setValue"
 require "GroupInfo"
@@ -38,6 +38,11 @@ end
 function getImmuneToSource(unit, source, prev)
 	_unitAura_SetScenario(getScenario())
 	return _unitAura_ImmuneToSource(unit, source, prev)
+end
+
+function getAttackId(unit, prev)
+	_unitAura_SetScenario(getScenario())
+	return _unitAura_AttackId(unit, prev)
 end
 
 function getAttack2Id(unit, prev)
@@ -91,7 +96,7 @@ function getAttack2Drain(unit, damage, prev)
 end
 
 function hasAbility(unit, ability, prev)
-	if unit.type == -1 or prev == true then
+	if unit.type == -1 then
 		return prev
 	end
 	_unitAura_SetScenario(getScenario())
@@ -108,6 +113,11 @@ function getAttackCritDamage(unit, prev)
 	return _unitAura_AttackCritDamage(unit, prev)
 end
 
+function getAttackCritPower(unit, prev)
+	_unitAura_SetScenario(getScenario())
+	return _unitAura_getAttackCritPower(unit, prev)
+end
+
 function getAttack2CritHit(unit, prev)
 	_unitAura_SetScenario(getScenario())
 	return _unitAura_Attack2CritHit(unit, prev)
@@ -118,9 +128,19 @@ function getAttack2CritDamage(unit, prev)
 	return _unitAura_Attack2CritDamage(unit, prev)
 end
 
+function getAttack2CritPower(unit, prev)
+	_unitAura_SetScenario(getScenario())
+	return _unitAura_getAttack2CritPower(unit, prev)
+end
+
 function getXpKilled(unit, prev)
 	_unitAura_SetScenario(getScenario())
 	return _unitAura_XpKilled(unit, prev)
+end
+
+function getXpNext(unit, prev)
+	_unitAura_SetScenario(getScenario())
+	return _unitAura_getXpNext(unit, prev)
 end
 
 function getAttackReach(unit, prev)
@@ -156,6 +176,56 @@ end
 function getScout(unit, prev)
 	_unitAura_SetScenario(getScenario())
 	return _unitAura_getScout(unit, prev)
+end
+
+function getLowerCost(unit, prev)
+	_unitAura_SetScenario(getScenario())
+	return _unitAura_getLowerCost(unit, prev)
+end
+
+function getLeadership(unit, prev)
+	_unitAura_SetScenario(getScenario())
+	return _unitAura_getLeadership(unit, prev)
+end
+
+function getAttackDamRatio(unit, prev)
+	return _unitAura_getAttackDamRatio(unit, prev)
+end
+
+function getAttack2DamRatio(unit, prev)
+	return _unitAura_getAttack2DamRatio(unit, prev)
+end
+
+function getAttackClass(unit, prev)
+	return _unitAura_getAttackClass(unit, prev)
+end
+
+function getAttackNameTxt(unit, prev)
+	return _unitAura_getAttackNameTxt(unit, prev)
+end
+
+function getAttackDrSplit(unit, prev)
+	return _unitAura_getAttackDrSplit(unit, prev)
+end
+
+function getAttack2Class(unit, prev)
+	return _unitAura_getAttack2Class(unit, prev)
+end
+
+function getAttack2NameTxt(unit, prev)
+	return _unitAura_getAttack2NameTxt(unit, prev)
+end
+
+function getAttack2DrSplit(unit, prev)
+	return _unitAura_getAttack2DrSplit(unit, prev)
+end
+
+function getAttackLevel(unit, prev)
+	return _unitAura_getAttackLevel(unit, prev)
+end
+
+function getAttack2Level(unit, prev)
+	return _unitAura_getAttack2Level(unit, prev)
 end
 
 function onModifiersChanged(unit)

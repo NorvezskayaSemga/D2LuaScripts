@@ -1,4 +1,4 @@
-package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\units\\?.lua"
+package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modifiers\\drawing\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\leaderMods\\?.lua;.\\Scripts\\modifiers\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\?.lua;.\\Scripts\\modifiers\\smns\\items\\?.lua;.\\Scripts\\modifiers\\smns\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\spells\\?.lua;.\\Scripts\\modifiers\\smns\\units\\?.lua;.\\Scripts\\modifiers\\spells\\?.lua;.\\Scripts\\modifiers\\units\\?.lua;.\\Scripts\\modifiers\\units\\bloodsorcerer\\?.lua;.\\Scripts\\modifiers\\units\\multiplicative_stats\\?.lua;.\\Scripts\\modifiers\\units\\torhoth\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\workshop\\?.lua;.\\Scripts\\workshop\\classes\\?.lua"
 require('converter')
 require('GroupInfo')
 require('setValue')
@@ -8,7 +8,11 @@ function getModifierDisplay(unit, prev)
 end
 
 function getModifierDescTxt(unit, prev)
-	return prev
+	local baseLvl = unit.baseImpl.level
+	if baseLvl == 3 then
+		return Id.new('x010tg1768')
+	end
+	return Id.new('x012tg1344')
 end
 
 function getAttackDamage(unit, prev)
@@ -28,7 +32,7 @@ function getAttackHeal(unit, prev)
 end
 
 function _getCitrineGargoyleAttackBonus(unit)
-	-- 0.25 * ������(����_������*(���������_�����+1))
+	-- 0.25 * ������(����_������*(����������_��������+1))
 	local overlevel = unit.impl.level - unit.baseImpl.level
 	local exp
 	

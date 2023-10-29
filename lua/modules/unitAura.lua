@@ -1,200 +1,50 @@
-package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modules\\smns\\?.lua"
+package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modifiers\\drawing\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\leaderMods\\?.lua;.\\Scripts\\modifiers\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\?.lua;.\\Scripts\\modifiers\\smns\\items\\?.lua;.\\Scripts\\modifiers\\smns\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\spells\\?.lua;.\\Scripts\\modifiers\\smns\\units\\?.lua;.\\Scripts\\modifiers\\spells\\?.lua;.\\Scripts\\modifiers\\units\\?.lua;.\\Scripts\\modifiers\\units\\bloodsorcerer\\?.lua;.\\Scripts\\modifiers\\units\\multiplicative_stats\\?.lua;.\\Scripts\\modifiers\\units\\torhoth\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\workshop\\?.lua;.\\Scripts\\workshop\\classes\\?.lua"
 unitAura={}
 require('GroupInfo')
 require('statscheck')
 require('named_mods')
+require('unitAura_mods')
 require('mapMultipliers')
+require('batInfo')
 require('smnsInfo')
+require('valueCap')
+require('smallEnthInfo')
+require('bloodsorcererInfo')
+require('attackTypeConversion')
+require('unitsLeveledAttacks')
+if smnsEnabled then
+	require('smnsStatsMultiplier')
+else
+	require('statsMultiplier')
+end
+require('workshop_commonlib')
+if workshopEnabled then
+	require('workshop_get_bonus')
+	require('workshop_special_mechanics')
+end
 if smnsEnabled then
 	require('smnsAura')
 	require('smnsAddAuraMods')
 end
 setValue = setValue or require('setValue')
 
-uaExternalExpKilled = {}
+uaMaxAdditionalCrit = _valueCap_GetMaxAdditionalCrit()
+-- uaExternalExpKilled_Increased = {}
+uaExternalExpKilled_More      = {}
 
-G040UM0013 = Id.new('g040um0013').value
-G040UM0065 = Id.new('g040um0065').value
-G040UM0066 = Id.new('g040um0066').value
-G040UM0067 = Id.new('g040um0067').value
-G040UM0068 = Id.new('g040um0068').value
-G040UM0069 = Id.new('g040um0069').value
-G040UM0070 = Id.new('g040um0070').value
-G040UM0071 = Id.new('g040um0071').value
-G040UM0100 = Id.new('g040um0100').value
-G040UM0101 = Id.new('g040um0101').value
-G040UM0102 = Id.new('g040um0102').value
-G040UM0103 = Id.new('g040um0103').value
-G040UM0104 = Id.new('g040um0104').value
-G040UM0105 = Id.new('g040um0105').value
-G040UM0106 = Id.new('g040um0106').value
-G040UM0107 = Id.new('g040um0107').value
-G040UM0108 = Id.new('g040um0108').value
-G040UM0109 = Id.new('g040um0109').value
-G040UM0110 = Id.new('g040um0110').value
-G040UM0111 = Id.new('g040um0111').value
-G040UM0112 = Id.new('g040um0112').value
-G040UM0113 = Id.new('g040um0113').value
-G040UM0114 = Id.new('g040um0114').value
-G040UM0115 = Id.new('g040um0115').value
-G040UM0116 = Id.new('g040um0116').value
-G040UM0117 = Id.new('g040um0117').value
-G040UM0118 = Id.new('g040um0118').value
-G040UM0119 = Id.new('g040um0119').value
-G040UM0120 = Id.new('g040um0120').value
-G040UM0121 = Id.new('g040um0121').value
-G040UM0122 = Id.new('g040um0122').value
-G040UM0123 = Id.new('g040um0123').value
-G040UM0124 = Id.new('g040um0124').value
-G040UM0125 = Id.new('g040um0125').value
-G040UM0126 = Id.new('g040um0126').value
-G040UM0127 = Id.new('g040um0127').value
-G040UM0128 = Id.new('g040um0128').value
-G040UM0129 = Id.new('g040um0129').value
-G040UM0130 = Id.new('g040um0130').value
-G040UM0131 = Id.new('g040um0131').value
-G040UM0132 = Id.new('g040um0132').value
-G040UM0133 = Id.new('g040um0133').value
-G040UM0134 = Id.new('g040um0134').value
-G040UM0135 = Id.new('g040um0135').value
-G040UM0136 = Id.new('g040um0136').value
-G040UM0137 = Id.new('g040um0137').value
-G040UM0138 = Id.new('g040um0138').value
-G040UM0139 = Id.new('g040um0139').value
-G040UM0140 = Id.new('g040um0140').value
-G040UM0141 = Id.new('g040um0141').value
-G040UM0142 = Id.new('g040um0142').value
-G040UM0143 = Id.new('g040um0143').value
-G040UM0144 = Id.new('g040um0144').value
-G040UM0145 = Id.new('g040um0145').value
-G040UM0146 = Id.new('g040um0146').value
-G040UM0147 = Id.new('g040um0147').value
-G040UM0148 = Id.new('g040um0148').value
-G040UM0149 = Id.new('g040um0149').value
-G040UM0150 = Id.new('g040um0150').value
-G040UM0151 = Id.new('g040um0151').value
-G040UM0152 = Id.new('g040um0152').value
-
-G040UM0161 = Id.new('g040um0161').value
-G040UM0162 = Id.new('g040um0162').value
-G040UM0163 = Id.new('g040um0163').value
-
-G040UM0164 = Id.new('g040um0164').value
-G040UM0165 = Id.new('g040um0165').value
-G040UM0166 = Id.new('g040um0166').value
-G040UM0167 = Id.new('g040um0167').value
-G040UM0168 = Id.new('g040um0168').value
-G040UM0169 = Id.new('g040um0169').value
-G040UM0170 = Id.new('g040um0170').value
-G040UM0171 = Id.new('g040um0171').value
-G040UM0172 = Id.new('g040um0172').value
-G040UM0173 = Id.new('g040um0173').value
-G040UM0174 = Id.new('g040um0174').value
-G040UM0175 = Id.new('g040um0175').value
-G040UM0176 = Id.new('g040um0176').value
-G040UM0177 = Id.new('g040um0177').value
-
-G040UM0182 = Id.new('g040um0182').value
-G040UM0183 = Id.new('g040um0183').value
-G040UM0184 = Id.new('g040um0184').value
-G040UM0185 = Id.new('g040um0185').value
-G040UM0186 = Id.new('g040um0186').value
-
-G040UM0187 = Id.new('g040um0187').value
-G040UM0188 = Id.new('g040um0188').value
-G040UM0189 = Id.new('g040um0189').value
-G040UM0190 = Id.new('g040um0190').value
-G040UM0191 = Id.new('g040um0191').value
-G040UM0192 = Id.new('g040um0192').value
-G040UM0194 = Id.new('g040um0194').value
-G040UM0205 = Id.new('g040um0205').value
-G040UM0208 = Id.new('g040um0208').value
-G040UM0210 = Id.new('g040um0210').value
-G040UM0211 = Id.new('g040um0211').value
-G040UM0212 = Id.new('g040um0212').value
-G040UM0213 = Id.new('g040um0213').value
-G040UM0214 = Id.new('g040um0214').value
-G040UM0215 = Id.new('g040um0215').value
-G040UM0216 = Id.new('g040um0216').value
-G040UM0217 = Id.new('g040um0217').value
-G040UM0218 = Id.new('g040um0218').value
-G040UM0048 = Id.new('g040um0048').value
-G000UM4012 = Id.new('g000um4012').value
-G201UM9040 = Id.new('g201um9040').value
-G201UM9164 = Id.new('g201um9164').value
-G201UM9165 = Id.new('g201um9165').value
-G040UM0223 = Id.new('g040um0223').value
-G040UM0224 = Id.new('g040um0224').value
-G040UM0225 = Id.new('g040um0225').value
-G040UM0226 = Id.new('g040um0226').value
-G040UM0227 = Id.new('g040um0227').value
-G040UM0228 = Id.new('g040um0228').value
-G040UM0237 = Id.new('g040um0237').value
-G040UM0238 = Id.new('g040um0238').value
-G040UM0239 = Id.new('g040um0239').value
-G040UM0240 = Id.new('g040um0240').value
-G040UM0242 = Id.new('g040um0242').value
-G040UM0249 = Id.new('g040um0249').value
-G040UM0251 = Id.new('g040um0251').value
-G040UM0257 = Id.new('g040um0257').value
-G040UM0266 = Id.new('g040um0266').value
-G040UM0267 = Id.new('g040um0267').value
-G040UM0268 = Id.new('g040um0268').value
-G040UM0269 = Id.new('g040um0269').value
-G040UM0270 = Id.new('g040um0270').value
-G040UM0271 = Id.new('g040um0271').value
-G040UM0272 = Id.new('g040um0272').value
-
-G201UM9121 = Id.new('g201um9121').value
-G201UM9166 = Id.new('g201um9166').value
-G201UM9167 = Id.new('g201um9167').value
-G201UM9168 = Id.new('g201um9168').value
-G201UM9169 = Id.new('g201um9169').value
-G201UM9170 = Id.new('g201um9170').value
-G201UM9171 = Id.new('g201um9171').value
-G201UM9172 = Id.new('g201um9172').value
-G201UM9173 = Id.new('g201um9173').value
-G201UM9174 = Id.new('g201um9174').value
-G201UM9175 = Id.new('g201um9175').value
-G201UM9176 = Id.new('g201um9176').value
-G201UM9177 = Id.new('g201um9177').value
-G201UM9178 = Id.new('g201um9178').value
-G201UM9179 = Id.new('g201um9179').value
-G201UM9180 = Id.new('g201um9180').value
-G201UM9181 = Id.new('g201um9181').value
-G201UM9182 = Id.new('g201um9182').value
-G201UM9183 = Id.new('g201um9183').value
-G201UM9184 = Id.new('g201um9184').value
-G201UM9185 = Id.new('g201um9185').value
-G201UM9186 = Id.new('g201um9186').value
-G201UM9187 = Id.new('g201um9187').value
-G201UM9188 = Id.new('g201um9188').value
-G201UM9189 = Id.new('g201um9189').value
-G201UM9190 = Id.new('g201um9190').value
-G201UM9191 = Id.new('g201um9191').value
-G201UM9192 = Id.new('g201um9192').value
-G201UM9193 = Id.new('g201um9193').value
-G201UM9194 = Id.new('g201um9194').value
-G201UM9222 = Id.new('g201um9222').value
-G201UM9223 = Id.new('g201um9223').value
-G201UM9224 = Id.new('g201um9224').value
-G201UM9225 = Id.new('g201um9225').value
-G201UM9226 = Id.new('g201um9226').value
-G201UM9227 = Id.new('g201um9227').value
-G201UM9228 = Id.new('g201um9228').value
-G201UM9229 = Id.new('g201um9229').value
-G201UM9230 = Id.new('g201um9230').value
-G201UM9241 = Id.new('g201um9241').value
-G201UM9242 = Id.new('g201um9242').value
-G201UM9243 = Id.new('g201um9243').value
-G201UM9244 = Id.new('g201um9244').value
-G201UM9245 = Id.new('g201um9245').value
+uaVulnerabilityModifiers = {}
+for sourceClass = 0, 7 do
+	uaVulnerabilityModifiers[sourceClass] = Id.new("g040um0"..tostring(197 + sourceClass)).value
+end
 
 aG000000000 = Id.new("g000000000")
 aG020AA0011 = Id.new("g020aa0011")
 aG020AA0013 = Id.new("g020aa0013")
 aG020AA0015 = Id.new("g020aa0015")
 aG020AA0016 = Id.new("g020aa0016")
+aG020AA0017 = Id.new("g020aa0017")
+aG020AA0018 = Id.new("g020aa0018")
+aG020AA0019 = Id.new("g020aa0019")
 aG014AA0001 = Id.new("g014aa0001")
 aG014AA0002 = Id.new("g014aa0002")
 aG014AA0003 = Id.new("g014aa0003")
@@ -203,49 +53,105 @@ aG014AA0005 = Id.new("g014aa0005")
 aG014AA0006 = Id.new("g014aa0006")
 aG014AA0007 = Id.new("g014aa0007")
 aG014AA0008 = Id.new("g014aa0008")
+aG014AA0009 = Id.new("g014aa0009")
+aG014AA0010 = Id.new("g014aa0010")
+aG014AA0011 = Id.new("g014aa0011")
+aG014AA0012 = Id.new("g014aa0012")
+
+aRangedDoppelganger = Id.new("g000aa2079")
+aMeleeDoppelganger = Id.new("g003aa0171")
+
+shield_of_elusive_reflections_enabled = true
+skip_unit_group_search = false
 
 function _unitAura_HitPoint(unit, prev)
+	_get_Group_and_Mods(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)
+	local ugroup = _GroupInfo_getCurrentGroup()
 	local id = unit.id.value
 	if uaNewHitPoint[id] == nil then
 		uaBaseHitPoint[id] = prev
 	else
 		uaBaseHitPoint[id] = uaNewHitPoint[id]
 	end
-	
-	_get_Group_and_Mods(unit)
-	
-	prev = uaBaseHitPoint[id]
-	
-	local ugroup = _GroupInfo_getCurrentGroup()
+
+	-- local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	-- local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	svSetHitPointFloatPart(unit, 0)
+
+	local baseAdditive = _unitAura_HitPoint_valFlat(unit)
+			     + 10 * ( _GroupInfo_UnitModifierAmount(mods, G201UM9302) - _GroupInfo_UnitModifierAmount(mods, G201UM9304) )
+			     + 1  * ( _GroupInfo_UnitModifierAmount(mods, G201UM9303) - _GroupInfo_UnitModifierAmount(mods, G201UM9305) )
+
+	local baseMultiplicative = 0.1 * ( _GroupInfo_UnitModifierAmount(mods, G201UM9334) - _GroupInfo_UnitModifierAmount(mods, G201UM9335) )
+
+	local workshopPercent = 1.0
+	if workshopEnabled then
+		workshopPercent = workshopPercent + 0.01 * Workshop_getBonus_baseHitPoint_Percent(scenario, unit, true)
+	end
+
+	uaBaseHitPoint[id] = _valueCap_GetInt(( uaBaseHitPoint[id] + baseAdditive ) * ( 1 + baseMultiplicative ) * workshopPercent)
+
+	uaBaseHitPoint[id] = _valueCap_CheckMaxHitPoint(unit, uaBaseHitPoint[id])
+
+	------------------
 
 	local multiplicative = _unitAura_HitPoint_valPercent(unit)
 	                     + _unitAura_HitPointOnDeath_valPercent(unit)
 
-	local additive       = _unitAura_HitPoint_valFlat(unit)
-			     + _mapMultipliers_Armor_Flat(unit)
+	local additive       = 0
 
 	local SpiritCageAmount = _unitAura_EffectSumStack({G040UM0272}, 1)
 	if SpiritCageAmount > 0 then
-		multiplicative = multiplicative + SpiritCageAmount * _unitAura_SpiritCage_Effect(unit, ugroup)
+		additive = additive + SpiritCageAmount * _unitAura_SpiritCage_Effect(unit, ugroup, 1)
 	end
-	
+
+	if mods[galleansboon_mod] ~= nil then
+		local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+		local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+		additive = additive - smnsInfo_GalleansBoonHitPointBonus * ( 1 - spellBuffMultiplier )
+	end
+
 	if smnsEnabled then
-		multiplicative = multiplicative + _smns_multiplicativeHitPointBonus(unit, prev)
+		multiplicative = multiplicative + _smns_multiplicativeHitPointBonus(unit, uaBaseHitPoint[id])
 	end
-	
-	return prev * ( 1 + 0.01 * multiplicative ) + additive
+
+	return svFlatEffectHitPoint(unit, uaBaseHitPoint[id] * ( 1 + 0.01 * multiplicative ), additive)
 end
 
 function _unitAura_Regen(unit, prev)
 	_get_Group_and_Mods(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)
 	local ugroup = _GroupInfo_getCurrentGroup()
-	
-	local result = prev
-	local u
-	
+	local id = unit.id.value
+
+	if uaNewRegen[id] == nil then
+		uaBaseRegen[id] = prev
+	else
+		uaBaseRegen[id] = uaNewRegen[id]
+	end
+
+	local baseAdditive =   10 * ( _GroupInfo_UnitModifierAmount(mods, G201UM9330) - _GroupInfo_UnitModifierAmount(mods, G201UM9332) )
+			     + 1  * ( _GroupInfo_UnitModifierAmount(mods, G201UM9331) - _GroupInfo_UnitModifierAmount(mods, G201UM9333) )
+
+	local baseMultiplicative = 0.1 * ( _GroupInfo_UnitModifierAmount(mods, G201UM9350) - _GroupInfo_UnitModifierAmount(mods, G201UM9351) )
+
+	if workshopEnabled then
+		baseAdditive = baseAdditive + Workshop_getBonus_baseRegen_Flat(scenario, unit, true)
+	end
+
+	uaBaseRegen[id] = _valueCap_GetInt(( uaBaseRegen[id] + baseAdditive ) * ( 1 + baseMultiplicative ))
+
+	------------------
+
+	local additive = _unitAura_Regen_valFlat(unit)
+		       + _mapMultipliers_Regen_Flat(unit)
+		       + _unitAura_MostLostHPBuff_RegenFlat(unit)
+
 	-- скальд
 	if unitGroup ~= nil then
 		if _GroupInfo_stackHasModifierAmount(aura_regen_5_1plevel_mod) > 0 then
+			local u
 			local mAmount
 			local unitGroupSlots = unitGroup.slots
 			for i = 1, #unitGroupSlots do
@@ -253,60 +159,113 @@ function _unitAura_Regen(unit, prev)
 				if u ~= nil and u.hp > 0 then
 					mAmount = _GroupInfo_UnitModifierAmount(_GroupInfo_UnitModifiers(u), aura_regen_5_1plevel_mod)
 					if mAmount > 0 then
-						result = result + mAmount * math.min( 5 + u.impl.level - u.baseImpl.level, 15 )
+						additive = additive + mAmount * math.min( 5 + u.impl.level - u.baseImpl.level, 15 )
 					end
 				end
 			end
 		end
 	end
-	
+
 	local SpiritCageAmount = _unitAura_EffectSumStack({G040UM0272}, 1)
 	if SpiritCageAmount > 0 then
-		result = result + SpiritCageAmount * _unitAura_SpiritCage_Effect(unit, ugroup)
+		additive = additive + SpiritCageAmount * _unitAura_SpiritCage_Effect(unit, ugroup, 2)
 	end
-	
+
 	if smnsEnabled then
-		result = result + _smns_flatRegenBonus(unit, prev)
+		additive = additive + _smns_flatRegenBonus(unit, prev)
 	end
-	
-	return result + _unitAura_Regen_valFlat(unit)
-		      + _mapMultipliers_Regen_Flat(unit)
+
+	return uaBaseRegen[id] + additive
 end
 
 function _unitAura_Armor(unit, prev)
 	_get_Group_and_Mods(unit)
-	local result = prev
-	
+	local mods = _GroupInfo_UnitModifiers(unit)
+	local id = unit.id.value
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	svSetArmorInit(unit, 0, spellBuffMultiplier)
+
+	local additiveMaxArmor = -25 * _GroupInfo_UnitModifierAmount(mods, executionersax_mod)
+
+	_valueCap_SetArmorMax(unit, additiveMaxArmor)
+
+	if uaNewArmor[id] == nil then
+		uaBaseArmor[id] = prev
+	else
+		uaBaseArmor[id] = uaNewArmor[id]
+	end
+
+	local baseAdditive =   10 * ( _GroupInfo_UnitModifierAmount(mods, G201UM9306) - _GroupInfo_UnitModifierAmount(mods, G201UM9308) )
+			     + 1  * ( _GroupInfo_UnitModifierAmount(mods, G201UM9307) - _GroupInfo_UnitModifierAmount(mods, G201UM9309) )
+
+	local baseMultiplicative = 0.1 * ( _GroupInfo_UnitModifierAmount(mods, G201UM9336) - _GroupInfo_UnitModifierAmount(mods, G201UM9337) )
+
+	if workshopEnabled then
+		baseAdditive = baseAdditive + Workshop_getBonus_baseArmor_Flat(scenario, unit, true)
+	end
+
+	uaBaseArmor[id] = _valueCap_GetInt(( uaBaseArmor[id] + baseAdditive ) * ( 1 + baseMultiplicative ))
+
+	uaBaseArmor[id] = _valueCap_CheckMaxArmor(unit, uaBaseArmor[id])
+
+	------------------
+
+	local additive = _mapMultipliers_Armor_Flat(unit) + _statsMultiplier_Armor(unit, mods, spellDebuffLowerEffect)
+
 	local c = _GroupInfo_getCoveringUnit(unit, true)
 	local mods
 	if c ~= nil then
 		mods = _GroupInfo_UnitModifiers(c)
-		result = result + _unitAura_ArmorFlat_txtCovered(c, mods)
+		additive = additive + _unitAura_ArmorFlat_txtCovered(c, mods)
 	end
 	if _unitAura_ArmorFlat_valNearest(unit) ~= 0 then
 		local nearestUnits = _GroupInfo_getLeftAndRightNearestUnits(unit, true)
 		for i = 1, #nearestUnits do
 			mods = _GroupInfo_UnitModifiers(nearestUnits[i])
-			result = result + _unitAura_ArmorFlat_txtNearest(nearestUnits[i], mods)
+			additive = additive + _unitAura_ArmorFlat_txtNearest(nearestUnits[i], mods)
 		end
 	end
 
-	if smnsEnabled then
-		result = result + _smns_flatArmorBonus(unit, prev)
+	mods = _GroupInfo_UnitModifiers(unit)
+
+	additive = additive + _unitAura_Armor_valFlat(unit)
+			    + _unitAura_MostLostHPBuff_ArmorFlat(unit)
+			    + _unitAura_LostHPEffect(unit, _unitAura_PerLostHP_Armor_val(unit, mods))
+
+	local onFullHPEffect = _unitAura_ArmorOnFullLife_val(unit, mods)
+	if onFullHPEffect ~= 0 and scenario:getUnit(unit.id).hpMax == unit.hp then
+		additive = additive + onFullHPEffect
 	end
-	
-	return result + _unitAura_Armor_valFlat(unit) 
-		      + _unitAura_MostLostHPBuff_ArmorFlat(unit)
-		      + _unitAura_LostHPEffect(unit, _unitAura_PerLostHP_Armor_val(unit, _GroupInfo_UnitModifiers(unit)))
+
+	if smnsEnabled then
+		additive = additive + _smns_flatArmorBonus(unit, prev)
+	end
+
+	return svFlatEffectArmor(unit, uaBaseArmor[id], additive)
 end
 
 function _unitAura_ImmuneToAttack(unit, attack, prev)
 	local result = prev
-	local gotGroup = false
-	if result == Immune.NotImmune then
-		if attack == Attack.Frostbite then
+	local gotGroup = skip_unit_group_search
+
+	if workshopEnabled then
+		if not gotGroup then
 			gotGroup = true
 			_get_Group_and_Mods(unit)
+		end
+		local workshopBonus_Once = Workshop_getBonus_ImmuneToAttack_Once(scenario, unit, attack, gotGroup)
+		local workshopBonus_Always = Workshop_getBonus_ImmuneToAttack_Always(scenario, unit, attack, gotGroup)
+		result = Workshop_changeImmuneClass(result, workshopBonus_Once, workshopBonus_Always)
+	end
+
+	if result == Immune.NotImmune then
+		if attack == Attack.Frostbite then
+			if not gotGroup then
+				gotGroup = true
+				_get_Group_and_Mods(unit)
+			end
 			if _unitAura_FrostbiteResist_stk(unit) > 0 then
 				result = Immune.Once
 			end
@@ -323,27 +282,51 @@ function _unitAura_ImmuneToAttack(unit, attack, prev)
 				end
 			end
 		elseif attack == Attack.Blister then
-			gotGroup = true
-			_get_Group_and_Mods(unit)
+			if not gotGroup then
+				gotGroup = true
+				_get_Group_and_Mods(unit)
+			end
 			if _unitAura_BlisterResist_stk(unit) > 0 then
 				result = Immune.Once
 			end
 		elseif attack == Attack.Poison then
-			gotGroup = true
-			_get_Group_and_Mods(unit)
+			if not gotGroup then
+				gotGroup = true
+				_get_Group_and_Mods(unit)
+			end
 			if _unitAura_PoisonResist_stk(unit) > 0 then
 				result = Immune.Once
 			end
 		elseif attack == Attack.LowerInitiative then
-			gotGroup = true
-			_get_Group_and_Mods(unit)
+			if not gotGroup then
+				gotGroup = true
+				_get_Group_and_Mods(unit)
+			end
 			if _unitAura_LowerInitiativeResist_stk(unit) > 0 then
 				result = Immune.Once
 			end
 		elseif attack == Attack.LowerDamage then
-			gotGroup = true
-			_get_Group_and_Mods(unit)
+			if not gotGroup then
+				gotGroup = true
+				_get_Group_and_Mods(unit)
+			end
 			if _unitAura_LowerDamageResist_stk(unit) > 0 then
+				result = Immune.Once
+			end
+		elseif attack == Attack.Fear then
+			if not gotGroup then
+				gotGroup = true
+				_get_Group_and_Mods(unit)
+			end
+			if _unitAura_FearResist_stk(unit) > 0 then
+				result = Immune.Once
+			end
+		elseif attack == Attack.Petrify then
+			if not gotGroup then
+				gotGroup = true
+				_get_Group_and_Mods(unit)
+			end
+			if _unitAura_PetrifyResist_stk(unit) > 0 then
 				result = Immune.Once
 			end
 		end
@@ -351,23 +334,85 @@ function _unitAura_ImmuneToAttack(unit, attack, prev)
 			if statsCheck_isCurseType(attack) then
 				local c = _GroupInfo_getCoveringUnit(unit, gotGroup)
 				if c ~= nil then
-					local mods = _GroupInfo_UnitModifiers(c)
-					if _unitAura_CurseProtection_txtCovered(c, mods) > 0 then
+					if _unitAura_CurseProtection_txtCovered(c, _GroupInfo_UnitModifiers(c)) > 0 then
 						result = Immune.Once
 					end
 				end
 			end
 		end
 	end
-	
+
+	if result ~= Immune.Always then
+		if _GroupInfo_stackHasModifier(shield_of_elusive_reflections_mod) and shield_of_elusive_reflections_enabled then
+			if not gotGroup then
+				gotGroup = true
+				_get_Group_and_Mods(unit)
+			end
+			local lrUnits = _GroupInfo_getLeftAndRightNearestUnits(unit, true)
+			if _GroupInfo_UnitModifierAmount(_GroupInfo_UnitModifiers(unit), shield_of_elusive_reflections_mod) > 0 then
+				local prevState_shield_of_elusive_reflections_enabled = shield_of_elusive_reflections_enabled
+				local prevState_skip_unit_group_search                = skip_unit_group_search
+				shield_of_elusive_reflections_enabled = false
+				skip_unit_group_search                = true
+				for i = 1, #lrUnits do
+					result = svSelectMaxImmunity(result, lrUnits[i].impl:getImmuneToAttackClass(attack))
+				end
+				shield_of_elusive_reflections_enabled = prevState_shield_of_elusive_reflections_enabled
+				skip_unit_group_search                = prevState_skip_unit_group_search
+			elseif attack == Attack.TransformOther then
+				if result == Immune.NotImmune then
+					for i = 1, #lrUnits do
+						if _GroupInfo_UnitModifierAmount(_GroupInfo_UnitModifiers(lrUnits[i]), shield_of_elusive_reflections_mod) > 0 then
+							result = Immune.Once
+							break
+						end
+					end
+				end
+			elseif attack == Attack.Doppelganger then
+				for i = 1, #lrUnits do
+					if _GroupInfo_UnitModifierAmount(_GroupInfo_UnitModifiers(lrUnits[i]), shield_of_elusive_reflections_mod) > 0 then
+						result = Immune.Always
+						break
+					end
+				end
+			end
+		end
+	end
+
 	if smnsEnabled then
+		if not gotGroup then
+			gotGroup = true
+			_get_Group_and_Mods(unit)
+		end
 		result = _smns_ImmuneToAttack(unit, attack, prev, result)
 	end
-	
-	return result
+
+	return svAttackImmunityClass(unit, attack, Immune.NotImmune, result)
 end
 
 function _unitAura_ImmuneToSource(unit, source, prev)
+	if not skip_unit_group_search then
+		_get_Group_and_Mods(unit)
+	end
+	local mods = _GroupInfo_UnitModifiers(unit)
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+
+	if workshopEnabled then
+		local workshopBonus_Once = Workshop_getBonus_ImmuneToSource_Once(scenario, unit, source, true)
+		local workshopBonus_Always = Workshop_getBonus_ImmuneToSource_Always(scenario, unit, source, true)
+		prev = Workshop_changeImmuneClass(prev, workshopBonus_Once, workshopBonus_Always)
+	end
+
+	if uaVulnerabilityModifiers[source] ~= nil
+	and _GroupInfo_UnitModifierAmount(mods, uaVulnerabilityModifiers[source]) > 0
+	and spellDebuffLowerEffect < 100 then
+		svSetAttackSourceVulnerability(unit, source, true)
+	else
+		svSetAttackSourceVulnerability(unit, source, false)
+	end
+
 	local alwaysWard = nil
 	local onceWard   = nil
 	if source == Source.Weapon then
@@ -395,13 +440,44 @@ function _unitAura_ImmuneToSource(unit, source, prev)
 		alwaysWard = G040UM0138
 		onceWard   = G040UM0130
 	end
-	local result =  _GroupInfo_checkWard(unit, prev, alwaysWard, onceWard, true)
-	
+	local result = _GroupInfo_checkWard(unit, prev, alwaysWard, onceWard, false)
+
+	if result == Immune.NotImmune then
+		if source == Source.Water then
+			if _GroupInfo_stackHasModifierAmount(luteofcharming_mod) > 0
+			and _GroupInfo_stackHasModifierAmount(oceanheart_mod) > 0 then
+				result = Immune.Once
+			end
+		end
+	end
+
+	if result ~= Immune.Always then
+		if _GroupInfo_stackHasModifier(shield_of_elusive_reflections_mod) and shield_of_elusive_reflections_enabled then
+			if _GroupInfo_UnitModifierAmount(mods, shield_of_elusive_reflections_mod) > 0 then
+				local lrUnits = _GroupInfo_getLeftAndRightNearestUnits(unit, true)
+				local prevState_shield_of_elusive_reflections_enabled = shield_of_elusive_reflections_enabled
+				local prevState_skip_unit_group_search                = skip_unit_group_search
+				shield_of_elusive_reflections_enabled = false
+				skip_unit_group_search                = true
+				for i = 1, #lrUnits do
+					result = svSelectMaxImmunity(result, lrUnits[i].impl:getImmuneToAttackSource(source))
+				end
+				shield_of_elusive_reflections_enabled = prevState_shield_of_elusive_reflections_enabled
+				skip_unit_group_search                = prevState_skip_unit_group_search
+			end
+		end
+	end
+
+	local spellEffect = _statsMultiplier_ResistanceSource(unit, mods, source, spellBuffMultiplier)
+	if result == Immune.NotImmune or ( result == Immune.Once and spellEffect == Immune.Always ) then
+		result = spellEffect
+	end
+
 	if smnsEnabled then
 		result = _smns_ImmuneToSource(unit, source, prev, result)
 	end
-	
-	return result
+
+	return svSourceImmunityClass(unit, source, Immune.NotImmune, result)
 end
 function _unitAura_hasOnceImmuneToSource(unit, source)
 	local mods = _GroupInfo_UnitModifiers(unit)
@@ -458,212 +534,187 @@ end
 
 function _unitAura_AttackInitiative(unit, prev)
 	local id = unit.id.value
-	if uaNewInitiative[id] == nil then
-		uaBaseInitiative[id] = prev
-	else
-		uaBaseInitiative[id] = uaNewInitiative[id]
-	end
 	_get_Group_and_Mods(unit)
-	uaBaseInitiative[id] = uaBaseInitiative[id] * _mapMultipliers_Initiative_Multi(unit)
-
 	local mods = _GroupInfo_UnitModifiers(unit)
-	
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	local addedValuesMultiplier = _statsMultiplier_Initiative(unit, mods, spellDebuffLowerEffect)
+	svInitiativeInit(unit, 0, addedValuesMultiplier, spellBuffMultiplier)
+
+
+	uaBaseInitiative[id] = _unitAura_BaseInitiative(id, mods, unit)
+
 	uaBaseInitiative[id] = _unitAura_ChainsOfSacrifice_Effect(unit, mods, uaBaseInitiative[id], true)
-	
+
+	uaBaseInitiative[id] = uaBaseInitiative[id] * _mapMultipliers_Initiative_Multi(unit)
+	uaBaseInitiative[id] = _valueCap_CheckMaxInitiative(unit, uaBaseInitiative[id])
+
+	------------------
+
 	local multiplicative = _unitAura_AttackInitiative_valPercent(unit)
 		             + _unitAura_LostHPEffect(unit, _unitAura_PerLostHP_AttackInitiative_val(unit, mods))
-	
+
 	local onFullHPEffect = _unitAura_AttackDamageInitiativeOnFullLife_val(unit, mods)
 	if onFullHPEffect ~= 0 and scenario:getUnit(unit.id).hpMax == unit.hp then
 		multiplicative = multiplicative + onFullHPEffect
 	end
-	
+
 	local additive = 0
 	if smnsEnabled then
 		additive = additive + _smns_flatInitiativeBonus(unit, uaBaseInitiative[id])
 		multiplicative = multiplicative + _smns_percentInitiativeBonus(unit, uaBaseInitiative[id])
 	end
-	
-	return (uaBaseInitiative[id] + additive) * ( 1 + 0.01 * multiplicative )
+
+	return svFlatEffectInitiative(unit,
+				      uaBaseInitiative[id] * ( 1 + 0.01 * multiplicative ) * addedValuesMultiplier,
+				      additive)
+end
+function _unitAura_BaseInitiative(unitId, unitMods, unit)
+	local result
+	if uaNewInitiative[unitId] == nil then
+		result = unit.leveledImpl.attack1.initiative
+	else
+		result = uaNewInitiative[unitId]
+	end
+
+	local baseAdditive =   10 * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9326) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9328) )
+			     + 1  * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9327) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9329) )
+
+	local baseMultiplicative = 0.1 * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9348) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9349) )
+
+	local workshopPercent = 1.0
+	if workshopEnabled then
+		workshopPercent = workshopPercent + 0.01 * Workshop_getBonus_baseAttackInitiative_Percent(scenario, unit, true)
+	end
+
+	return _valueCap_GetInt(( result + baseAdditive ) * ( 1 + baseMultiplicative ) * workshopPercent )
 end
 
 function _unitAura_AttackPower1(unit, prev)
 	local id = unit.id.value
-	if uaNewPower1[id] == nil then
-		uaBasePower1[id] = prev
-	else
-		uaBasePower1[id] = uaNewPower1[id]
-	end
 	_get_Group_and_Mods(unit)
-	uaBasePower1[id] = uaBasePower1[id] * _mapMultipliers_Power1_Multi(unit)
-	return _unitAura_PowerModsEffect(unit, uaBasePower1[id])
+	local mods = _GroupInfo_UnitModifiers(unit)
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	local addedValuesMultiplier = _statsMultiplier_Power1(unit, mods, spellDebuffLowerEffect)
+	svSetAttack1PowerInit(unit, 0, addedValuesMultiplier, spellBuffMultiplier)
+
+	_valueCap_Set_Attack1Accuracy_Cap(unit, uaBasePower1[id])
+
+	local result = _unitAura_PowerModsEffect(unit, uaBasePower1[id], 1)
+	if not svGetApplyDamageSpreadChanceShift1(unit) then
+		return svFlatEffectPower1(unit,
+					  result * addedValuesMultiplier,
+					  0)
+	else
+		return svMultimplicativeEffectPower1(unit,
+						     uaBasePower1[id],
+						     result * addedValuesMultiplier / uaBasePower1[id])
+	end
 end
 function _unitAura_AttackPower2(unit, prev)
 	local id = unit.id.value
-	if uaNewPower2[id] == nil then
-		uaBasePower2[id] = prev
-	else
-		uaBasePower2[id] = uaNewPower2[id]
-	end
 	_get_Group_and_Mods(unit)
-	uaBasePower2[id] = uaBasePower2[id] * _mapMultipliers_Power2_Multi(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	local addedValuesMultiplier = _statsMultiplier_Power2(unit, mods, spellDebuffLowerEffect)
+	svSetAttack2PowerInit(unit, 0, addedValuesMultiplier, spellBuffMultiplier)
+
+	_valueCap_Set_Attack2Accuracy_Cap(unit, uaBasePower2[id])
+
 	if not smnsInfoApplyAccuracyBuffToAttack2 then
 		return uaBasePower2[id]
 	end
-	return _unitAura_PowerModsEffect(unit, uaBasePower2[id])
+
+	local result = _unitAura_PowerModsEffect(unit, uaBasePower2[id], 2)
+	if not svGetApplyDamageSpreadChanceShift2(unit) then
+		return svFlatEffectPower2(unit,
+					  result * addedValuesMultiplier,
+					  0)
+	else
+		return svMultimplicativeEffectPower2(unit,
+						     uaBasePower2[id],
+						     result * addedValuesMultiplier / uaBasePower2[id])
+	end
 end
 
 function _unitAura_AttackDamage1(unit, prev)
 	local id = unit.id.value
-	if uaNewDamage1[id] == nil then
-		uaBaseDamage1[id] = prev
-	else
-		uaBaseDamage1[id] = uaNewDamage1[id]
-	end
 	_get_Group_and_Mods(unit)
-	uaBaseDamage1[id] = uaBaseDamage1[id] * _mapMultipliers_Damage1_Multi(unit)
-	
-	local ugroup = _GroupInfo_getCurrentGroup()
-	local unitMods = _GroupInfo_UnitModifiers(unit)
-	
-	if _GroupInfo_UnitModifierAmount(unitMods, runestone_mod) > 0 and
-	   _GroupInfo_UnitModifierAmount(unitMods, runemaul_mod) > 0 then
-		uaBaseDamage1[id] = uaBaseDamage1[id] + 5
+	local mods = _GroupInfo_UnitModifiers(unit)
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	local addedValuesMultiplier = _statsMultiplier_Damage1(unit, mods, spellDebuffLowerEffect)
+	svSetAttack1DamageInit(unit, 0, addedValuesMultiplier, spellBuffMultiplier)
+
+	_valueCap_Set_Attack1Damage_Cap(unit, uaBaseDamage1[id])
+
+	if uaAttackType1[id] ~= Attack.Shatter then
+		local result = _unitAura_DamageModsEffect(unit, uaBaseDamage1[id], 1, false)
+		return svFlatEffectDamage1(unit, result * addedValuesMultiplier, 0)
+	else
+		return svFlatEffectShatter1(unit, uaBaseDamage1[id], 0)
 	end
-		
-	local harvastCupsAmount = _GroupInfo_UnitModifierAmount(unitMods, harvestcup_mod)
-	if harvastCupsAmount > 0 then
-		uaBaseDamage1[id] = uaBaseDamage1[id] + math.floor(unit.hp * harvastCupsAmount / 20)
-	end
-	if _GroupInfo_stackHasModifierAmount(harvestarmor_mod) > 0 and
-	   _GroupInfo_stackHasModifierAmount(harvestcup_mod) > 0 and
-	   _GroupInfo_stackHasModifierAmount(harvestdagger_mod) > 0 then
-		local cLeader = _GroupInfo_getCurrentGroupLeader()
-		if cLeader ~= nil then
-			uaBaseDamage1[id] = uaBaseDamage1[id] + math.floor(cLeader.hp / 25)
-		end
-	end
-	
-	local ChainsOfHumilityAmount = _unitAura_EffectSumStack({chainsofhumility_mod}, 1)
-	if ChainsOfHumilityAmount > 0 then
-		uaBaseDamage1[id] = uaBaseDamage1[id] + ChainsOfHumilityAmount * _unitAura_ChainsOfHumility_Effect(unit, ugroup)
-	end
-	
-	local result = _unitAura_DamageModsEffect(unit, uaBaseDamage1[id], 1, false)
-	
-	uaAddedDamageCached[id] = nil
-	uaAddedDamageType[id] = nil
-		
-	if uaBaseDamage1[id] ~= 0 then
-		local eff = _unitAura_AddedDamageSum(unit)
-		if eff > 0 then
-			uaAddedDamageCached[id] = uaBaseDamage1[id] * eff * 0.01
-			if _unitAura_EffectSumStack({G040UM0070}, 1) > 0 then
-				uaAddedDamageType[id] = aG020AA0013
-			else
-				uaAddedDamageType[id] = aG020AA0015
-			end
-		end
-	end
-	if _unitAura_EffectSumStack({G040UM0068}, 1) > 0 then
-		uaAddedDamageType[id] = aG020AA0011
-		uaAddedDamageCached[id] = 1
-	end
-	if _GroupInfo_UnitModifierAmount(unitMods, mortistear_mod) > 0 and
-	   _GroupInfo_UnitModifierAmount(unitMods, thanatosskull_mod) > 0 and
-	   _GroupInfo_UnitModifierAmount(unitMods, thanatosblade_mod) > 0 then
-		uaAddedDamageType[id] = aG020AA0016
-		uaAddedDamageCached[id] = 1
-	end
-	
-	-- если ничего не добавлено предметами, то проверяем рисованные
-	if uaAddedDamageType[id] == nil then
-		if _GroupInfo_UnitModifierAmount(unitMods, G201UM9223) > 0 then
-			uaAddedDamageType[id] = aG014AA0001
-			uaAddedDamageCached[id] = 1
-		elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9224) > 0 then
-			uaAddedDamageType[id] = aG014AA0002
-			uaAddedDamageCached[id] = 1
-		elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9225) > 0 then
-			uaAddedDamageType[id] = aG014AA0003
-			uaAddedDamageCached[id] = 1
-		elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9226) > 0 then
-			uaAddedDamageType[id] = aG014AA0004
-			uaAddedDamageCached[id] = 1
-		elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9227) > 0 then
-			uaAddedDamageType[id] = aG014AA0005
-			uaAddedDamageCached[id] = 1
-		elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9228) > 0 then
-			uaAddedDamageType[id] = aG014AA0006
-			uaAddedDamageCached[id] = 1
-		elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9229) > 0 then
-			uaAddedDamageType[id] = aG014AA0007
-			uaAddedDamageCached[id] = 1
-		elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9230) > 0 then
-			uaAddedDamageType[id] = aG014AA0008
-			uaAddedDamageCached[id] = 1
-		end
-	end
-	
-	return result
 end
 function _unitAura_AttackDamage2(unit, prev)
 	local id = unit.id.value
-	if uaNewDamage2[id] == nil then
-		uaBaseDamage2[id] = prev
-	else
-		uaBaseDamage2[id] = uaNewDamage2[id]
-	end
 	_get_Group_and_Mods(unit)
-	uaBaseDamage2[id] = uaBaseDamage2[id] * _mapMultipliers_Damage2_Multi(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)
 
-	local ugroup = _GroupInfo_getCurrentGroup()
-	if uaAddedDamageCached[id] ~= nil then
-		uaBaseDamage2[id] = uaBaseDamage2[id] + math.max(uaAddedDamageCached[id] + uaAddedDamageBias[id], 0)
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	local addedValuesMultiplier = _statsMultiplier_Damage2(unit, mods, spellDebuffLowerEffect)
+	svSetAttack2DamageInit(unit, 0, addedValuesMultiplier, spellBuffMultiplier)
+
+	_valueCap_Set_Attack2Damage_Cap(unit, uaBaseDamage2[id])
+
+	if uaAttackType2[id] ~= Attack.Shatter then
+		local result = _unitAura_DamageModsEffect(unit, uaBaseDamage2[id], 2, false)
+		return svFlatEffectDamage2(unit, result * addedValuesMultiplier, 0)
+	else
+		return svFlatEffectShatter2(unit, uaBaseDamage2[id], uaAddToShatterBaseDamage2[id])
 	end
-	return _unitAura_DamageModsEffect(unit, uaBaseDamage2[id], 2, false)
 end
 
 function _unitAura_AttackHeal1(unit, prev)
 	local id = unit.id.value
-	if uaNewHeal1[id] == nil then
-		uaBaseHeal1[id] = prev
-	else
-		uaBaseHeal1[id] = uaNewHeal1[id]
-	end
 	_get_Group_and_Mods(unit)
-	uaBaseHeal1[id] = uaBaseHeal1[id] * _mapMultipliers_Heal1_Multi(unit)
-	
-	local ugroup = _GroupInfo_getCurrentGroup()
-	local ChainsOfHumilityAmount = _unitAura_EffectSumStack({chainsofhumility_mod}, 1)
-	if ChainsOfHumilityAmount > 0 then
-		uaBaseHeal1[id] = uaBaseHeal1[id] + ChainsOfHumilityAmount * _unitAura_ChainsOfHumility_Effect(unit, ugroup)
-	end
-	
+	local mods = _GroupInfo_UnitModifiers(unit)
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	local addedValuesMultiplier = _statsMultiplier_Heal1(unit, mods, spellDebuffLowerEffect)
+	svSetAttack1HealInit(unit, 0, addedValuesMultiplier, spellBuffMultiplier)
+
+	_valueCap_Set_Attack1Heal_Cap(unit, uaBaseHeal1[id])
+
 	if smnsInfoApplyDmgBuffToHeal then
-		return _unitAura_HealModsEffect(unit, uaBaseHeal1[id], 1, false)
+		local result = _unitAura_HealModsEffect(unit, uaBaseHeal1[id], 1, false)
+		return svFlatEffectHeal1(unit, result * addedValuesMultiplier, 0)
 	else
 		return uaBaseHeal1[id]
 	end
 end
 function _unitAura_AttackHeal2(unit, prev)
 	local id = unit.id.value
-	if uaNewHeal2[id] == nil then
-		uaBaseHeal2[id] = prev
-	else
-		uaBaseHeal2[id] = uaNewHeal2[id]
-	end
 	_get_Group_and_Mods(unit)
-	uaBaseHeal2[id] = uaBaseHeal2[id] * _mapMultipliers_Heal2_Multi(unit)
-	
-	local ugroup = _GroupInfo_getCurrentGroup()	
-	local ChainsOfHumilityAmount = _unitAura_EffectSumStack({chainsofhumility_mod}, 1)
-	if ChainsOfHumilityAmount > 0 then
-		uaBaseHeal2[id] = uaBaseHeal2[id] + ChainsOfHumilityAmount * _unitAura_ChainsOfHumility_Effect(unit, ugroup)
-	end
-	
+	local mods = _GroupInfo_UnitModifiers(unit)
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	local addedValuesMultiplier = _statsMultiplier_Heal2(unit, mods, spellDebuffLowerEffect)
+	svSetAttack2HealInit(unit, 0, addedValuesMultiplier, spellBuffMultiplier)
+
+	_valueCap_Set_Attack2Heal_Cap(unit, uaBaseHeal2[id])
+
 	if smnsInfoApplyDmgBuffToHeal then
-		return _unitAura_HealModsEffect(unit, uaBaseHeal2[id], 2, false)
+		local result = _unitAura_HealModsEffect(unit, uaBaseHeal2[id], 2, false)
+		return svFlatEffectHeal2(unit, result * addedValuesMultiplier, 0)
 	else
 		return uaBaseHeal2[id]
 	end
@@ -676,7 +727,7 @@ function _unitAura_DamageModsEffect(unit, prev, attackN, callGetGroupAndMods)
 	if callGetGroupAndMods then
 		_get_Group_and_Mods(unit)
 	end
-	
+
 	local mods = _GroupInfo_UnitModifiers(unit)
 
 	local multiplicative = _unitAura_AttackDamageHeal_valPercent(unit)
@@ -691,7 +742,12 @@ function _unitAura_DamageModsEffect(unit, prev, attackN, callGetGroupAndMods)
 	if onFullHPEffect ~= 0 and scenario:getUnit(unit.id).hpMax == unit.hp then
 		multiplicative = multiplicative + onFullHPEffect
 	end
-	
+
+	onFullHPEffect = _unitAura_AttackLessDamageOnFullLife_val(unit, mods)
+	if onFullHPEffect ~= 0 and scenario:getUnit(unit.id).hpMax == unit.hp then
+		multiplicative = multiplicative - onFullHPEffect
+	end
+
 	if multiplicative ~= 0 then
 		local multiplier = 1 + 0.01 * multiplicative
 		local attk = nil
@@ -714,8 +770,9 @@ function _unitAura_HealModsEffect(unit, prev, attackN, callGetGroupAndMods)
 	return _unitAura_DamageModsEffect(unit, prev, attackN, callGetGroupAndMods)
 end
 
-function _unitAura_PowerModsEffect(unit, prev)
+function _unitAura_PowerModsEffect(unit, prev, attackN)
 	local mods = _GroupInfo_UnitModifiers(unit)
+	local uid = unit.id.value
 
 	local onFullHPEffect = _unitAura_AttackLessPowerOnFullLife_val(unit, mods)
 	local lessPower
@@ -723,95 +780,165 @@ function _unitAura_PowerModsEffect(unit, prev)
 		lessPower = onFullHPEffect
 	else
 		lessPower = 0
-	end	
-
-	if prev * ( 1 - 0.01 * lessPower ) >= 100 then
-		return prev
 	end
 
-	local multiplicative = _unitAura_AttackPower_valPercent(unit) 
+	local additive = 0
+	local multiplicative = _unitAura_AttackPower_valPercent(unit)
 	                     + _unitAura_MostLostHPBuff_PowerPercent(unit)
                              + _unitAura_LostHPEffect(unit, _unitAura_PerLostHP_AttackPower_val(unit, mods))
                              - lessPower
 
-	return prev * ( 1 + 0.01 * multiplicative )
+       	if attackN == 1 then
+       		if not statsCheck_isDirectDmgType(uaAttackType1[uid]) then
+        		multiplicative = multiplicative + _unitAura_NonDirectDamageAttackAccuracy_val(unit)
+        	end
+	else
+        	if not statsCheck_isDirectDmgType(uaAttackType2[uid]) then
+        		multiplicative = multiplicative + _unitAura_NonDirectDamageAttackAccuracy_val(unit)
+        	end
+	end
+
+	local cursedAshesAmount = _GroupInfo_stackHasModifierAmount(cursedash_mod)
+	if cursedAshesAmount > 0 then
+		if _GroupInfo_stackHasModifierAmount(divinationbox_mod) > 0
+		or _GroupInfo_stackHasModifierAmount(abyssfangs_mod) > 0 then
+			if attackN == 1 then
+				if statsCheck_isCurseType(uaAttackType1[uid]) then
+					multiplicative = multiplicative + 10 * cursedAshesAmount
+				end
+			else
+				if statsCheck_isCurseType(uaAttackType2[uid]) then
+					multiplicative = multiplicative + 10 * cursedAshesAmount
+				end
+			end
+		end
+	end
+
+	if smnsEnabled then
+		multiplicative = multiplicative + _smns_multiplicativePower(unit, prev, attackN, mods)
+		additive = additive + _smns_flatPower(unit, prev, attackN, mods)
+	end
+
+	return prev * ( 1 + 0.01 * multiplicative ) + additive
 end
 
 function _unitAura_AttackDrain(unit, damage, prev)
+	_valueCap_Set_Attack1Drain_Cap(unit, damage)
+
 	if damage == 0 then
 		return prev
 	end
 	_get_Group_and_Mods(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)
 	local ugroup = _GroupInfo_getCurrentGroup()
-	
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	svSetDrain1FloatPart(unit, 0, spellBuffMultiplier)
+
+	local additive = 0
 	local multiplicative = _unitAura_AttackDrain_valFlat(unit)
                              + _unitAura_LostHPEffect(unit, _unitAura_PerLostHP_AttackDrain_val(unit, _GroupInfo_UnitModifiers(unit)))
                              + _unitAura_AttackDrainOnDeath_valPercent(unit)
                              + _mapMultipliers_Drain1_Flat(unit)
-        
+
 	local SpiritCageAmount = _unitAura_EffectSumStack({G040UM0272}, 1)
 	if SpiritCageAmount > 0 then
-		multiplicative = multiplicative + SpiritCageAmount * _unitAura_SpiritCage_Effect(unit, ugroup)
+		additive = additive + SpiritCageAmount * _unitAura_SpiritCage_Effect(unit, ugroup, 3)
 	end
-	
-	return prev + damage * 0.01 * multiplicative
+
+	if workshopEnabled then
+		multiplicative = multiplicative + Workshop_getBonus_Attack1Drain_Flat(scenario, unit, true)
+	end
+
+	return svAddDrain1(unit, prev + additive, damage, 0.01 * multiplicative)
 end
 
 function _unitAura_Attack2Drain(unit, damage, prev)
+	_valueCap_Set_Attack2Drain_Cap(unit, damage)
+
 	if damage == 0 then
 		return prev
 	end
 	_get_Group_and_Mods(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)
 	local ugroup = _GroupInfo_getCurrentGroup()
-	
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	svSetDrain2FloatPart(unit, 0, spellBuffMultiplier)
+
+	local additive = 0
 	local multiplicative = _unitAura_AttackDrain_valFlat(unit)
                              + _unitAura_LostHPEffect(unit, _unitAura_PerLostHP_AttackDrain_val(unit, _GroupInfo_UnitModifiers(unit)))
                              + _unitAura_AttackDrainOnDeath_valPercent(unit)
                              + _mapMultipliers_Drain2_Flat(unit)
-        
-	local SpiritCageAmount = _unitAura_EffectSumStack({G040UM0272}, 1)
-	if SpiritCageAmount > 0 then
-		multiplicative = multiplicative + SpiritCageAmount * _unitAura_SpiritCage_Effect(unit, ugroup)
+
+	--local SpiritCageAmount = _unitAura_EffectSumStack({G040UM0272}, 1)
+	--if SpiritCageAmount > 0 then
+	--	additive = additive + SpiritCageAmount * _unitAura_SpiritCage_Effect(unit, ugroup, 3)
+	--end
+
+	if workshopEnabled then
+		multiplicative = multiplicative + Workshop_getBonus_Attack2Drain_Flat(scenario, unit, true)
 	end
-	
-	return prev + damage * 0.01 * multiplicative
+
+	return svAddDrain2(unit, prev + additive, damage, 0.01 * multiplicative)
 end
 
 function _unitAura_getMovement(unit, prev)
-	svSetMovementFloatPart(unit, 0)
-	if prev == 0 then
-		return prev
-	end
-
-	local unitMods = _GroupInfo_UnitModifiers(unit)
-	local movementMultiplier = _unitAura_movementMultiplier(unit, unitMods)
-	if movementMultiplier == 0 then
-		return 0
-	end
-
 	local result = prev
 	_get_Group_and_Mods(unit)
-	
-	result = result + _mapMultipliers_MovementPoints_Flat(unit)
-	
-	if _GroupInfo_UnitModifierAmount(unitMods, itemsmasterperk_mod) > 0 then
-		result = result + _unitAura_ItemsMasterPerk_Effect(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	-- local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	svSetMovementFloatPart(unit, 0)
+
+	local mods = _GroupInfo_UnitModifiers(unit)
+	local movementMultiplier = _statsMultiplier_Movement(unit, mods, spellDebuffLowerEffect)
+
+	if workshopEnabled then
+		movementMultiplier = movementMultiplier * ( 1 + 0.01 * Workshop_getBonus_Movement_Percent(scenario, unit, true) )
+		result = result + Workshop_getBonus_Movement_Flat(scenario, unit, true)
 	end
-	
+
+	svSetMovementMultiplier(unit, movementMultiplier)
+
+	result = result + _mapMultipliers_MovementPoints_Flat(unit)
+
+	if _GroupInfo_UnitModifierAmount(mods, itemsmasterperk_mod) > 0 then
+		result = result + _unitAura_ItemsMasterPerk_Effect(unit, 1)
+	end
+
 	if smnsEnabled then
 		result = result + _smns_flatMovementBonus(unit, prev, result)
 	end
-	return svRoundMovement(unit, result * movementMultiplier)
+	return svFlatEffectMovement(unit, 0, result)
 end
 
 function _unitAura_getFastRetreat(unit, prev)
 	local result = prev
-	if smnsEnabled then
-		_get_Group_and_Mods(unit)
+
+	_get_Group_and_Mods(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+
+	if workshopEnabled then
+		result = Workshop_intToBoolean(result, Workshop_getBonus_FastRetreat(scenario, unit, true))
 	end
-		
+
+	if _statsMultiplier_FastRetreat(unit, mods, spellBuffMultiplier) then
+		result = true
+	end
+
 	if smnsEnabled then
 		result = _smns_getFastRetreat(unit, prev, result)
+	end
+	if result then
+		return _GroupInfo_canUseFastRetreat(unit, true)
 	end
 	return result
 end
@@ -827,8 +954,15 @@ function _unitAura_getNegotiate(unit, prev)
 	_get_Group_and_Mods(unit)
 	uaBaseNegotiate[id] = uaBaseNegotiate[id] + _mapMultipliers_Negotiate_Flat(unit)
 
+	if workshopEnabled then
+		uaBaseNegotiate[id] = uaBaseNegotiate[id] + Workshop_getBonus_baseNegotiate_Flat(scenario, unit, true)
+	end
+
 	local result = uaBaseNegotiate[id]
-		
+
+	local effectFunction = _unitAura_GlobalNegotiate_txt
+	result = result + _unitAura_NearestGroupsAuraEffect(unit, effectFunction, 2)
+
 	if smnsEnabled then
 		result = result + _smns_getNegotiate(unit, prev, result)
 	end
@@ -836,39 +970,112 @@ function _unitAura_getNegotiate(unit, prev)
 end
 
 function _unitAura_getScout(unit, prev)
-	local result = prev
-	if smnsEnabled then
-		_get_Group_and_Mods(unit)
+	_get_Group_and_Mods(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	svSetScoutFloatPart(unit, 0, spellBuffMultiplier)
+
+	local result = prev + _mapMultipliers_Scout_Flat(unit)
+
+	if workshopEnabled then
+		result = result + Workshop_getBonus_Scout_Flat(scenario, unit, true)
 	end
-		
+
 	if smnsEnabled then
 		result = result + _smns_getScout(unit, prev, result)
 	end
-	return result
+	return svFlatEffectScout(unit, result, 0)
+end
+
+function _unitAura_getLowerCost(unit, prev)
+	_get_Group_and_Mods(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+	svSetLowerCostFloatPart(unit, 0, spellBuffMultiplier)
+
+	local result = prev + _mapMultipliers_TradeDiscount_Flat(unit)
+
+	if workshopEnabled then
+		result = result + Workshop_getBonus_LowerCost_Flat(scenario, unit, true)
+	end
+
+	if smnsEnabled then
+		result = result + _smns_flatLowerCostBonus(unit, prev, result)
+	end
+	return svFlatEffectLowerCost(unit, result, 0)
+end
+
+function _unitAura_getLeadership(unit, prev)
+	if workshopEnabled then
+		_get_Group_and_Mods(unit)
+		prev = prev + Workshop_getBonus_Leadership_Flat(scenario, unit, true)
+	end
+	return prev
 end
 
 function _unitAura_hasMovementBonus(unit, ground, prev)
 	local result = prev
+	_get_Group_and_Mods(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+
+	if workshopEnabled then
+		if ground == Ground.Plain then
+			result = not Workshop_intToBoolean(not result, Workshop_getBonus_MoveAbility(scenario, unit, ground, true))
+		else
+			result = Workshop_intToBoolean(result, Workshop_getBonus_MoveAbility(scenario, unit, ground, true))
+		end
+	end
+
+	if _statsMultiplier_WalkAbility(unit, mods, ground, spellBuffMultiplier) then
+		if ground == 0 then
+			result = false
+		else
+			result = true
+		end
+	end
+
 	if smnsEnabled then
-		_get_Group_and_Mods(unit)
 		result = _smns_hasMovementBonus(unit, ground, prev, result)
 	end
 	return result
 end
 
 function _unitAura_hasAbility(unit, ability, prev)
+	local gotGroup = true
 	local result = prev
-	if ability == Ability.WandScrollUse then
-		_get_Group_and_Mods(unit)
-		result = _GroupInfo_stackHasModifier(G040UM0161)
-	elseif ability == Ability.TalismanUse then
-		_get_Group_and_Mods(unit)
-		result = _GroupInfo_stackHasModifier(G040UM0161)
-		      or _GroupInfo_stackHasModifier(G040UM0205)
+	_get_Group_and_Mods(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+
+	if workshopEnabled then
+		result = Workshop_intToBoolean(result, Workshop_getBonus_LeaderAbility(scenario, unit, ability, gotGroup))
 	end
-	
+
+	if ability == Ability.WandScrollUse then
+		if _GroupInfo_stackHasModifier(G040UM0161) then
+			result = true
+		end
+	elseif ability == Ability.TalismanUse then
+		if _GroupInfo_stackHasModifier(G040UM0161)
+		or _GroupInfo_stackHasModifier(G040UM0205) then
+			result = true
+		end
+	end
+
+	if _statsMultiplier_Ability(unit, mods, ability, spellBuffMultiplier) then
+		result = true
+	end
+
 	if smnsEnabled then
-		_get_Group_and_Mods(unit)
 		result = _smns_hasAbility(unit, ability, prev, result)
 	end
 	
@@ -876,17 +1083,71 @@ function _unitAura_hasAbility(unit, ability, prev)
 end
 
 function _unitAura_XpKilled(unit, prev)
+	svSetXpKilledFloatPart(unit, 0)
 	local id = unit.id.value
 	if uaNewXpKilled[id] == nil then
 		uaBaseXpKilled[id] = prev
 	else
 		uaBaseXpKilled[id] = uaNewXpKilled[id]
 	end
-        local e = uaExternalExpKilled[unit.id.value]
-	if e ~= nil then
-		return uaBaseXpKilled[id] * e
+
+	_get_Group_and_Mods(unit)
+	local ugroup = _GroupInfo_getCurrentGroup()
+	local gunits = _GroupInfo_getGroupUnits(ugroup)
+	local umods
+	local expMultiplier = 1
+	for i = 1, #gunits do
+		umods = _GroupInfo_UnitModifiers(gunits[i])
+		expMultiplier = expMultiplier
+			      + 0.05 * _GroupInfo_UnitModifierAmount(umods, G201UM9286)
+			      - 0.05 * _GroupInfo_UnitModifierAmount(umods, G201UM9287)
+			      + 0.10 * _GroupInfo_UnitModifierAmount(umods, G201UM9288)
+			      - 0.10 * _GroupInfo_UnitModifierAmount(umods, G201UM9289)
 	end
-	return uaBaseXpKilled[id]
+
+	-- if uaExternalExpKilled_Increased[id] ~= nil then
+		-- expMultiplier = ( expMultiplier + uaExternalExpKilled_Increased[id] ) * uaExternalExpKilled_More[id]
+	-- end
+	if uaExternalExpKilled_More[id] ~= nil then
+		expMultiplier = expMultiplier * uaExternalExpKilled_More[id]
+	end
+	svSetXpKilledMultiplier(unit, expMultiplier)
+	return svFlatEffectXpKilled(unit, 0, uaBaseXpKilled[id])
+end
+
+function _unitAura_getXpNext(unit, prev)
+	svSetXpNextFloatPart(unit, 0)
+	return svFlatEffectXpNext(unit, prev, 0)
+end
+
+function _unitAura_AttackCritDamageEffectCommon(unit)
+	return _unitAura_MostLostHPBuff_CritFlat(unit)
+	     + _unitAura_AttackCrit_valFlat(unit)
+             + _unitAura_LostHPEffect(unit, _unitAura_PerLostHP_AttackCrit_val(unit, _GroupInfo_UnitModifiers(unit)))
+end
+function _unitAura_AttackCritDamageEffect1(unit, gotGroup)
+	local workshopBonus = 0
+	if not gotGroup then
+		_get_Group_and_Mods(unit)
+	end
+	if workshopEnabled then
+		workshopBonus = Workshop_getBonus_Attack1CritDamage_Flat(scenario, unit, true)
+	end
+	return _unitAura_AttackCritDamageEffectCommon(unit)
+	     + _mapMultipliers_CritDamage1_Flat(unit)
+	     + workshopBonus
+end
+function _unitAura_AttackCritDamageEffect2(unit, gotGroup)
+	local workshopBonus = 0
+	if not gotGroup then
+		_get_Group_and_Mods(unit)
+	end
+	if workshopEnabled then
+		workshopBonus = Workshop_getBonus_Attack2CritDamage_Flat(scenario, unit, true)
+	end
+	return _unitAura_AttackCritDamageEffectCommon(unit)
+	     + _mapMultipliers_CritDamage2_Flat(unit)
+	     + workshopBonus
 end
 
 function _unitAura_AttackCritHit(unit, prev)
@@ -894,9 +1155,7 @@ function _unitAura_AttackCritHit(unit, prev)
 		return true
 	end
 	_get_Group_and_Mods(unit)
-	local effect = _unitAura_MostLostHPBuff_CritFlat(unit)
-	             + _unitAura_AttackCrit_valFlat(unit)
-                     + _unitAura_LostHPEffect(unit, _unitAura_PerLostHP_AttackCrit_val(unit, _GroupInfo_UnitModifiers(unit)))
+	local effect = _unitAura_AttackCritDamageEffect1(unit, true)
 	if effect > 0 then
 		return true
 	end
@@ -904,18 +1163,60 @@ function _unitAura_AttackCritHit(unit, prev)
 end
 
 function _unitAura_AttackCritDamage(unit, prev)
+	local id = unit.id.value
 	_get_Group_and_Mods(unit)
-	local effect = _unitAura_MostLostHPBuff_CritFlat(unit)
-	             + _unitAura_AttackCrit_valFlat(unit)
-                     + _unitAura_LostHPEffect(unit, _unitAura_PerLostHP_AttackCrit_val(unit, _GroupInfo_UnitModifiers(unit)))
+
+	local unitMods = _GroupInfo_UnitModifiers(unit)
+
+	_valueCap_Set_AttackCriticalHitDamage_Percent_Bonus(unit, _unitAura_MaxAttackCritDamage_val(unit, unitMods))
+
+	local effect = _unitAura_AttackCritDamageEffect1(unit, true)
 	local result
 	if unit.leveledImpl.attack1.crit then
 		result = prev + effect
 	else
 		result = effect
 	end
-	svSetCrit1InitialDamage(unit, result)
-	return result
+
+	local ratio
+	local totalDmg
+	if smnsInfoCriticalHit_ClassicalIncrease or scenario == nil then
+		ratio = 1
+		totalDmg = nil
+	else
+		local baseDmg  = uaBaseDamage1[id]
+		if baseDmg == nil or baseDmg == 0 then
+			ratio = 1
+			totalDmg = baseDmg
+		else
+			totalDmg = scenario:getUnit(unit.id).impl.attack1.damage
+			if totalDmg == 0 then
+				totalDmg = baseDmg
+			end
+			ratio = baseDmg / totalDmg
+		end
+	end
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, unitMods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, unitMods, spellDebuffLowerEffect)
+
+	svSetCrit1InitialDamage(unit, result, ratio, totalDmg, spellBuffMultiplier)
+	return svAddCrit1Damage(unit, result, 0)
+end
+
+function _unitAura_getAttackCritPower(unit, prev)
+	_get_Group_and_Mods(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+
+	svSetCrit1Power(unit, prev, spellBuffMultiplier)
+	local workshopBonus = 0
+	if workshopEnabled then
+		workshopBonus = Workshop_getBonus_Attack1CritPower_Flat(scenario, unit, true)
+	end
+	return svAddCrit1Power(unit, prev, _mapMultipliers_CritPower1_Flat(unit) + workshopBonus)
 end
 
 function _unitAura_Attack2CritHit(unit, prev)
@@ -923,9 +1224,7 @@ function _unitAura_Attack2CritHit(unit, prev)
 		return true
 	end
 	_get_Group_and_Mods(unit)
-	local effect = _unitAura_MostLostHPBuff_CritFlat(unit)
-	             + _unitAura_AttackCrit_valFlat(unit)
-                     + _unitAura_LostHPEffect(unit, _unitAura_PerLostHP_AttackCrit_val(unit, _GroupInfo_UnitModifiers(unit)))
+	local effect = _unitAura_AttackCritDamageEffect2(unit, true)
 	if effect > 0 then
 		return true
 	end
@@ -933,10 +1232,13 @@ function _unitAura_Attack2CritHit(unit, prev)
 end
 
 function _unitAura_Attack2CritDamage(unit, prev)
+	local id = unit.id.value
 	_get_Group_and_Mods(unit)
-	local effect = _unitAura_MostLostHPBuff_CritFlat(unit)
-	             + _unitAura_AttackCrit_valFlat(unit)
-                     + _unitAura_LostHPEffect(unit, _unitAura_PerLostHP_AttackCrit_val(unit, _GroupInfo_UnitModifiers(unit)))
+
+	local unitMods = _GroupInfo_UnitModifiers(unit)
+	_valueCap_Set_AttackCriticalHitDamage_Percent_Bonus(unit, _unitAura_MaxAttackCritDamage_val(unit, unitMods))
+
+	local effect = _unitAura_AttackCritDamageEffect2(unit, true)
 	local result
 	local a = unit.leveledImpl.attack2
 	if a ~= nil and a.crit then
@@ -944,8 +1246,46 @@ function _unitAura_Attack2CritDamage(unit, prev)
 	else
 		result = effect
 	end
-	svSetCrit2InitialDamage(unit, result)
-	return result
+
+	local ratio
+	local totalDmg
+	if smnsInfoCriticalHit_ClassicalIncrease or scenario == nil then
+		ratio = 1
+		totalDmg = nil
+	else
+		local baseDmg  = uaBaseDamage2[id]
+		if baseDmg == nil or baseDmg == 0 then
+			ratio = 1
+			totalDmg = baseDmg
+		else
+			totalDmg = scenario:getUnit(unit.id).impl.attack2.damage
+			if totalDmg == 0 then
+				totalDmg = baseDmg
+			end
+			ratio = baseDmg / totalDmg
+		end
+	end
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, unitMods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, unitMods, spellDebuffLowerEffect)
+
+	svSetCrit2InitialDamage(unit, result, ratio, totalDmg, spellBuffMultiplier)
+	return svAddCrit2Damage(unit, result, 0)
+end
+
+function _unitAura_getAttack2CritPower(unit, prev)
+	_get_Group_and_Mods(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)
+
+	local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, mods)
+	local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, mods, spellDebuffLowerEffect)
+
+	svSetCrit2Power(unit, prev, spellBuffMultiplier)
+	local workshopBonus = 0
+	if workshopEnabled then
+		workshopBonus = Workshop_getBonus_Attack2CritPower_Flat(scenario, unit, true)
+	end
+	return svAddCrit2Power(unit, prev, _mapMultipliers_CritPower2_Flat(unit) + workshopBonus)
 end
 
 function _unitAura_AtckTwice(unit, prev)
@@ -953,43 +1293,1061 @@ function _unitAura_AtckTwice(unit, prev)
 	local mods = _GroupInfo_UnitModifiers(unit)
 	if twice and _GroupInfo_UnitModifierAmount(mods, G201UM9121) > 0 then
  		twice = false
-	end 
+	end
 	if not twice then
 		local effect = _unitAura_LostHPEffect(unit, _unitAura_PerLostHP_DoubleAttack_val(unit, mods))
 		if effect > 0 then
 			twice = _mRnd_simpleRndEvent(effect)
 		end
-	end	
+	end
 	return twice
 end
 
-uaAddedDamageType             = {}
-uaAddedDamageCached           = {}
-uaAddedDamageBias             = {}
-uaAddedDamageReaplacedAttack2 = {}
-function _unitAura_Attack2Id(unit, prev)
-	local id = unit.id.value
-	uaAddedDamageReaplacedAttack2[id] = nil
-	if uaAddedDamageCached[id] ~= nil then
-		local uimpl = unit.impl
-		if prev == aG000000000 or statsCheck_isHealAttack(uimpl.attack2) then
-			uaAddedDamageReaplacedAttack2[id] = uimpl.attack2
-			uaAddedDamageBias[id] = -1
-			return uaAddedDamageType[id]
-		end
+function _unitAura_getAttackDamRatio(unit, prev)
+	svSetAttack1SplashFloatPart(unit, 0)
+	local mods = _GroupInfo_UnitModifiers(unit)
+	return svFlatEffectSplash1(unit, prev, _unitAura_SplashDamage_val(unit, mods))
+end
+
+function _unitAura_getAttack2DamRatio(unit, prev)
+	svSetAttack2SplashFloatPart(unit, 0)
+	local mods = _GroupInfo_UnitModifiers(unit)
+	return svFlatEffectSplash2(unit, prev, _unitAura_SplashDamage_val(unit, mods))
+end
+
+uaAttackType1 = {}
+function _unitAura_getUaAttackType1(unit)
+	return uaAttackType1[unit.id.value]
+end
+function _unitAura_getAttackClass(unit, prev)
+	if statsCheck_isSelfTransformType(prev) then
+		return prev
 	end
-	uaAddedDamageBias[id] = 0
+	local id = unit.id.value
+	if uaAttackType1[id] ~= nil then
+		return uaAttackType1[id]
+	end
 	return prev
 end
-function _unitAura_GetAddedDamageReaplacedAttack2(unitValueID)
-	return uaAddedDamageReaplacedAttack2[unitValueID]
+
+uaAttackType2 = {}
+function _unitAura_getUaAttackType2(unit)
+	return uaAttackType2[unit.id.value]
 end
+function _unitAura_getAttack2Class(unit, prev)
+	local id = unit.id.value
+	if uaAttackType2[id] ~= nil then
+		return uaAttackType2[id]
+	end
+	return prev
+end
+
+uaAttackName1 = {}
+function _unitAura_getAttackNameTxt(unit, prev)
+	local id = unit.id.value
+	if uaAttackName1[id] ~= nil then
+		return uaAttackName1[id]
+	end
+	return prev
+end
+
+uaAttackName2 = {}
+function _unitAura_getAttack2NameTxt(unit, prev)
+	local id = unit.id.value
+	if uaAttackName2[id] ~= nil then
+		return uaAttackName2[id]
+	end
+	return prev
+end
+
+uaAttackSplit1 = {}
+function _unitAura_getAttackDrSplit(unit, prev)
+	local id = unit.id.value
+	if uaAttackSplit1[id] ~= nil then
+		return uaAttackSplit1[id]
+	end
+	return prev
+end
+
+uaAttackSplit2 = {}
+function _unitAura_getAttack2DrSplit(unit, prev)
+	local id = unit.id.value
+	if uaAttackSplit2[id] ~= nil then
+		return uaAttackSplit2[id]
+	end
+	return prev
+end
+
+uaAttackLevel1 = {}
+function _unitAura_getAttackLevel(unit, prev)
+	local id = unit.id.value
+	if uaAttackLevel1[id] ~= nil then
+		return uaAttackLevel1[id]
+	end
+	return prev
+end
+
+uaAttackLevel2 = {}
+function _unitAura_getAttack2Level(unit, prev)
+	local id = unit.id.value
+	if uaAttackLevel2[id] ~= nil then
+		return uaAttackLevel2[id]
+	end
+	return prev
+end
+
+uaAddToShatterBaseDamage2 = {}
+function _unitAura_AttackId(unit, prev)
+	local id = unit.id.value
+
+	_valueCap_SetUnitAttackDamageHealMax(unit)
+
+	_get_Group_and_Mods(unit)
+	local ugroup = _GroupInfo_getCurrentGroup()
+	local unitMods = _GroupInfo_UnitModifiers(unit)
+
+	uaAttackName1[id] = nil
+	uaAttackName2[id] = nil
+	uaAddToShatterBaseDamage2[id] = 0
+
+	local leveledAttack1
+	if unit.leveledImpl.altAttack == nil then
+		leveledAttack1 = unit.leveledImpl.attack1
+	else
+		leveledAttack1 = unit.leveledImpl.altAttack
+	end
+	local leveledAttack1Id = leveledAttack1.id
+	uaAttackType1[id] = _UnitsLeveledAttacks_getAttackClass(leveledAttack1.type, unit, unitMods)
+	uaAttackLevel1[id] = leveledAttack1.level
+
+	local leveledAttack2 = unit.leveledImpl.attack2
+	local leveledAttack2Id
+	if leveledAttack2 == nil or _GroupInfo_UnitModifierAmount(unitMods, delete_attack2_mod) > 0 then
+		leveledAttack2Id = aG000000000
+		uaAttackType2[id] = nil
+		leveledAttack2 = nil
+		uaAttackLevel2[id] = nil
+	else
+		leveledAttack2Id = leveledAttack2.id
+		uaAttackType2[id] = leveledAttack2.type
+		uaAttackLevel2[id] = leveledAttack2.level
+	end
+	leveledAttack2Id = _UnitsLeveledAttacks_getAttack2Id(leveledAttack2Id, unit, unitMods)
+	uaAttackType2[id] = _UnitsLeveledAttacks_getAttack2Class(uaAttackType2[id], unit, unitMods)
+
+
+	---------------------------------------
+
+	local damageFlatBonus = 10 * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9314) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9318) )
+			      + 1  * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9316) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9320) )
+
+	local healFlatBonus = 10 * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9322) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9324) )
+			    + 1  * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9323) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9325) )
+
+	local powerFlatBonus = _GroupInfo_UnitModifierAmount(unitMods, G201UM9310) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9312)
+
+	local damage2FlatBonus = 10 * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9315) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9319) )
+			       + 1  * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9317) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9321) )
+
+	local heal2FlatBonus = 10 * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9322) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9324) )
+			     + 1  * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9323) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9325) )
+
+	local power2FlatBonus = _GroupInfo_UnitModifierAmount(unitMods, G201UM9311) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9313)
+
+
+	if _GroupInfo_UnitModifierAmount(unitMods, runestone_mod) > 0 and
+	   _GroupInfo_UnitModifierAmount(unitMods, runemaul_mod) > 0 then
+		damageFlatBonus = damageFlatBonus + 5
+	end
+
+	local harvastCupsAmount = _GroupInfo_UnitModifierAmount(unitMods, harvestcup_mod)
+	if harvastCupsAmount > 0 then
+		damageFlatBonus = damageFlatBonus + math.floor(unit.hp * harvastCupsAmount / 20)
+	end
+
+	if _GroupInfo_stackHasModifierAmount(harvestarmor_mod) > 0 and
+	   _GroupInfo_stackHasModifierAmount(harvestcup_mod) > 0 and
+	   _GroupInfo_stackHasModifierAmount(harvestdagger_mod) > 0 then
+		local cLeader = _GroupInfo_getCurrentGroupLeader()
+		if cLeader ~= nil then
+			damageFlatBonus = damageFlatBonus + math.floor(cLeader.hp / 25)
+		end
+	end
+
+	local ChainsOfHumilityAmount = _unitAura_EffectSumStack({chainsofhumility_mod}, 1)
+	if ChainsOfHumilityAmount > 0 then
+		local chainsOfHumilityEffect = ChainsOfHumilityAmount * _unitAura_ChainsOfHumility_Effect(unit, ugroup)
+		damageFlatBonus = damageFlatBonus + chainsOfHumilityEffect
+		healFlatBonus = healFlatBonus + chainsOfHumilityEffect
+	end
+
+	---------------------------------------
+
+	if uaNewDamage1[id] == nil then
+		uaBaseDamage1[id] = leveledAttack1.damage
+	else
+		uaBaseDamage1[id] = uaNewDamage1[id]
+	end
+	if uaNewHeal1[id] == nil then
+		uaBaseHeal1[id] = leveledAttack1.heal
+	else
+		uaBaseHeal1[id] = uaNewHeal1[id]
+	end
+	if uaNewPower1[id] == nil then
+		uaBasePower1[id] = _UnitsLeveledAttacks_getAttackPower(leveledAttack1.power, unit, unitMods)
+	else
+		uaBasePower1[id] = uaNewPower1[id]
+	end
+
+	uaBaseDamage1[id] = _valueCap_CheckMaxDamage(unit, uaBaseDamage1[id])
+	uaBaseHeal1[id] = _valueCap_CheckMaxHeal(unit, uaBaseHeal1[id])
+	uaBasePower1[id] = _valueCap_CheckMaxAccuracy(unit, uaBasePower1[id])
+
+	if leveledAttack2Id ~= aG000000000 then
+		if uaNewDamage2[id] == nil then
+			uaBaseDamage2[id] = _UnitsLeveledAttacks_getAttack2Damage(leveledAttack2, unit, unitMods)
+		else
+			uaBaseDamage2[id] = uaNewDamage2[id]
+		end
+		if uaNewHeal2[id] == nil then
+			uaBaseHeal2[id] = _UnitsLeveledAttacks_getAttack2Heal(leveledAttack2, unit, unitMods)
+		else
+			uaBaseHeal2[id] = uaNewHeal2[id]
+		end
+		if uaNewPower2[id] == nil then
+			uaBasePower2[id] = _UnitsLeveledAttacks_getAttack2Power(leveledAttack2, unit, unitMods)
+		else
+			uaBasePower2[id] = uaNewPower2[id]
+		end
+
+		uaBaseDamage2[id] = _valueCap_CheckMaxDamage(unit, uaBaseDamage2[id])
+		uaBaseHeal2[id] = _valueCap_CheckMaxHeal(unit, uaBaseHeal2[id])
+		uaBasePower2[id] = _valueCap_CheckMaxAccuracy(unit, uaBasePower2[id])
+	else
+		uaBaseDamage2[id] = 0
+		uaBaseHeal2[id] = 0
+		uaBasePower2[id] = 0
+	end
+
+	----------------------------------------------
+
+	if workshopEnabled then
+		local workshopPercent
+		if uaBasePower1[id] ~= 0 or powerFlatBonus ~= 0 then
+			workshopPercent = 1 + 0.01 * Workshop_getBonus_baseAttack1Power_Percent(scenario, unit, true)
+			uaBasePower1[id] = uaBasePower1[id] * workshopPercent
+			powerFlatBonus = powerFlatBonus * workshopPercent
+		end
+		if uaBasePower2[id] ~= 0 or power2FlatBonus ~= 0 then
+			workshopPercent = 1 + 0.01 * Workshop_getBonus_baseAttack2Power_Percent(scenario, unit, true)
+			uaBasePower2[id] = uaBasePower2[id] * workshopPercent
+			power2FlatBonus = power2FlatBonus * workshopPercent
+		end
+		if uaBaseDamage1[id] ~= 0 or damageFlatBonus ~= 0 then
+			workshopPercent = 1 + 0.01 * Workshop_getBonus_baseAttack1Damage_Percent(scenario, unit, true)
+			uaBaseDamage1[id] = uaBaseDamage1[id] * workshopPercent
+			damageFlatBonus = damageFlatBonus * workshopPercent
+		end
+		if uaBaseDamage2[id] ~= 0 or damage2FlatBonus ~= 0 then
+			workshopPercent = 1 + 0.01 * Workshop_getBonus_baseAttack2Damage_Percent(scenario, unit, true)
+			uaBaseDamage2[id] = uaBaseDamage2[id] * workshopPercent
+			damage2FlatBonus = damage2FlatBonus * workshopPercent
+		end
+		if uaBaseHeal1[id] ~= 0 or healFlatBonus ~= 0 then
+			workshopPercent = 1 + 0.01 * Workshop_getBonus_baseAttack1Heal_Percent(scenario, unit, true)
+			uaBaseHeal1[id] = uaBaseHeal1[id] * workshopPercent
+			healFlatBonus = healFlatBonus * workshopPercent
+		end
+		if uaBaseHeal2[id] ~= 0 or heal2FlatBonus ~= 0 then
+			workshopPercent = 1 + 0.01 * Workshop_getBonus_baseAttack2Heal_Percent(scenario, unit, true)
+			uaBaseHeal2[id] = uaBaseHeal2[id] * workshopPercent
+			heal2FlatBonus = heal2FlatBonus * workshopPercent
+		end
+	end
+
+	----------------------------------------------
+
+	local addedDamageAttack = nil
+	local drawnedDamageAttack2 = nil
+	local drawnedHealAttack2 = nil
+	local addedDamageAttackHasPercentValue = false
+
+	-- вторичные атаки для юнитов с первичной атакой уроном или проклятием
+	if _GroupInfo_UnitModifierAmount(unitMods, G040UM0070) > 0 then
+		-- разрушение брони от тяжелого арбалета
+		addedDamageAttack = AttackTypeConversion_MakeAttackInfo(Attack.Shatter, 0.10, 0, 0, 55, false, aG020AA0013, false)
+		addedDamageAttackHasPercentValue = true
+	elseif _GroupInfo_UnitModifierAmount(unitMods, G040UM0066) > 0 then
+		-- урон от лука солнца
+		addedDamageAttack = AttackTypeConversion_MakeAttackInfo(Attack.Damage, 0.30, 0, 0, 100, false, aG020AA0017, false)
+		addedDamageAttackHasPercentValue = true
+	elseif _GroupInfo_UnitModifierAmount(unitMods, G040UM0069) > 0 then
+		-- урон от ледяного лука
+		addedDamageAttack = AttackTypeConversion_MakeAttackInfo(Attack.Damage, 0.35, 0, 0, 100, false, aG020AA0018, false)
+		addedDamageAttackHasPercentValue = true
+	elseif _GroupInfo_UnitModifierAmount(unitMods, G040UM0071) > 0 then
+		-- урон от арбалета мора
+		addedDamageAttack = AttackTypeConversion_MakeAttackInfo(Attack.Damage, 0.30, 0, 0, 100, false, aG020AA0019, false)
+		addedDamageAttackHasPercentValue = true
+	elseif _GroupInfo_UnitModifierAmount(unitMods, G040UM0068) > 0 then
+		-- понижение уровня от лука заката
+		addedDamageAttack = AttackTypeConversion_MakeAttackInfo(Attack.DrainLevel, 0, 0, 0, 40, false, aG020AA0011, false)
+	elseif _GroupInfo_UnitModifierAmount(unitMods, mortistear_mod) > 0 and
+	       _GroupInfo_UnitModifierAmount(unitMods, thanatosskull_mod) > 0 and
+	       _GroupInfo_UnitModifierAmount(unitMods, thanatosblade_mod) > 0 then
+		-- понижение уровня от сэта танатоса
+		addedDamageAttack = AttackTypeConversion_MakeAttackInfo(Attack.DrainLevel, 0, 0, 0, 40, false, aG020AA0016, false)
+	end
+
+	-- проверяем рисованные
+	if _GroupInfo_UnitModifierAmount(unitMods, G201UM9223) > 0 then
+		drawnedDamageAttack2 = AttackTypeConversion_MakeAttackInfo(Attack.LowerDamage, 0, 0, 1, 50, false, aG014AA0001, false)
+	elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9224) > 0 then
+		drawnedDamageAttack2 = AttackTypeConversion_MakeAttackInfo(Attack.LowerInitiative, 0, 0, 1, 50, false, aG014AA0002, false)
+	elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9225) > 0 then
+		drawnedDamageAttack2 = AttackTypeConversion_MakeAttackInfo(Attack.DrainLevel, 0, 0, 0, 50, false, aG014AA0003, false)
+	elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9226) > 0 then
+		drawnedDamageAttack2 = AttackTypeConversion_MakeAttackInfo(Attack.Petrify, 0, 0, 0, 50, false, aG014AA0004, false)
+	elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9227) > 0 then
+		drawnedDamageAttack2 = AttackTypeConversion_MakeAttackInfo(Attack.Paralyze, 0, 0, 0, 50, false, aG014AA0005, false)
+	elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9228) > 0 then
+		drawnedDamageAttack2 = AttackTypeConversion_MakeAttackInfo(Attack.Fear, 0, 0, 0, 50, false, aG014AA0006, false)
+	elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9229) > 0 then
+		drawnedDamageAttack2 = AttackTypeConversion_MakeAttackInfo(Attack.Shatter, 10, 0, 0, 50, false, aG014AA0007, false)
+	elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9230) > 0 then
+		drawnedDamageAttack2 = AttackTypeConversion_MakeAttackInfo(Attack.TransformOther, 0, 0, 0, 50, false, aG014AA0008, false)
+	end
+
+	-- вторичные атаки для юнитов с первичной атакой уроном или проклятием
+	-- конец
+
+	-- вторичные атаки для юнитов с первичной атакой лечением
+
+	-- проверяем рисованные
+	if _GroupInfo_UnitModifierAmount(unitMods, G201UM9297) > 0 then
+		drawnedHealAttack2 = AttackTypeConversion_MakeAttackInfo(Attack.BoostDamage, 0, 0, 1, 100, false, aG014AA0009, false)
+	elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9298) > 0 then
+		drawnedHealAttack2 = AttackTypeConversion_MakeAttackInfo(Attack.GiveAttack, 0, 0, 0, 100, false, aG014AA0010, false)
+	elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9299) > 0 then
+		drawnedHealAttack2 = AttackTypeConversion_MakeAttackInfo(Attack.Cure, 0, 0, 0, 100, false, aG014AA0011, false)
+	elseif _GroupInfo_UnitModifierAmount(unitMods, G201UM9300) > 0 then
+		drawnedHealAttack2 = AttackTypeConversion_MakeAttackInfo(Attack.Revive, 0, 0, 0, 100, false, aG014AA0012, false)
+	end
+
+	-- вторичные атаки для юнитов с первичной атакой лечением
+	-- конец
+
+	----------------------------------------------
+
+	if addedDamageAttack ~= nil and statsCheck_isCurseType(AttackTypeConversion_GetClass(addedDamageAttack)) then
+		if leveledAttack2Id ~= aG000000000 and AttackTypeConversion_GetClass(addedDamageAttack) == uaAttackType2[id] then
+			uaBasePower2[id] = uaBasePower2[id] + (100 - uaBasePower2[id]) * 0.01 * AttackTypeConversion_GetPower(addedDamageAttack)
+			addedDamageAttack = nil
+		elseif drawnedDamageAttack2 ~= nil and AttackTypeConversion_GetClass(addedDamageAttack) == AttackTypeConversion_GetClass(drawnedDamageAttack2) then
+			AttackTypeConversion_SetPower(drawnedDamageAttack2, AttackTypeConversion_GetPower(drawnedDamageAttack2) + (100 - AttackTypeConversion_GetPower(drawnedDamageAttack2)) * 0.01 * AttackTypeConversion_GetPower(addedDamageAttack))
+			addedDamageAttack = nil
+		elseif leveledAttack2Id ~= aG000000000 and AttackTypeConversion_GetClass(addedDamageAttack) == uaAttackType1[id] then
+			uaBasePower1[id] = uaBasePower1[id] + (100 - uaBasePower1[id]) * 0.01 * AttackTypeConversion_GetPower(addedDamageAttack)
+			addedDamageAttack = nil
+		end
+	end
+
+	----------------------------------------------
+
+	local damageMod      = _GroupInfo_UnitModifierAmount(unitMods, potion_change_attack_damage_mod)
+	local vampirismMod   = _GroupInfo_UnitModifierAmount(unitMods, potion_change_attack_vampirism_mod)
+	local thaumaturgyMod = _GroupInfo_UnitModifierAmount(unitMods, potion_change_attack_thaumaturgy_mod)
+	local healMod        = _GroupInfo_UnitModifierAmount(unitMods, potion_change_attack_heal_mod)
+
+	if healMod > 0 and damageMod > 0 then
+		damageMod = 0
+		healMod = 0
+	end
+	if healMod > 0 and vampirismMod > 0 then
+		vampirismMod = 0
+		healMod = 0
+	end
+	if healMod > 0 and thaumaturgyMod > 0 then
+		thaumaturgyMod = 0
+		healMod = 0
+	end
+	if vampirismMod > 0 then
+		damageMod = 0
+	end
+	if thaumaturgyMod > 0 then
+		damageMod = 0
+		vampirismMod = 0
+	end
+
+	if thaumaturgyMod > 0 or vampirismMod > 0 or damageMod > 0 or healMod > 0 then
+		local Attack2TypeBeforeConversion = uaAttackType2[id]
+
+		if statsCheck_isDirectDmgType(uaAttackType1[id]) then
+			uaBaseDamage1[id] = uaBaseDamage1[id] + damageFlatBonus
+			damageFlatBonus = 0
+			-- healFlatBonus   = 0
+		elseif leveledAttack2Id ~= aG000000000 and statsCheck_isDirectDmgType(uaAttackType2[id]) then
+			uaBaseDamage2[id] = uaBaseDamage2[id] + damageFlatBonus
+			damageFlatBonus = 0
+			-- healFlatBonus   = 0
+		elseif statsCheck_isHPRestoreType(uaAttackType1[id]) then
+			uaBaseHeal1[id] = uaBaseHeal1[id] + healFlatBonus
+			-- damageFlatBonus = 0
+			healFlatBonus   = 0
+		elseif leveledAttack2Id ~= aG000000000 and statsCheck_isHPRestoreType(uaAttackType2[id]) then
+			uaBaseHeal2[id] = uaBaseHeal2[id] + healFlatBonus
+			-- damageFlatBonus = 0
+			healFlatBonus   = 0
+		end
+		if leveledAttack2Id ~= aG000000000 and statsCheck_isDirectDmgType(uaAttackType2[id]) then
+			uaBaseDamage2[id] = uaBaseDamage2[id] + damage2FlatBonus
+			damage2FlatBonus = 0
+			-- heal2FlatBonus   = 0
+		elseif leveledAttack2Id ~= aG000000000 and statsCheck_isHPRestoreType(uaAttackType2[id]) then
+			uaBaseHeal2[id] = uaBaseHeal2[id] + heal2FlatBonus
+			-- damage2FlatBonus = 0
+			heal2FlatBonus   = 0
+		end
+		if statsCheck_isPowerAppliable(uaAttackType1[id]) then
+			uaBasePower1[id] = uaBasePower1[id] + powerFlatBonus
+			powerFlatBonus  = 0
+		end
+		if leveledAttack2Id ~= aG000000000 and statsCheck_isPowerAppliable(uaAttackType2[id]) then
+			uaBasePower2[id] = uaBasePower2[id] + power2FlatBonus
+			power2FlatBonus = 0
+		end
+
+		local attack1Info = nil
+		local attack2Info = nil
+		attack1Info = AttackTypeConversion_MakeAttackInfo(uaAttackType1[id], uaBaseDamage1[id], uaBaseHeal1[id], 0, uaBasePower1[id], leveledAttack1.damageSplit, leveledAttack1Id, false)
+		if leveledAttack2Id ~= aG000000000 then
+			local split2Info
+			if leveledAttack2 ~= nil then
+				split2Info = leveledAttack2.damageSplit
+			else
+				split2Info = true
+			end
+			attack2Info = AttackTypeConversion_MakeAttackInfo(uaAttackType2[id], uaBaseDamage2[id], uaBaseHeal2[id], 0, uaBasePower2[id], split2Info, leveledAttack2Id, false)
+		end
+
+		local attacksArray
+		if healMod == 0 then
+			attacksArray = {attack1Info, attack2Info, drawnedDamageAttack2, drawnedHealAttack2}
+		else
+			attacksArray = {attack1Info, attack2Info, drawnedHealAttack2, drawnedDamageAttack2}
+		end
+		local attackArrayUpperBound = 4
+
+		local convertedAttacksArray = {}
+		local softConversion = true
+		local convertedAddedDamageAttack = nil
+
+		if thaumaturgyMod > 0 then
+			for i=1, attackArrayUpperBound do
+				convertedAttacksArray[i] = AttackTypeConversion_ThaumaturgyPotion(unit, attacksArray[i], softConversion)
+			end
+			convertedAddedDamageAttack = AttackTypeConversion_ThaumaturgyPotion(unit, addedDamageAttack, softConversion)
+		elseif vampirismMod > 0 then
+			for i=1, attackArrayUpperBound do
+				convertedAttacksArray[i] = AttackTypeConversion_VampirismPotion(unit, attacksArray[i], softConversion)
+			end
+			convertedAddedDamageAttack = AttackTypeConversion_VampirismPotion(unit, addedDamageAttack, softConversion)
+		elseif damageMod > 0 then
+			for i=1, attackArrayUpperBound do
+				convertedAttacksArray[i] = AttackTypeConversion_CommonDamagePotion(unit, attacksArray[i], softConversion)
+			end
+			convertedAddedDamageAttack = AttackTypeConversion_CommonDamagePotion(unit, addedDamageAttack, softConversion)
+		elseif healMod > 0 then
+			for i=1, attackArrayUpperBound do
+				convertedAttacksArray[i] = AttackTypeConversion_HealPotion(unit, attacksArray[i], softConversion)
+			end
+			convertedAddedDamageAttack = AttackTypeConversion_HealPotion(unit, addedDamageAttack, softConversion)
+		end
+
+		local needHardConversion = true
+		if healMod == 0 then
+			if AttackTypeConversion_GetDamage(convertedAttacksArray[1]) > 0 then
+				needHardConversion = false
+			elseif convertedAttacksArray[2] ~= nil then
+				if AttackTypeConversion_GetDamage(convertedAttacksArray[2]) > 0 then
+					needHardConversion = false
+				end
+			else
+				for i=3, attackArrayUpperBound do
+					if convertedAttacksArray[i] ~= nil and AttackTypeConversion_GetDamage(convertedAttacksArray[i]) > 0 then
+						needHardConversion = false
+						break
+					end
+				end
+			end
+		else
+			if AttackTypeConversion_GetHeal(convertedAttacksArray[1]) > 0 then
+				needHardConversion = false
+			elseif convertedAttacksArray[2] ~= nil then
+				if AttackTypeConversion_GetHeal(convertedAttacksArray[2]) > 0 then
+					needHardConversion = false
+				end
+			else
+				for i=3, attackArrayUpperBound do
+					if convertedAttacksArray[i] ~= nil and AttackTypeConversion_GetHeal(convertedAttacksArray[i]) > 0 then
+						needHardConversion = false
+						break
+					end
+				end
+			end
+		end
+
+		if needHardConversion then
+			softConversion = false
+			if thaumaturgyMod > 0 then
+				convertedAttacksArray[1] = AttackTypeConversion_ThaumaturgyPotion(unit, attacksArray[1], softConversion)
+			elseif vampirismMod > 0 then
+				convertedAttacksArray[1] = AttackTypeConversion_VampirismPotion(unit, attacksArray[1], softConversion)
+			elseif damageMod > 0 then
+				convertedAttacksArray[1] = AttackTypeConversion_CommonDamagePotion(unit, attacksArray[1], softConversion)
+			elseif healMod > 0 then
+				convertedAttacksArray[1] = AttackTypeConversion_HealPotion(unit, attacksArray[1], softConversion)
+			end
+		end
+
+		local convertedAttack1 = convertedAttacksArray[1]
+		local convertedAttack2 = nil
+
+		if convertedAttacksArray[2] ~= nil then
+			convertedAttack2 = convertedAttacksArray[2]
+		else
+			if healMod == 0 then
+				if AttackTypeConversion_GetDamage(convertedAttack1) > 0 then
+					for i=3, attackArrayUpperBound do
+						if convertedAttacksArray[i] ~= nil then
+							convertedAttack2 = convertedAttacksArray[i]
+							break
+						end
+					end
+				else
+					for i=3, attackArrayUpperBound do
+						if convertedAttacksArray[i] ~= nil and AttackTypeConversion_GetDamage(convertedAttacksArray[i]) > 0 then
+							convertedAttack2 = convertedAttacksArray[i]
+							break
+						end
+					end
+				end
+
+				if convertedAttack2 == nil and convertedAddedDamageAttack ~= nil then
+					convertedAttack2 = AttackTypeConversion_MakeAttackInfo(AttackTypeConversion_GetClass(convertedAddedDamageAttack),
+											       0,
+											       0,
+											       AttackTypeConversion_GetLevel(convertedAddedDamageAttack),
+											       AttackTypeConversion_GetPower(convertedAddedDamageAttack),
+											       AttackTypeConversion_GetSplit(convertedAddedDamageAttack),
+											       AttackTypeConversion_GetAttackId(convertedAddedDamageAttack),
+											       AttackTypeConversion_GetValueIsGenerated(convertedAddedDamageAttack))
+				end
+			else
+
+				if AttackTypeConversion_GetHeal(convertedAttack1) > 0 then
+					for i=3, attackArrayUpperBound do
+						if convertedAttacksArray[i] ~= nil then
+							convertedAttack2 = convertedAttacksArray[i]
+							break
+						end
+					end
+				else
+					for i=3, attackArrayUpperBound do
+						if convertedAttacksArray[i] ~= nil and AttackTypeConversion_GetHeal(convertedAttacksArray[i]) > 0 then
+							convertedAttack2 = convertedAttacksArray[i]
+							break
+						end
+					end
+				end
+				if convertedAttack2 == nil and convertedAddedDamageAttack ~= nil then
+					convertedAttack2 = AttackTypeConversion_MakeAttackInfo(AttackTypeConversion_GetClass(convertedAddedDamageAttack),
+											       0,
+											       0,
+											       AttackTypeConversion_GetLevel(convertedAddedDamageAttack),
+											       AttackTypeConversion_GetPower(convertedAddedDamageAttack),
+											       AttackTypeConversion_GetSplit(convertedAddedDamageAttack),
+											       AttackTypeConversion_GetAttackId(convertedAddedDamageAttack),
+											       AttackTypeConversion_GetValueIsGenerated(convertedAddedDamageAttack))
+				end
+			end
+		end
+
+		if convertedAttack2 ~= nil then
+			if healMod == 0 then
+				if AttackTypeConversion_GetDamage(convertedAttack1) > 0 and AttackTypeConversion_GetDamage(convertedAttack2) > 0 then
+					if AttackTypeConversion_GetValueIsGenerated(convertedAttack2) then
+						convertedAttack2 = AttackTypeConversion_SetDamage(convertedAttack2, 0.2 * AttackTypeConversion_GetDamage(convertedAttack2))
+					elseif AttackTypeConversion_GetValueIsGenerated(convertedAttack1) then
+						convertedAttack1 = AttackTypeConversion_SetDamage(convertedAttack1, 0.2 * AttackTypeConversion_GetDamage(convertedAttack1))
+					end
+				end
+			else
+				if AttackTypeConversion_GetHeal(convertedAttack1) > 0 and AttackTypeConversion_GetHeal(convertedAttack2) > 0 then
+					if AttackTypeConversion_GetValueIsGenerated(convertedAttack2) then
+						convertedAttack2 = AttackTypeConversion_SetHeal(convertedAttack2, 0.2 * AttackTypeConversion_GetHeal(convertedAttack2))
+					elseif AttackTypeConversion_GetValueIsGenerated(convertedAttack1) then
+						convertedAttack1 = AttackTypeConversion_SetHeal(convertedAttack1, 0.2 * AttackTypeConversion_GetHeal(convertedAttack1))
+					end
+				end
+			end
+		end
+
+
+		leveledAttack1Id = _unitAura_AttackInfoToAttack1BaseStats(id, convertedAttack1, true, true)
+
+		if convertedAttack2 ~= nil then
+			leveledAttack2Id = _unitAura_AttackInfoToAttack2BaseStats(id, convertedAttack2, true, true)
+		else
+			uaAttackType2[id]  = nil
+			uaBaseDamage2[id]  = 0
+			uaBaseHeal2[id]    = 0
+			uaBasePower2[id]   = 0
+			uaAttackSplit2[id] = false
+			uaAttackLevel2[id] = nil
+			leveledAttack2Id   = aG000000000
+		end
+
+		-- log('attack1 '..AttackTypeConversion_PrintAttackInfo(convertedAttack1))
+		-- log('attack2 '..AttackTypeConversion_PrintAttackInfo(convertedAttack2))
+
+		if damageFlatBonus ~= 0 or healFlatBonus ~= 0 then
+			if statsCheck_isDirectDmgType(uaAttackType1[id]) then
+				uaBaseDamage1[id] = uaBaseDamage1[id] + damageFlatBonus
+				damageFlatBonus = 0
+			elseif leveledAttack2Id ~= aG000000000 and statsCheck_isDirectDmgType(uaAttackType2[id]) then
+				uaBaseDamage2[id] = uaBaseDamage2[id] + damageFlatBonus
+				damageFlatBonus = 0
+			elseif statsCheck_isHPRestoreType(uaAttackType1[id]) then
+				uaBaseHeal1[id] = uaBaseHeal1[id] + healFlatBonus
+				healFlatBonus   = 0
+			elseif leveledAttack2Id ~= aG000000000 and statsCheck_isHPRestoreType(uaAttackType2[id]) then
+				uaBaseHeal2[id] = uaBaseHeal2[id] + healFlatBonus
+				healFlatBonus   = 0
+			end
+			-- damageFlatBonus = 0
+			-- healFlatBonus   = 0
+		end
+		if damage2FlatBonus ~= 0 or heal2FlatBonus ~= 0 then
+			if leveledAttack2Id ~= aG000000000 and statsCheck_isDirectDmgType(uaAttackType2[id]) then
+				uaBaseDamage2[id] = uaBaseDamage2[id] + damage2FlatBonus
+				damage2FlatBonus = 0
+			elseif leveledAttack2Id ~= aG000000000 and statsCheck_isHPRestoreType(uaAttackType2[id]) then
+				uaBaseHeal2[id] = uaBaseHeal2[id] + heal2FlatBonus
+				heal2FlatBonus   = 0
+			end
+			-- damage2FlatBonus = 0
+			-- heal2FlatBonus   = 0
+		end
+		if powerFlatBonus ~= 0 or power2FlatBonus ~= 0 then
+			if statsCheck_isPowerAppliable(uaAttackType1[id]) then
+				uaBasePower1[id] = uaBasePower1[id] + powerFlatBonus
+				powerFlatBonus  = 0
+			end
+			if leveledAttack2Id ~= aG000000000 and statsCheck_isPowerAppliable(uaAttackType2[id]) then
+				uaBasePower2[id] = uaBasePower2[id] + power2FlatBonus
+				power2FlatBonus = 0
+			end
+			-- powerFlatBonus  = 0
+			-- power2FlatBonus = 0
+		end
+
+		if convertedAddedDamageAttack ~= nil then
+			if healMod == 0 then
+				if AttackTypeConversion_GetDamage(convertedAddedDamageAttack) ~= 0 then
+					if leveledAttack2Id ~= aG000000000 and statsCheck_isDirectDmgType(uaAttackType2[id]) then
+						if addedDamageAttackHasPercentValue then
+							uaBaseDamage2[id] = uaBaseDamage2[id] + AttackTypeConversion_GetDamage(convertedAddedDamageAttack) * ( uaBaseDamage1[id] + uaBaseDamage2[id] )
+						else
+							uaBaseDamage2[id] = uaBaseDamage2[id] + AttackTypeConversion_GetDamage(convertedAddedDamageAttack)
+						end
+					elseif leveledAttack2Id ~= aG000000000 and statsCheck_isShatterType(uaAttackType2[id]) then
+						if addedDamageAttackHasPercentValue then
+							uaAddToShatterBaseDamage2[id] = uaAddToShatterBaseDamage2[id] + uaBaseDamage2[id] + AttackTypeConversion_GetDamage(convertedAddedDamageAttack)  * ( uaAddToShatterBaseDamage2[id] + uaBaseDamage1[id] + uaBaseDamage2[id] )
+						else
+							uaAddToShatterBaseDamage2[id] = uaAddToShatterBaseDamage2[id] + uaBaseDamage2[id] + AttackTypeConversion_GetDamage(convertedAddedDamageAttack)
+						end
+						uaBaseDamage2[id] = 0
+					elseif statsCheck_isDirectDmgType(uaAttackType1[id]) then
+						if addedDamageAttackHasPercentValue then
+							uaBaseDamage1[id] = uaBaseDamage1[id] + AttackTypeConversion_GetDamage(convertedAddedDamageAttack) * ( uaBaseDamage1[id] + uaBaseDamage2[id] )
+
+						else
+							uaBaseDamage1[id] = uaBaseDamage1[id] + AttackTypeConversion_GetDamage(convertedAddedDamageAttack)
+						end
+					end
+				end
+			else
+				if AttackTypeConversion_GetHeal(convertedAddedDamageAttack) ~= 0 then
+					if leveledAttack2Id ~= aG000000000 and statsCheck_isHPRestoreType(uaAttackType2[id]) then
+						if addedDamageAttackHasPercentValue then
+							uaBaseHeal2[id] = uaBaseHeal2[id] + AttackTypeConversion_GetHeal(convertedAddedDamageAttack) * ( uaBaseHeal1[id] + uaBaseHeal2[id] )
+						else
+							uaBaseHeal2[id] = uaBaseHeal2[id] + AttackTypeConversion_GetHeal(convertedAddedDamageAttack)
+						end
+					elseif statsCheck_isHPRestoreType(uaAttackType1[id]) then
+						if addedDamageAttackHasPercentValue then
+							uaBaseHeal1[id] = uaBaseHeal1[id] + AttackTypeConversion_GetHeal(convertedAddedDamageAttack) * ( uaBaseHeal1[id] + uaBaseHeal2[id] )
+						else
+							uaBaseHeal1[id] = uaBaseHeal1[id] + AttackTypeConversion_GetHeal(convertedAddedDamageAttack)
+						end
+					end
+				end
+			end
+		end
+
+		if thaumaturgyMod > 0 then
+			-- uaAttackType1[id] = Attack.DrainOverflow
+			uaAttackName1[id], uaAttackName2[id] = AttackTypeConversion_Rename("x010tg1703", Attack.DrainOverflow, leveledAttack1, uaAttackType1[id], uaAttackType2[id], Attack2TypeBeforeConversion, uaAttackName1[id], uaAttackName2[id])
+		elseif vampirismMod > 0 then
+			-- uaAttackType1[id] = Attack.Drain
+			uaAttackName1[id], uaAttackName2[id] = AttackTypeConversion_Rename("x000tg4037", Attack.Drain, leveledAttack1, uaAttackType1[id], uaAttackType2[id], Attack2TypeBeforeConversion, uaAttackName1[id], uaAttackName2[id])
+		elseif damageMod > 0 then
+			-- uaAttackType1[id] = Attack.Damage
+			uaAttackName1[id], uaAttackName2[id] = AttackTypeConversion_Rename("x010tg1928", Attack.Damage, leveledAttack1, uaAttackType1[id], uaAttackType2[id], Attack2TypeBeforeConversion, uaAttackName1[id], uaAttackName2[id])
+		elseif healMod > 0 then
+			-- uaAttackType1[id] = Attack.Heal
+			uaAttackName1[id], uaAttackName2[id] = AttackTypeConversion_Rename("x000tg5011", Attack.Heal, leveledAttack1, uaAttackType1[id], uaAttackType2[id], Attack2TypeBeforeConversion, uaAttackName1[id], uaAttackName2[id])
+		end
+
+
+	elseif addedDamageAttack ~= nil or drawnedDamageAttack2 ~= nil or drawnedHealAttack2 ~= nil then
+		if statsCheck_isDirectDmgType(uaAttackType1[id]) then
+			uaBaseDamage1[id] = uaBaseDamage1[id] + damageFlatBonus
+			damageFlatBonus   = 0
+		elseif leveledAttack2Id ~= aG000000000 and statsCheck_isDirectDmgType(uaAttackType2[id]) then
+			uaBaseDamage2[id] = uaBaseDamage2[id] + damageFlatBonus
+			damageFlatBonus   = 0
+		elseif statsCheck_isHPRestoreType(uaAttackType1[id]) then
+			uaBaseHeal1[id] = uaBaseHeal1[id] + healFlatBonus
+			healFlatBonus   = 0
+		elseif leveledAttack2Id ~= aG000000000 and statsCheck_isHPRestoreType(uaAttackType2[id]) then
+			uaBaseHeal2[id] = uaBaseHeal2[id] + healFlatBonus
+			healFlatBonus   = 0
+		end
+		if leveledAttack2Id ~= aG000000000 and statsCheck_isDirectDmgType(uaAttackType2[id]) then
+			uaBaseDamage2[id] = uaBaseDamage2[id] + damage2FlatBonus
+			damage2FlatBonus  = 0
+		elseif leveledAttack2Id ~= aG000000000 and statsCheck_isHPRestoreType(uaAttackType2[id]) then
+			uaBaseHeal2[id] = uaBaseHeal2[id] + heal2FlatBonus
+			heal2FlatBonus  = 0
+		end
+		if statsCheck_isPowerAppliable(uaAttackType1[id]) then
+			uaBasePower1[id] = uaBasePower1[id] + powerFlatBonus
+			powerFlatBonus   = 0
+		end
+		if leveledAttack2Id ~= aG000000000 and statsCheck_isPowerAppliable(uaAttackType2[id]) then
+			uaBasePower2[id] = uaBasePower2[id] + power2FlatBonus
+			power2FlatBonus  = 0
+		end
+
+		if leveledAttack2Id == aG000000000 then
+			if statsCheck_isDirectDmgType(uaAttackType1[id])
+			or statsCheck_isCurseType(uaAttackType1[id])
+			or statsCheck_isDoTType(uaAttackType1[id])
+			or statsCheck_isShatterType(uaAttackType1[id]) then
+				if statsCheck_isCurseType(uaAttackType1[id]) and ( uaAttackType1[id] ~= Attack.DrainLevel ) then
+					addedDamageAttack = AttackTypeConversion_FilterDamagingAttack(uaAttackType1[id], addedDamageAttack)
+					drawnedDamageAttack2 = AttackTypeConversion_FilterDamagingAttack(uaAttackType1[id], drawnedDamageAttack2)
+				end
+				if addedDamageAttack ~= nil and drawnedDamageAttack2 ~= nil then
+					local addedDamageAttackClass    = AttackTypeConversion_GetClass(addedDamageAttack)
+					local drawnedDamageAttack2Class = AttackTypeConversion_GetClass(drawnedDamageAttack2)
+					if statsCheck_isDirectDmgType(addedDamageAttackClass) and statsCheck_isDirectDmgType(drawnedDamageAttack2Class) then
+						leveledAttack2Id = _unitAura_AttackInfoToAttack2BaseStats(id, drawnedDamageAttack2, false, false)
+						uaBaseDamage2[id] = AttackTypeConversion_GetDamage(drawnedDamageAttack2) + ( AttackTypeConversion_GetDamage(drawnedDamageAttack2) + uaBaseDamage1[id] ) * AttackTypeConversion_GetAverageDamage(addedDamageAttack)
+					elseif statsCheck_isShatterType(addedDamageAttackClass) and statsCheck_isShatterType(drawnedDamageAttack2Class) then
+						leveledAttack2Id = _unitAura_AttackInfoToAttack2BaseStats(id, drawnedDamageAttack2, false, false)
+						uaBaseDamage2[id] = AttackTypeConversion_GetDamage(drawnedDamageAttack2) + uaBaseDamage1[id] * AttackTypeConversion_GetDamage(addedDamageAttack)
+					elseif statsCheck_isDirectDmgType(uaAttackType1[id]) and
+					    (  statsCheck_isDirectDmgType(addedDamageAttackClass)
+					    or statsCheck_isDoTType(addedDamageAttackClass)
+					    or statsCheck_isShatterType(addedDamageAttackClass) ) then
+						uaBaseDamage1[id] = uaBaseDamage1[id] * ( 1 + AttackTypeConversion_GetAverageDamage(addedDamageAttack) )
+						leveledAttack2Id = _unitAura_AttackInfoToAttack2BaseStats(id, drawnedDamageAttack2, true, false)
+					else
+						leveledAttack2Id = _unitAura_AttackInfoToAttack2BaseStats(id, addedDamageAttack, false, false)
+						uaBaseDamage2[id] = AttackTypeConversion_GetDamage(addedDamageAttack) * uaBaseDamage1[id]
+					end
+				elseif addedDamageAttack ~= nil then
+					leveledAttack2Id = _unitAura_AttackInfoToAttack2BaseStats(id, addedDamageAttack, false, false)
+					uaBaseDamage2[id] = AttackTypeConversion_GetDamage(addedDamageAttack) * uaBaseDamage1[id]
+				elseif drawnedDamageAttack2 ~= nil then
+					leveledAttack2Id = _unitAura_AttackInfoToAttack2BaseStats(id, drawnedDamageAttack2, true, false)
+				end
+			elseif statsCheck_isHealType(uaAttackType1[id]) then
+				if drawnedHealAttack2 ~= nil then
+					if uaAttackType1[id] ~= AttackTypeConversion_GetClass(drawnedHealAttack2) or uaAttackType1[id] == Attack.GiveAttack then
+						leveledAttack2Id = _unitAura_AttackInfoToAttack2BaseStats(id, drawnedHealAttack2, false, true)
+					end
+				end
+			end
+		else
+			local addedDmgSum = 0
+			local addedHealSum = 0
+			if addedDamageAttack ~= nil then
+				local addedDamageAttackClass = AttackTypeConversion_GetClass(addedDamageAttack)
+				if statsCheck_isDirectDmgType(addedDamageAttackClass)
+				or statsCheck_isDoTType(addedDamageAttackClass)
+				or statsCheck_isShatterType(addedDamageAttackClass) then
+					addedDmgSum = addedDmgSum + ( uaBaseDamage1[id] + uaBaseDamage2[id] ) * AttackTypeConversion_GetAverageDamage(addedDamageAttack)
+				end
+			end
+			if drawnedDamageAttack2 ~= nil then
+				local drawnedDamageAttack2Class = AttackTypeConversion_GetClass(drawnedDamageAttack2)
+				if statsCheck_isDirectDmgType(drawnedDamageAttack2Class)
+				or statsCheck_isDoTType(drawnedDamageAttack2Class)
+				or statsCheck_isShatterType(drawnedDamageAttack2Class) then
+					addedDmgSum = addedDmgSum + AttackTypeConversion_GetAverageDamage(drawnedDamageAttack2)
+				end
+			end
+			if drawnedHealAttack2 ~= nil then
+				if statsCheck_isHPRestoreType(AttackTypeConversion_GetClass(drawnedHealAttack2)) then
+					addedHealSum = addedHealSum + AttackTypeConversion_GetHeal(drawnedHealAttack2)
+				end
+			end
+
+			if statsCheck_isShatterType(uaAttackType2[id]) and addedDamageAttack ~= nil and statsCheck_isShatterType(AttackTypeConversion_GetClass(addedDamageAttack)) then
+				uaAddToShatterBaseDamage2[id] = uaAddToShatterBaseDamage2[id] + addedDmgSum
+			-- elseif drawnedDamageAttack2 ~= nil and statsCheck_isShatterType(AttackTypeConversion_GetClass(drawnedDamageAttack2)) and addedDamageAttack ~= nil and statsCheck_isShatterType(AttackTypeConversion_GetClass(addedDamageAttack)) then
+			--	uaAddToShatterBaseDamage2[id] = uaAddToShatterBaseDamage2[id] + addedDmgSum
+			elseif statsCheck_isDirectDmgType(uaAttackType2[id]) then
+				uaBaseDamage2[id] = uaBaseDamage2[id] + addedDmgSum
+			elseif statsCheck_isDirectDmgType(uaAttackType1[id]) then
+				uaBaseDamage1[id] = uaBaseDamage1[id] + addedDmgSum
+			elseif statsCheck_isHPRestoreType(uaAttackType2[id]) then
+				uaBaseHeal2[id] = uaBaseHeal2[id] + addedHealSum
+			elseif statsCheck_isHPRestoreType(uaAttackType1[id]) then
+				uaBaseHeal1[id] = uaBaseHeal1[id] + addedHealSum
+			end
+		end
+
+		if statsCheck_isDirectDmgType(uaAttackType1[id]) then
+			uaBaseDamage1[id] = uaBaseDamage1[id] + damageFlatBonus
+			damageFlatBonus   = 0
+		elseif leveledAttack2Id ~= aG000000000 and statsCheck_isDirectDmgType(uaAttackType2[id]) then
+			uaBaseDamage2[id] = uaBaseDamage2[id] + damageFlatBonus
+			damageFlatBonus   = 0
+		elseif statsCheck_isHPRestoreType(uaAttackType1[id]) then
+			uaBaseHeal1[id] = uaBaseHeal1[id] + healFlatBonus
+			healFlatBonus   = 0
+		elseif leveledAttack2Id ~= aG000000000 and statsCheck_isHPRestoreType(uaAttackType2[id]) then
+			uaBaseHeal2[id] = uaBaseHeal2[id] + healFlatBonus
+			healFlatBonus   = 0
+		end
+		if leveledAttack2Id ~= aG000000000 and statsCheck_isDirectDmgType(uaAttackType2[id]) then
+			uaBaseDamage2[id] = uaBaseDamage2[id] + damage2FlatBonus
+			damage2FlatBonus  = 0
+		elseif leveledAttack2Id ~= aG000000000 and statsCheck_isHPRestoreType(uaAttackType2[id]) then
+			uaBaseHeal2[id] = uaBaseHeal2[id] + heal2FlatBonus
+			heal2FlatBonus  = 0
+		end
+		if statsCheck_isPowerAppliable(uaAttackType1[id]) then
+			uaBasePower1[id] = uaBasePower1[id] + powerFlatBonus
+			powerFlatBonus   = 0
+		end
+		if leveledAttack2Id ~= aG000000000 and statsCheck_isPowerAppliable(uaAttackType2[id]) then
+			uaBasePower2[id] = uaBasePower2[id] + power2FlatBonus
+			power2FlatBonus  = 0
+		end
+
+	else
+		-- без конвертации или добавленного урона
+		if statsCheck_isDirectDmgType(uaAttackType1[id]) then
+			uaBaseDamage1[id] = uaBaseDamage1[id] + damageFlatBonus
+			damageFlatBonus = 0
+		end
+		if leveledAttack2Id ~= aG000000000 and statsCheck_isDirectDmgType(uaAttackType2[id]) then
+			uaBaseDamage2[id] = uaBaseDamage2[id] + damageFlatBonus
+			damageFlatBonus = 0
+		end
+		if statsCheck_isHPRestoreType(uaAttackType1[id]) then
+			uaBaseHeal1[id] = uaBaseHeal1[id] + healFlatBonus
+			healFlatBonus = 0
+		end
+		if leveledAttack2Id ~= aG000000000 and statsCheck_isHPRestoreType(uaAttackType2[id]) then
+			uaBaseHeal2[id] = uaBaseHeal2[id] + healFlatBonus
+			healFlatBonus = 0
+		end
+		if leveledAttack2Id ~= aG000000000 and statsCheck_isDirectDmgType(uaAttackType2[id]) then
+			uaBaseDamage2[id] = uaBaseDamage2[id] + damage2FlatBonus
+			damage2FlatBonus = 0
+		end
+		if leveledAttack2Id ~= aG000000000 and statsCheck_isHPRestoreType(uaAttackType2[id]) then
+			uaBaseHeal2[id] = uaBaseHeal2[id] + heal2FlatBonus
+			heal2FlatBonus = 0
+		end
+		if statsCheck_isPowerAppliable(uaAttackType1[id]) then
+			uaBasePower1[id] = uaBasePower1[id] + powerFlatBonus
+			powerFlatBonus = 0
+		end
+		if leveledAttack2Id ~= aG000000000 and statsCheck_isPowerAppliable(uaAttackType2[id]) then
+			uaBasePower2[id] = uaBasePower2[id] + power2FlatBonus
+			power2FlatBonus = 0
+		end
+		damageFlatBonus = 0
+		healFlatBonus   = 0
+		powerFlatBonus  = 0
+		damage2FlatBonus = 0
+		heal2FlatBonus   = 0
+		power2FlatBonus = 0
+	end
+
+	-------------------------------------------
+
+	uaAttack2Id[id] = leveledAttack2Id
+
+	-------------------------------------------
+	-- замена типа с помощью заклинания
+	if _GroupInfo_UnitModifierAmount(unitMods, ClansT4SpellChangeAttackType_mod) > 0 then
+		local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, unitMods)
+		local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, unitMods, spellDebuffLowerEffect)
+		if spellBuffMultiplier > 0 then
+			local aType1Before = uaAttackType1[id]
+			local aType2Before = uaAttackType2[id]
+			uaAttackType1[id], uaAttackLevel1[id], uaBasePower1[id], uaAttackType2[id], uaAttackLevel2[id], uaBasePower2[id] = AttackTypeConversion_BlessAttackTypeToCurseAttackType(uaAttackType1[id], uaAttackLevel1[id], uaBasePower1[id], uaAttackType2[id], uaAttackLevel2[id], uaBasePower2[id])
+			uaAttackName1[id] = AttackTypeConversion_RenameAttack(uaAttackType1[id], aType1Before, uaAttackName1[id])
+			uaAttackName2[id] = AttackTypeConversion_RenameAttack(uaAttackType2[id], aType2Before, uaAttackName2[id])
+			if  (uaAttackType1[id] == Attack.Paralyze or uaAttackType1[id] == Attack.Petrify)
+			and (uaAttackType2[id] == Attack.LowerDamage or uaAttackType2[id] == Attack.LowerInitiative or uaAttackType2[id] == Attack.Fear or uaAttackType2[id] == Attack.Paralyze or uaAttackType2[id] == Attack.Petrify) then
+				uaBasePower1[id] = uaBasePower1[id] + 10
+
+				uaAttackType2[id]  = nil
+				uaBaseDamage2[id]  = 0
+				uaBaseHeal2[id]    = 0
+				uaBasePower2[id]   = 0
+				uaAttackSplit2[id] = false
+				uaAttackLevel2[id] = nil
+				uaAttack2Id[id]    = aG000000000
+			end
+		end
+	end
+
+	-------------------------------------------
+
+	if _GroupInfo_UnitModifierAmount(unitMods, small_enth_leveling_mod) > 0 then
+		local smallEnth_Multiplier = _smallEnthInfo_aBaseDamageMultiplier(unit)
+		uaBaseDamage1[id] = uaBaseDamage1[id] * smallEnth_Multiplier
+		uaBaseDamage2[id] = uaBaseDamage2[id] * smallEnth_Multiplier
+		uaBaseHeal1[id] = uaBaseHeal1[id] * smallEnth_Multiplier
+		uaBaseHeal2[id] = uaBaseHeal2[id] * smallEnth_Multiplier
+	end
+
+	if _GroupInfo_UnitModifierAmount(unitMods, linaret_mod) > 0 and unit.original == nil and unit.impl.small then
+		uaAttack2Id[id] = aG000000000
+		leveledAttack1Id = aRangedDoppelganger
+		if statsCheck_isHealType(uaAttackType1[id]) or statsCheck_isSummonType(uaAttackType1[id]) then
+			local generatedAttackInfo = AttackTypeConversion_MakeAttackInfo(nil, 0, 0, 0, uaBasePower1[id], false, nil, true)
+			local generatedDmgAttack = AttackTypeConversion_GenDamage(unit, generatedAttackInfo)
+			uaAttackType1[id] = Attack.Damage
+			uaBaseDamage1[id] = AttackTypeConversion_GetDamage(generatedDmgAttack)
+			uaBasePower1[id] = AttackTypeConversion_GetPower(generatedDmgAttack)
+		end
+	end
+
+	svSetApplyDamageSpreadChanceShift1(unit, false)
+	svSetApplyDamageSpreadChanceShift2(unit, false)
+	if uaBasePower1[id] > 0 then
+		uaBasePower1[id] = uaBasePower1[id]
+				 * _mapMultipliers_Power1_Multi(unit)
+				 * ( 1 + 0.1 * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9338) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9340) ) )
+		uaBasePower1[id] = _valueCap_CheckMaxAccuracy(unit, _valueCap_GetInt(uaBasePower1[id]))
+	end
+	if uaBasePower2[id] > 0 then
+		uaBasePower2[id] = uaBasePower2[id]
+				 * _mapMultipliers_Power2_Multi(unit)
+				 * ( 1 + 0.1 * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9339) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9341) ) )
+	end
+	if uaBaseDamage1[id] > 0 then
+		uaBaseDamage1[id] = uaBaseDamage1[id]
+				  * _mapMultipliers_Damage1_Multi(unit)
+				  * ( 1 + 0.1 * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9342) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9344) ) )
+		if workshopEnabled then
+			local applyDamageSpread1
+			uaBaseDamage1[id], uaBasePower1[id], applyDamageSpread1 = Workshop_Mechanics_DamageSpread(scenario, unit, true, uaBaseDamage1[id], uaBasePower1[id], uaAttackType1[id], 1)
+			svSetApplyDamageSpreadChanceShift1(unit, applyDamageSpread1)
+		end
+		uaBaseDamage1[id] = _valueCap_CheckMaxDamage(unit, _valueCap_GetInt(uaBaseDamage1[id]))
+	end
+	if uaBaseDamage2[id] > 0 then
+		uaBaseDamage2[id] = uaBaseDamage2[id]
+				  * _mapMultipliers_Damage2_Multi(unit)
+				  * ( 1 + 0.1 * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9343) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9345) ) )
+		if workshopEnabled then
+			local applyDamageSpread2
+			uaBaseDamage2[id], uaBasePower2[id], applyDamageSpread2 = Workshop_Mechanics_DamageSpread(scenario, unit, true, uaBaseDamage2[id], uaBasePower2[id], uaAttackType2[id], 2)
+			svSetApplyDamageSpreadChanceShift2(unit, applyDamageSpread2)
+		end
+		uaBaseDamage2[id] = _valueCap_CheckMaxDamage(unit, _valueCap_GetInt(uaBaseDamage2[id]))
+	end
+	if uaBaseHeal1[id] > 0 then
+		uaBaseHeal1[id] = uaBaseHeal1[id]
+				* _mapMultipliers_Heal1_Multi(unit)
+				* ( 1 + 0.1 * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9346) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9347) ) )
+		if workshopEnabled then
+			uaBaseHeal1[id] = Workshop_Mechanics_HealSpread(scenario, unit, true, uaBaseHeal1[id])
+		end
+		uaBaseHeal1[id] = _valueCap_CheckMaxHeal(unit, _valueCap_GetInt(uaBaseHeal1[id]))
+	end
+	if uaBaseHeal2[id] > 0 then
+		uaBaseHeal2[id] = uaBaseHeal2[id]
+				* _mapMultipliers_Heal2_Multi(unit)
+				* ( 1 + 0.1 * ( _GroupInfo_UnitModifierAmount(unitMods, G201UM9346) - _GroupInfo_UnitModifierAmount(unitMods, G201UM9347) ) )
+		if workshopEnabled then
+			uaBaseHeal2[id] = Workshop_Mechanics_HealSpread(scenario, unit, true, uaBaseHeal2[id])
+		end
+		uaBaseHeal2[id] = _valueCap_CheckMaxHeal(unit, _valueCap_GetInt(uaBaseHeal2[id]))
+	end
+
+	if unit.leveledImpl.altAttack ~= nil then
+		return unit.leveledImpl.attack1.id
+	end
+	return leveledAttack1Id
+end
+function _unitAura_AttackInfoToAttack1BaseStats(id, ainfo, setDamage, setHeal)
+	uaAttackName1[id] = nil
+	if setDamage then
+		uaBaseDamage1[id] = AttackTypeConversion_GetDamage(ainfo)
+	end
+	if setHeal then
+		uaBaseHeal1[id] = AttackTypeConversion_GetHeal(ainfo)
+	end
+	uaBasePower1[id]  = AttackTypeConversion_GetPower(ainfo)
+	uaAttackType1[id] = AttackTypeConversion_GetClass(ainfo)
+	uaAttackSplit1[id] = AttackTypeConversion_GetSplit(ainfo)
+	uaAttackLevel1[id] = AttackTypeConversion_GetLevel(ainfo)
+	return AttackTypeConversion_GetAttackId(ainfo)
+end
+function _unitAura_AttackInfoToAttack2BaseStats(id, ainfo, setDamage, setHeal)
+	uaAttackName2[id] = nil
+	if setDamage then
+		uaBaseDamage2[id] = AttackTypeConversion_GetDamage(ainfo)
+	end
+	if setHeal then
+		uaBaseHeal2[id] = AttackTypeConversion_GetHeal(ainfo)
+	end
+	uaBasePower2[id]  = AttackTypeConversion_GetPower(ainfo)
+	uaAttackType2[id] = AttackTypeConversion_GetClass(ainfo)
+	uaAttackSplit2[id] = AttackTypeConversion_GetSplit(ainfo)
+	uaAttackLevel2[id] = AttackTypeConversion_GetLevel(ainfo)
+	return AttackTypeConversion_GetAttackId(ainfo)
+end
+
+uaAttack2Id  = {}
+function _unitAura_Attack2Id(unit, prev)
+	local id = unit.id.value
+	if uaAttack2Id[id] ~= nil then
+		return uaAttack2Id[id]
+	end
+	return prev
+end
+
 
 uaNewDamage1  = {}
 uaBaseDamage1 = {}
 function _unitAura_SetNewDamage1(unit, value)
 	local id = unit.id.value
-	uaNewDamage1[id] = _unitAura_SetMax(uaNewDamage1[id], value)
+	uaNewDamage1[id] = _valueCap_CheckMaxDamage(unit, _unitAura_SetMax(uaNewDamage1[id], value))
 	return 0
 end
 function _unitAura_GetBaseDamage1(unitValueID)
@@ -1000,7 +2358,7 @@ uaNewHeal1  = {}
 uaBaseHeal1 = {}
 function _unitAura_SetNewHeal1(unit, value)
 	local id = unit.id.value
-	uaNewHeal1[id] = _unitAura_SetMax(uaNewHeal1[id], value)
+	uaNewHeal1[id] = _valueCap_CheckMaxHeal(unit, _unitAura_SetMax(uaNewHeal1[id], value))
 	return 0
 end
 function _unitAura_GetBaseHeal1(unitValueID)
@@ -1011,7 +2369,7 @@ uaNewPower1  = {}
 uaBasePower1 = {}
 function _unitAura_SetNewPower1(unit, value)
 	local id = unit.id.value
-	uaNewPower1[id] = _unitAura_SetMax(uaNewPower1[id], value)
+	uaNewPower1[id] = _valueCap_CheckMaxAccuracy(unit, _unitAura_SetMax(uaNewPower1[id], value))
 	return 0
 end
 function _unitAura_GetBasePower1(unitValueID)
@@ -1022,7 +2380,7 @@ uaNewDamage2  = {}
 uaBaseDamage2 = {}
 function _unitAura_SetNewDamage2(unit, value)
 	local id = unit.id.value
-	uaNewDamage2[id] = _unitAura_SetMax(uaNewDamage2[id], value)
+	uaNewDamage2[id] = _valueCap_CheckMaxDamage(unit, _unitAura_SetMax(uaNewDamage2[id], value))
 	return 0
 end
 function _unitAura_GetBaseDamage2(unitValueID)
@@ -1033,7 +2391,7 @@ uaNewHeal2  = {}
 uaBaseHeal2 = {}
 function _unitAura_SetNewHeal2(unit, value)
 	local id = unit.id.value
-	uaNewHeal2[id] = _unitAura_SetMax(uaNewHeal2[id], value)
+	uaNewHeal2[id] = _valueCap_CheckMaxHeal(unit, _unitAura_SetMax(uaNewHeal2[id], value))
 	return 0
 end
 function _unitAura_GetBaseHeal2(unitValueID)
@@ -1044,7 +2402,7 @@ uaNewPower2  = {}
 uaBasePower2 = {}
 function _unitAura_SetNewPower2(unit, value)
 	local id = unit.id.value
-	uaNewPower2[id] = _unitAura_SetMax(uaNewPower2[id], value)
+	uaNewPower2[id] = _valueCap_CheckMaxAccuracy(unit, _unitAura_SetMax(uaNewPower2[id], value))
 	return 0
 end
 function _unitAura_GetBasePower2(unitValueID)
@@ -1062,11 +2420,22 @@ function _unitAura_GetBaseRegen(unitValueID)
 	return uaBaseRegen[unitValueID]
 end
 
+uaNewArmor  = {}
+uaBaseArmor = {}
+function _unitAura_SetNewArmor(unit, value)
+	local id = unit.id.value
+	uaNewArmor[id] = _unitAura_SetMax(uaNewArmor[id], value)
+	return 0
+end
+function _unitAura_GetBaseArmor(unitValueID)
+	return uaBaseArmor[unitValueID]
+end
+
 uaNewInitiative  = {}
 uaBaseInitiative = {}
 function _unitAura_SetNewInitiative(unit, value)
 	local id = unit.id.value
-	uaNewInitiative[id] = _unitAura_SetMax(uaNewInitiative[id], value)
+	uaNewInitiative[id] = _valueCap_CheckMaxInitiative(unit, _unitAura_SetMax(uaNewInitiative[id], value))
 	return 0
 end
 function _unitAura_GetBaseInitiative(unitValueID)
@@ -1077,7 +2446,7 @@ uaNewXpKilled  = {}
 uaBaseXpKilled = {}
 function _unitAura_SetNewXpKilled(unit, value)
 	local id = unit.id.value
-	uaNewXpKilled[id] = _unitAura_SetMax(uaNewXpKilled[id], value)
+	uaNewXpKilled[id] = _valueCap_XpKilled(unit, _unitAura_SetMax(uaNewXpKilled[id], value))
 	return 0
 end
 function _unitAura_GetBaseXpKilled(unitValueID)
@@ -1099,7 +2468,7 @@ uaNewHitPoint  = {}
 uaBaseHitPoint = {}
 function _unitAura_SetNewHitPoint(unit, value)
 	local id = unit.id.value
-	uaNewHitPoint[id] = _unitAura_SetMax(uaNewHitPoint[id], value)
+	uaNewHitPoint[id] = _valueCap_CheckMaxHitPoint(unit, _unitAura_SetMax(uaNewHitPoint[id], value))
 	return 0
 end
 function _unitAura_GetBaseHitPoint(unitValueID)
@@ -1108,6 +2477,7 @@ end
 
 function _unitAura_SetNewClear(unitIDValue)
 	uaNewRegen[unitIDValue] = nil
+	uaNewArmor[unitIDValue] = nil
 	uaNewDamage1[unitIDValue] = nil
 	uaNewHeal1[unitIDValue] = nil
 	uaNewPower1[unitIDValue] = nil
@@ -1122,6 +2492,8 @@ end
 function _unitAura_SetMax(oldValue, newValue)
 	if oldValue == nil then
 		return newValue
+	elseif newValue == nil then
+		return newValue
 	else
 		return math.max(oldValue, newValue)
 	end
@@ -1131,6 +2503,10 @@ scenario = nil
 function _unitAura_SetScenario(scen)
 	scenario = scen
 	_mapMultipliers_SetScenario(scen)
+	_batInfo_setScenario(scen)
+	if smnsEnabled then
+		_smnsAura_SetScenario(scen)
+	end
 	return _GroupInfo_SetScenario(scen)
 end
 function _unitAura_GetScenario()
@@ -1141,8 +2517,8 @@ uaHitPoint_valPercent5               = {G040UM0144, G040UM0145, G040UM0146, G040
 uaHitPoint_valFlat5                  = {G040UM0141, G201UM9169}
 uaHitPoint_valFlat10                 = {G040UM0142}
 uaHitPoint_valFlat25                 = {G040UM0143}
-uaRegen_valFlat5                     = {G040UM0108, G040UM0109, G040UM0110, G201UM9171}
-uaRegen_valFlat10                    = {G040UM0150}
+uaRegen_valFlat5                     = {G040UM0108, G040UM0109, G040UM0110, G201UM9171, G040UM0312}
+uaRegen_valFlat10                    = {G040UM0150, G040UM0313}
 uaArmor_valFlat5                     = {G040UM0100, G040UM0120, G040UM0121, G040UM0122, G040UM0151, G201UM9166}
 uaAttackInitiative_valPercent5       = {G040UM0117, G040UM0118, G040UM0119, G040UM0152, G201UM9168}
 uaAttackInitiative_valPercent10      = {G040UM0257}
@@ -1157,11 +2533,13 @@ uaAttackDrain_valFlat35              = {G040UM0237}
 uaAttackCrit_valFlat5                = {G040UM0188, G040UM0189, G040UM0190, G201UM9172, G040UM0251}
 uaAttackCrit_valFlat10               = {G040UM0191}
 umAttackProtection5                  = {G201UM9245}
-umAttackProtection25                 = {G040UM0164, G040UM0168, G040UM0171, G040UM0192, G040UM0224, G201UM9182}
+umAttackProtection25                 = {G040UM0164, G040UM0168, G040UM0171, G040UM0224, G201UM9182}
 umAttackProtection35                 = {}
-umAttackProtection50                 = {G040UM0165, G040UM0169, G040UM0172, G040UM0174}
+umAttackProtection50                 = {G040UM0165, G040UM0169, G040UM0172, G040UM0174, G040UM0319}
 umAttackProtection75                 = {G040UM0166, G040UM0170, G040UM0173}
 umAttackProtection100                = {G040UM0167}
+umAttackProtectionSpellBuff25        = {G040UM0192}
+umAttackProtectionIgnorance          = {G040UM0282, G040UM0320}
 umSummonBonusLevel1                  = {G040UM0182}
 umSummonBonusLevel2                  = {G040UM0183}
 umSummonBonusLevel3                  = {G040UM0184}
@@ -1170,10 +2548,12 @@ umSummonBonusLevel5                  = {G040UM0186}
 uaSummonTransform_valFlat1           = {G040UM0208, G040UM0212, G040UM0213, G040UM0214, G201UM9173}
 uaSummonTransform_valFlat2           = {G040UM0210, G040UM0211}
 uaExpKill_valFlat10m                 = {G201UM9165}
-uaExpKill_valFlat25m                 = {G040UM0194}
+uaExpKill_valFlat25m                 = {}
 uaExpKill_valFlat10                  = {G040UM0215, G040UM0217, G040UM0048}
-uaExpKill_valFlat15                  = {G040UM0216, G040UM0218, G000UM4012, G201UM9164}
+uaExpKill_valFlat15                  = {G040UM0218, G000UM4012, G201UM9164}
 uaExpKill_valFlat25                  = {G201UM9040}
+uaExpKill_valFlatSpellBuff15         = {G040UM0216}
+uaExpKill_valFlatSpellDebuff25       = {G040UM0194}
 uaCurseProtection_valCovered1        = {G040UM0163, G040UM0223, G201UM9174}
 uaArmorFlat_valCovered10             = {G040UM0227, G040UM0228, G201UM9183}
 uaArmorFlat_valCovered15             = {G040UM0225}
@@ -1183,25 +2563,60 @@ uaFrostbiteResist                    = {G040UM0102, G201UM9178}
 uaPoisonResist                       = {G040UM0103, G201UM9179}
 uaLowerDamageResist                  = {G040UM0105, G201UM9180}
 uaLowerInitiativeResist              = {G040UM0104, G201UM9181}
+uaFearResist 		             = {}
+uaPetrifyResist 		     = {}
 umPerLostHP_Armor1                   = {G201UM9184}
 umPerLostHP_AttackInitiative1        = {G201UM9185}
 umPerLostHP_AttackDamageHeal1        = {G201UM9186}
 umPerLostHP_AttackPower1             = {G201UM9187}
-umPerLostHP_AttackDrain1             = {G201UM9188}
+umPerLostHP_AttackDrain1             = {G201UM9188, G040UM0181}
 umPerLostHP_AttackCrit1              = {G201UM9189}
 umPerLostHP_DoubleAttack1            = {G201UM9190}
 umAttackDamageInitiativeOnFullLife10 = {G201UM9191}
 umAttackLessPowerOnFullLife10        = {G201UM9192}
+umAttackLessDamageOnFullLife10       = {G201UM9285, G040UM0311}
+umArmorOnFullLife10		     = {G201UM9282, G040UM0309}
+umArmorOnFullLife20		     = {G040UM0345}
+umAttackProtectionOnFullLife25       = {G201UM9283}
+umAttackProtectionOnFullLife50       = {G040UM0310}
+umAttackProtectionOnFullLife75       = {G040UM0308}
+umAttackProtectionOnFullLife100      = {}
+umAttackProtectionPerLevel1          = {G201UM9284}
 umCowardiceBig                       = {G201UM9193, G040UM0242}
 umVampirismPerCorpse                 = {G201UM9222, G040UM0013, G040UM0268}
 umHitPointPerCorpse                  = {G201UM9242, G040UM0269}
 umCannibalism10                      = {G201UM9194}
 uaArmorFlat_valNearest5              = {G040UM0249}
-umDrainLevelResistance50             = {G040UM0266, G040UM0267, G201UM9241}
-uaHitPointOnDeath_valPercent10       = {G201UM9244}
-uaHitPointOnDeath_valPercent20       = {G040UM0271}
-uaAttackDrainOnDeath_valPercent10    = {G201UM9243}
-uaAttackDrainOnDeath_valPercent20    = {G040UM0270}
+umDrainLevelResistance50             = {G040UM0266, G040UM0267, G201UM9241, G040UM0306, G014UM1065}
+umDrainLevelResistance75             = {G040UM0305}
+uaHitPointOnDeath10                  = {G201UM9244}
+uaHitPointOnDeath20                  = {G040UM0271}
+uaAttackDrainOnDeath10               = {G201UM9243}
+uaAttackDrainOnDeath20               = {G040UM0270}
+umMaxAttackCritDamage5		     = {G201UM9301}
+umMaxAttackCritDamage10		     = {}
+umMaxAttackCritDamage25		     = {G040UM0317}
+umMaxAttackCritDamage50		     = {G040UM0318}
+umMaxAttackCritDamage75		     = {G040UM0321}
+umSpellDebuffResistance10	     = {G201UM9352, G040UM0327, blessedbracelet_mod}
+umSpellDebuffResistance20	     = {G040UM0322}
+umSpellDebuffResistance30	     = {G040UM0323, perseverancebreastplate_mod}
+umSpellDebuffResistance50	     = {G040UM0331, puritytiara_mod}
+uaSpellDebuffResistance10	     = {G201UM9353, G040UM0324, G040UM0328, G040UM0329}
+uaSpellDebuffResistance20	     = {G040UM0325, G040UM0330}
+umSpellBuffLowerEffect10	     = {G201UM9360}
+umSpellBuffLowerEffect1		     = {G201UM9362}
+umSpellBuffIncreasedEffect10	     = {G201UM9359}
+umSpellBuffIncreasedEffect1	     = {G201UM9361}
+umSpellBuffLowerEffectSpell40	     = {G040UM0373}
+umSpellBuffLowerEffectSpell60	     = {G040UM0374}
+umSplashDamage5                      = {G201UM9354}
+umSplashDamage5m                     = {G201UM9355}
+uaNonDirectDamageAttackAccuracy5     = {G201UM9364}
+uaNonDirectDamageAttackAccuracy10    = {G040UM0379}
+gaGlobalMagicSummonCritAndAccuracy10 = {G201UM9367}
+gaGlobalMagicSummonCritAndAccuracy20 = {G040UM0383}
+gaGlobalNegotiate5                   = {G201UM9368}
 
 function _unitAura_HitPoint_valPercent(unit)
 	local warmasterSet = 0
@@ -1539,26 +2954,82 @@ function _unitAura_LowerInitiativeResist_cnt(unit, unitMods)
 	return _unitAura_EffectSumUnit(unitMods, uaLowerInitiativeResist, 1)
 end
 
-function _unitAura_movementMultiplier(unit, unitMods)
-	local n100 = _GroupInfo_UnitModifierAmount(unitMods, spell_paraseus_mod)
-	if n100 > 0 then
-		return 0
-	end
-	local n99  = _GroupInfo_UnitModifierAmount(unitMods, spell_mutilation_mod)
-	local n50  = _GroupInfo_UnitModifierAmount(unitMods, spell_severeblizzard_mod)
-		   + _GroupInfo_UnitModifierAmount(unitMods, spell_deathpsalm_mod)
-	local n30  = _GroupInfo_UnitModifierAmount(unitMods, spell_entanglement_mod)
+function _unitAura_NonDirectDamageAttackAccuracy_val(unit)
+	return _unitAura_EffectSumStack(uaNonDirectDamageAttackAccuracy5, 5)
+	     + _unitAura_EffectSumStack(uaNonDirectDamageAttackAccuracy10, 10)
+end
+function _unitAura_NonDirectDamageAttackAccuracy_txt(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, uaNonDirectDamageAttackAccuracy5, 5)
+	     + _unitAura_EffectSumUnit(unitMods, uaNonDirectDamageAttackAccuracy10, 10)
+end
+function _unitAura_NonDirectDamageAttackAccuracy_cnt(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, uaNonDirectDamageAttackAccuracy5, 1)
+	     + _unitAura_EffectSumUnit(unitMods, uaNonDirectDamageAttackAccuracy10, 1)
+end
 
-	return (0.01^n99) * (0.5^n50) * (0.7^n30)
+function _unitAura_FearResist_stk(unit)
+	local divinationset = 0
+	if _GroupInfo_stackHasModifierAmount(divinationbox_mod) > 0
+	and _GroupInfo_stackHasModifierAmount(saintblood_mod) > 0 then
+		divinationset = 1
+	end
+	return _unitAura_EffectSumStack(uaFearResist, 1)
+	     + divinationset
+end
+function _unitAura_FearResist_val(unit, unitMods)
+	local divinationset = 0
+	if _GroupInfo_stackHasModifierAmount(divinationbox_mod) > 0
+	and _GroupInfo_stackHasModifierAmount(saintblood_mod) > 0 then
+		divinationset = 1
+	end
+	return _unitAura_EffectSumUnit(unitMods, uaFearResist, 1)
+	     + divinationset
+end
+function _unitAura_FearResist_cnt(unit, unitMods)
+	local divinationset = _GroupInfo_UnitModifierAmount(unitMods, divinationbox_mod)
+	return _unitAura_EffectSumUnit(unitMods, uaFearResist, 1)
+	     + divinationset
+end
+
+function _unitAura_PetrifyResist_stk(unit)
+	local abyssfangsset = 0
+	if _GroupInfo_stackHasModifierAmount(abyssfangs_mod) > 0
+	and _GroupInfo_stackHasModifierAmount(cursedash_mod) > 0 then
+		abyssfangsset = 1
+	end
+	return _unitAura_EffectSumStack(uaPetrifyResist, 1)
+	     + abyssfangsset
+end
+function _unitAura_PetrifyResist_val(unit, unitMods)
+	local abyssfangsset = 0
+	if _GroupInfo_stackHasModifierAmount(abyssfangs_mod) > 0
+	and _GroupInfo_stackHasModifierAmount(cursedash_mod) > 0 then
+		abyssfangsset = 1
+	end
+	return _unitAura_EffectSumUnit(unitMods, uaPetrifyResist, 1)
+	     + abyssfangsset
+end
+function _unitAura_PetrifyResist_cnt(unit, unitMods)
+	local abyssfangsset = _GroupInfo_UnitModifierAmount(unitMods, abyssfangs_mod)
+	return _unitAura_EffectSumUnit(unitMods, uaPetrifyResist, 1)
+	     + abyssfangsset
 end
 
 function _unitAura_AttackProtection_val(unit, unitMods)
-	return _unitAura_EffectSumUnit(unitMods, umAttackProtection5, 5)
-	     + _unitAura_EffectSumUnit(unitMods, umAttackProtection25, 25)
-	     + _unitAura_EffectSumUnit(unitMods, umAttackProtection35, 35)
-	     + _unitAura_EffectSumUnit(unitMods, umAttackProtection50, 50)
-	     + _unitAura_EffectSumUnit(unitMods, umAttackProtection75, 75)
-	     + _unitAura_EffectSumUnit(unitMods, umAttackProtection100, 100)
+	local spellBonus = _unitAura_EffectSumUnit(unitMods, umAttackProtectionSpellBuff25, 25)
+	if spellBonus ~= 0 then
+		_get_Group_and_Mods(unit)
+		local spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, unitMods)
+		local spellBuffMultiplier = _unitAura_SpellBuffLowerEffect_multiplier(unit, unitMods, spellDebuffLowerEffect)
+		spellBonus = math.floor(spellBonus * spellBuffMultiplier)
+	end
+	return math.min( 100, _unitAura_EffectSumUnit(unitMods, umAttackProtection5, 5)
+			    + _unitAura_EffectSumUnit(unitMods, umAttackProtection25, 25)
+			    + _unitAura_EffectSumUnit(unitMods, umAttackProtection35, 35)
+			    + _unitAura_EffectSumUnit(unitMods, umAttackProtection50, 50)
+			    + _unitAura_EffectSumUnit(unitMods, umAttackProtection75, 75)
+			    + _unitAura_EffectSumUnit(unitMods, umAttackProtection100, 100)
+			    + spellBonus)
 end
 function _unitAura_AttackProtection_cnt(unit, unitMods)
 	return _unitAura_EffectSumUnit(unitMods, umAttackProtection5, 1)
@@ -1567,12 +3038,33 @@ function _unitAura_AttackProtection_cnt(unit, unitMods)
 	     + _unitAura_EffectSumUnit(unitMods, umAttackProtection50, 1)
 	     + _unitAura_EffectSumUnit(unitMods, umAttackProtection75, 1)
 	     + _unitAura_EffectSumUnit(unitMods, umAttackProtection100, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umAttackProtectionSpellBuff25, 1)
+end
+
+function _unitAura_AttackProtectionIgnorance_val(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, umAttackProtectionIgnorance, 1)
+end
+function _unitAura_AttackProtectionIgnorance_cnt(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, umAttackProtectionIgnorance, 1)
+end
+
+function _unitAura_AttackProtectionPerLevel_val(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, umAttackProtectionPerLevel1, 5)
+end
+function _unitAura_AttackProtectionPerLevel_cnt(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, umAttackProtectionPerLevel1, 1)
+end
+function _unitAura_AttackProtectionPerLevelCapped_val(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, {G040UM0337}, 4)
+	     + _unitAura_EffectSumUnit(unitMods, {G040UM0338}, 10)
 end
 
 function _unitAura_CowardiceBig_val(unit, unitMods)
+	if _unitAura_EffectSumUnit(unitMods, {G201UM9281}, 1) > 0 then
+		return 0
+	end
 	local r = _unitAura_EffectSumUnit(unitMods, umCowardiceBig, 1)
 	if r > 0 then
-		-- scenario:getUnit(unit.id).impl.attack1.type
 		local attackType = scenario:getUnit(unit.id).impl.attack1.type
 		if not (statsCheck_isDirectDmgType(attackType)
 		     or statsCheck_isCurseType(attackType)
@@ -1584,14 +3076,6 @@ function _unitAura_CowardiceBig_val(unit, unitMods)
 end
 function _unitAura_CowardiceBig_cnt(unit, unitMods)
 	local r = _unitAura_EffectSumUnit(unitMods, umCowardiceBig, 1)
-	if r > 0 then
-		local attackType = scenario:getUnit(unit.id).impl.attack1.type
-		if not (statsCheck_isDirectDmgType(attackType)
-		     or statsCheck_isCurseType(attackType)
-		     or statsCheck_isDoTType(attackType)) then
-			r = 0
-		end
-	end
 	return r
 end
 
@@ -1616,12 +3100,148 @@ function _unitAura_HitPointPerCorpse_cnt(unit, unitMods)
 	return _unitAura_EffectSumUnit(unitMods, umHitPointPerCorpse, 1)
 end
 
+function _unitAura_MaxAttackCritDamage_val(unit, unitMods)
+	return math.min( uaMaxAdditionalCrit,
+	       _unitAura_EffectSumUnit(unitMods, umMaxAttackCritDamage5, 5)
+	     + _unitAura_EffectSumUnit(unitMods, umMaxAttackCritDamage10, 10)
+	     + _unitAura_EffectSumUnit(unitMods, umMaxAttackCritDamage25, 25)
+	     + _unitAura_EffectSumUnit(unitMods, umMaxAttackCritDamage50, 50)
+	     + _unitAura_EffectSumUnit(unitMods, umMaxAttackCritDamage75, 75) )
+end
+function _unitAura_MaxAttackCritDamage_cnt(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, umMaxAttackCritDamage5, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umMaxAttackCritDamage10, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umMaxAttackCritDamage25, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umMaxAttackCritDamage50, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umMaxAttackCritDamage75, 1)
+end
+
 function _unitAura_DrainLevelResistance_val(unit, unitMods)
 	local n = _unitAura_EffectSumUnit(unitMods, umDrainLevelResistance50, 1)
+		+ _unitAura_EffectSumUnit(unitMods, umDrainLevelResistance75, 2)
 	return math.min(99, math.floor(100 * ( 1 - 0.5^n)))
 end
 function _unitAura_DrainLevelResistance_cnt(unit, unitMods)
 	return _unitAura_EffectSumUnit(unitMods, umDrainLevelResistance50, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umDrainLevelResistance75, 1)
+end
+
+function _unitAura_SpellBuffLowerEffect_val(unit, unitMods, spellDebuffLowerEffect)
+	local spellBonus = _unitAura_EffectSumUnit(unitMods, umSpellBuffLowerEffectSpell40, 40)
+			 + _unitAura_EffectSumUnit(unitMods, umSpellBuffLowerEffectSpell60, 60)
+	if spellBonus ~= 0 then
+		_get_Group_and_Mods(unit)
+		if spellDebuffLowerEffect == nil then
+			spellDebuffLowerEffect = _unitAura_SpellDebuffResistance_total(unit, unitMods)
+		end
+		spellBonus = math.floor(spellBonus * (1 - 0.01 * spellDebuffLowerEffect))
+	end
+
+	return math.max( -100, math.min( 100,
+	       spellBonus
+	     + _unitAura_EffectSumUnit(unitMods, umSpellBuffLowerEffect10, 10)
+	     + _unitAura_EffectSumUnit(unitMods, umSpellBuffLowerEffect1, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umSpellBuffIncreasedEffect10, -10)
+	     + _unitAura_EffectSumUnit(unitMods, umSpellBuffIncreasedEffect1, -1)))
+end
+
+function _unitAura_SpellBuffLowerEffect_cnt(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, umSpellBuffLowerEffect10, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umSpellBuffLowerEffect1, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umSpellBuffIncreasedEffect10, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umSpellBuffIncreasedEffect1, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umSpellBuffLowerEffectSpell40, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umSpellBuffLowerEffectSpell60, 1)
+end
+function _unitAura_SpellBuffLowerEffect_multiplier(unit, unitMods, spellDebuffLowerEffect)
+	return 1 - 0.01 * _unitAura_SpellBuffLowerEffect_val(unit, unitMods, spellDebuffLowerEffect)
+end
+
+function _unitAura_SpellDebuffResistance_total(unit, unitMods)
+	return _unitAura_SpellDebuffResistance_val(unit, unitMods)
+	     + _unitAura_SpellDebuffResistanceAura_stk(unit)
+end
+function _unitAura_SpellDebuffResistance_total_alt(unit, unitMods, unitGroupMods)
+	return _unitAura_SpellDebuffResistance_val(unit, unitMods)
+	     + _unitAura_SpellDebuffResistanceAura_val(unit, unitGroupMods)
+end
+
+function _unitAura_SpellDebuffResistance_total(unit, unitMods)
+	return _unitAura_SpellDebuffResistance_val(unit, unitMods)
+	     + _unitAura_SpellDebuffResistanceAura_stk(unit)
+end
+function _unitAura_SpellDebuffResistance_total_alt(unit, unitMods, unitGroupMods)
+	return _unitAura_SpellDebuffResistance_val(unit, unitMods)
+	     + _unitAura_SpellDebuffResistanceAura_val(unit, unitGroupMods)
+end
+
+function _unitAura_SpellDebuffResistance_val(unit, unitMods)
+	return math.min(100, _unitAura_EffectSumUnit(unitMods, umSpellDebuffResistance10, 10)
+	                   + _unitAura_EffectSumUnit(unitMods, umSpellDebuffResistance20, 20)
+	                   + _unitAura_EffectSumUnit(unitMods, umSpellDebuffResistance30, 30)
+	                   + _unitAura_EffectSumUnit(unitMods, umSpellDebuffResistance50, 50))
+end
+function _unitAura_SpellDebuffResistance_cnt(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, umSpellDebuffResistance10, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umSpellDebuffResistance20, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umSpellDebuffResistance30, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umSpellDebuffResistance50, 1)
+end
+
+function _unitAura_SpellDebuffResistanceAura_stk(unit)
+	local perseverancebreastplateset = 0
+	if _GroupInfo_stackHasModifierAmount(saintblood_mod) > 0
+	and _GroupInfo_stackHasModifierAmount(perseverancebreastplate_mod) > 0 then
+		perseverancebreastplateset = 10
+	end
+	local runeoflifeset = _GroupInfo_stackHasModifierAmount(runeoflife_mod)
+	if runeoflifeset > 0
+	and ( _GroupInfo_stackHasModifierAmount(mjolnircrown_mod) > 0
+	or    _GroupInfo_stackHasModifierAmount(warmasterhelmet_mod) > 0 ) then
+		runeoflifeset = 10 * runeoflifeset
+	else
+		runeoflifeset = 0
+	end
+	return math.min(100, _unitAura_EffectSumStack(uaSpellDebuffResistance10, 10)
+	                   + _unitAura_EffectSumStack(uaSpellDebuffResistance20, 20)
+	                   + perseverancebreastplateset
+	                   + runeoflifeset)
+end
+function _unitAura_SpellDebuffResistanceAura_val(unit, unitMods)
+	local perseverancebreastplateset = 0
+	if _GroupInfo_UnitModifierAmount(unitMods, saintblood_mod) > 0
+	and _GroupInfo_UnitModifierAmount(unitMods, perseverancebreastplate_mod) > 0 then
+		perseverancebreastplateset = 10
+	end
+	local runeoflifeset = _GroupInfo_UnitModifierAmount(unitMods, runeoflife_mod)
+	if runeoflifeset > 0
+	and ( _GroupInfo_UnitModifierAmount(unitMods, mjolnircrown_mod) > 0
+	or    _GroupInfo_UnitModifierAmount(unitMods, warmasterhelmet_mod) > 0 ) then
+		runeoflifeset = 10 * runeoflifeset
+	else
+		runeoflifeset = 0
+	end
+	return math.min(100, _unitAura_EffectSumUnit(unitMods, uaSpellDebuffResistance10, 10)
+			   + _unitAura_EffectSumUnit(unitMods, uaSpellDebuffResistance20, 20)
+			   + perseverancebreastplateset
+			   + runeoflifeset)
+end
+function _unitAura_SpellDebuffResistanceAura_cnt(unit, unitMods)
+	local perseverancebreastplateset = _GroupInfo_UnitModifierAmount(unitMods, saintblood_mod)
+	local runeoflifeset = _GroupInfo_UnitModifierAmount(unitMods, runeoflife_mod)
+	return _unitAura_EffectSumUnit(unitMods, uaSpellDebuffResistance10, 1)
+	     + _unitAura_EffectSumUnit(unitMods, uaSpellDebuffResistance20, 1)
+	     + perseverancebreastplateset
+	     + runeoflifeset
+end
+
+function _unitAura_SplashDamage_val(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, umSplashDamage5, 5)
+	     + _unitAura_EffectSumUnit(unitMods, umSplashDamage5m, -5)
+end
+function _unitAura_SplashDamage_cnt(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, umSplashDamage5, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umSplashDamage5m, 1)
 end
 
 function _unitAura_PerLostHP_Armor_val(unit, unitMods)
@@ -1687,6 +3307,35 @@ function _unitAura_AttackLessPowerOnFullLife_cnt(unit, unitMods)
 	return _unitAura_EffectSumUnit(unitMods, umAttackLessPowerOnFullLife10, 1)
 end
 
+function _unitAura_AttackLessDamageOnFullLife_val(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, umAttackLessDamageOnFullLife10, 10)
+end
+function _unitAura_AttackLessDamageOnFullLife_cnt(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, umAttackLessDamageOnFullLife10, 1)
+end
+
+function _unitAura_ArmorOnFullLife_val(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, umArmorOnFullLife10, 10)
+	     + _unitAura_EffectSumUnit(unitMods, umArmorOnFullLife20, 20)
+end
+function _unitAura_ArmorOnFullLife_cnt(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, umArmorOnFullLife10, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umArmorOnFullLife20, 1)
+end
+
+function _unitAura_AttackProtectionOnFullLife_val(unit, unitMods)
+	return math.min( 100, _unitAura_EffectSumUnit(unitMods, umAttackProtectionOnFullLife25, 25)
+	    		    + _unitAura_EffectSumUnit(unitMods, umAttackProtectionOnFullLife50, 50)
+	    		    + _unitAura_EffectSumUnit(unitMods, umAttackProtectionOnFullLife75, 75)
+	    		    + _unitAura_EffectSumUnit(unitMods, umAttackProtectionOnFullLife100, 100))
+end
+function _unitAura_AttackProtectionOnFullLife_cnt(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, umAttackProtectionOnFullLife25, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umAttackProtectionOnFullLife50, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umAttackProtectionOnFullLife75, 1)
+	     + _unitAura_EffectSumUnit(unitMods, umAttackProtectionOnFullLife100, 1)
+end
+
 function _unitAura_SummonBonusLevel_val(unit, unitMods)
 	return _unitAura_EffectSumUnit(unitMods, umSummonBonusLevel1, 1)
 	     + _unitAura_EffectSumUnit(unitMods, umSummonBonusLevel2, 2)
@@ -1703,6 +3352,10 @@ function _unitAura_SummonBonusLevel_cnt(unit, unitMods)
 end
 
 function _unitAura_SummonTransform_valFlat(unit)
+	local mods = _GroupInfo_UnitModifiers(unit)
+	if _GroupInfo_UnitModifierAmount(mods, no_summoner_aura_bonus_mod) > 0 then
+		return 0
+	end
 	return _unitAura_EffectSumStack(uaSummonTransform_valFlat1, 1)
 	     + _unitAura_EffectSumStack(uaSummonTransform_valFlat2, 2)
 end
@@ -1718,12 +3371,14 @@ function _unitAura_SummonTransform_Exp(unit)
 	return 10 * _unitAura_SummonTransform_valFlat(unit)
 end
 
-function _unitAura_ExpKill_valFlat(mods)
+function _unitAura_ExpKill_valFlat(mods, debuffMulti, buffMulti)
 	return _unitAura_EffectSum(mods, uaExpKill_valFlat10, 10)
 	     + _unitAura_EffectSum(mods, uaExpKill_valFlat15, 15)
 	     + _unitAura_EffectSum(mods, uaExpKill_valFlat25, 25)
 	     + _unitAura_EffectSum(mods, uaExpKill_valFlat10m, -10)
 	     + _unitAura_EffectSum(mods, uaExpKill_valFlat25m, -25)
+	     + _unitAura_EffectSum(mods, uaExpKill_valFlatSpellDebuff25, -25 * debuffMulti)
+	     + _unitAura_EffectSum(mods, uaExpKill_valFlatSpellBuff15, 15 * buffMulti)
 end
 
 function _unitAura_CurseProtection_valCovered(unit)
@@ -1763,29 +3418,52 @@ function _unitAura_ArmorFlat_cntNearest(unit, unitMods)
 end
 
 function _unitAura_HitPointOnDeath_valPercent(unit)
-	return _unitAura_EffectSumStack_Dead(uaHitPointOnDeath_valPercent10, 10)
-	     + _unitAura_EffectSumStack_Dead(uaHitPointOnDeath_valPercent20, 20)
+	return _unitAura_EffectSumStack_Dead(uaHitPointOnDeath10, 10)
+	     + _unitAura_EffectSumStack_Dead(uaHitPointOnDeath20, 20)
 end
 function _unitAura_HitPointOnDeath_txtPercent(unit, unitMods)
-	return _unitAura_EffectSumUnit(unitMods, uaHitPointOnDeath_valPercent10, 10)
-	     + _unitAura_EffectSumUnit(unitMods, uaHitPointOnDeath_valPercent20, 20)
+	return _unitAura_EffectSumUnit(unitMods, uaHitPointOnDeath10, 10)
+	     + _unitAura_EffectSumUnit(unitMods, uaHitPointOnDeath20, 20)
 end
 function _unitAura_HitPointOnDeath_cntPercent(unit, unitMods)
-	return _unitAura_EffectSumUnit(unitMods, uaHitPointOnDeath_valPercent10, 1)
-	     + _unitAura_EffectSumUnit(unitMods, uaHitPointOnDeath_valPercent20, 1)
+	return _unitAura_EffectSumUnit(unitMods, uaHitPointOnDeath10, 1)
+	     + _unitAura_EffectSumUnit(unitMods, uaHitPointOnDeath20, 1)
 end
 
 function _unitAura_AttackDrainOnDeath_valPercent(unit)
-	return _unitAura_EffectSumStack_Dead(uaAttackDrainOnDeath_valPercent10, 10)
-	     + _unitAura_EffectSumStack_Dead(uaAttackDrainOnDeath_valPercent20, 20)
+	return _unitAura_EffectSumStack_Dead(uaAttackDrainOnDeath10, 10)
+	     + _unitAura_EffectSumStack_Dead(uaAttackDrainOnDeath20, 20)
 end
 function _unitAura_AttackDrainOnDeath_txtPercent(unit, unitMods)
-	return _unitAura_EffectSumUnit(unitMods, uaAttackDrainOnDeath_valPercent10, 10)
-	     + _unitAura_EffectSumUnit(unitMods, uaAttackDrainOnDeath_valPercent20, 20)
+	return _unitAura_EffectSumUnit(unitMods, uaAttackDrainOnDeath10, 10)
+	     + _unitAura_EffectSumUnit(unitMods, uaAttackDrainOnDeath20, 20)
 end
 function _unitAura_AttackDrainOnDeath_cntPercent(unit, unitMods)
-	return _unitAura_EffectSumUnit(unitMods, uaAttackDrainOnDeath_valPercent10, 1)
-	     + _unitAura_EffectSumUnit(unitMods, uaAttackDrainOnDeath_valPercent20, 1)
+	return _unitAura_EffectSumUnit(unitMods, uaAttackDrainOnDeath10, 1)
+	     + _unitAura_EffectSumUnit(unitMods, uaAttackDrainOnDeath20, 1)
+end
+
+function _unitAura_GlobalMagicSummonCritAndAccuracy_val(unit)
+	return _unitAura_EffectSumStack(gaGlobalMagicSummonCritAndAccuracy10, 10)
+	     + _unitAura_EffectSumStack(gaGlobalMagicSummonCritAndAccuracy20, 20)
+end
+function _unitAura_GlobalMagicSummonCritAndAccuracy_txt(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, gaGlobalMagicSummonCritAndAccuracy10, 10)
+	     + _unitAura_EffectSumUnit(unitMods, gaGlobalMagicSummonCritAndAccuracy20, 20)
+end
+function _unitAura_GlobalMagicSummonCritAndAccuracy_cnt(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, gaGlobalMagicSummonCritAndAccuracy10, 1)
+	     + _unitAura_EffectSumUnit(unitMods, gaGlobalMagicSummonCritAndAccuracy20, 1)
+end
+
+function _unitAura_GlobalNegotiate_val(unit)
+	return _unitAura_EffectSumStack(gaGlobalNegotiate5, 5)
+end
+function _unitAura_GlobalNegotiate_txt(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, gaGlobalNegotiate5, 5)
+end
+function _unitAura_GlobalNegotiate_cnt(unit, unitMods)
+	return _unitAura_EffectSumUnit(unitMods, gaGlobalNegotiate5, 1)
 end
 
 function _unitAura_EffectSum(modsArray, modsSearch, modValue)
@@ -1822,6 +3500,7 @@ end
 ua_mlh_ArmorFlat20    = {G040UM0175, G040UM0177}
 ua_mlh_PowerPercent20 = {G040UM0177}
 ua_mlh_CritFlat20     = {G040UM0176}
+ua_mlh_RegenFlat30    = {G040UM0381}
 
 function _unitAura_MostLostHPBuff_ArmorFlat(unit)
 	local effect = _unitAura_EffectSumStack(ua_mlh_ArmorFlat20, 20)
@@ -1835,7 +3514,11 @@ function _unitAura_MostLostHPBuff_CritFlat(unit)
 	local effect = _unitAura_EffectSumStack(ua_mlh_CritFlat20, 20)
 	return _unitAura_MostLostHPBuff_Calc(unit, effect, false, true, false, false, false)
 end
-	
+function _unitAura_MostLostHPBuff_RegenFlat(unit)
+	local effect = _unitAura_EffectSumStack(ua_mlh_RegenFlat30, 30)
+	return _unitAura_MostLostHPBuff_Calc(unit, effect, true, true, true, true, true)
+end
+
 function _unitAura_MostLostHPBuff_Calc(unit, effect, ignoreForFilter, forDirectDmg, forDotDmg, forCurse, forHeal)
 	if effect == 0 or unit.hp == 0 then
 		return 0
@@ -1865,7 +3548,7 @@ function _unitAura_MostLostHPBuff_Calc(unit, effect, ignoreForFilter, forDirectD
 			    unitImpl = scenario:getUnit(uid).impl
 			    a1 = unitImpl.attack1
 			    a2 = unitImpl.attack2
-			    
+
 			    apply = ignoreForFilter
 			    if not apply and forDirectDmg and (statsCheck_isDirectDmgAttack(a1) or statsCheck_isDirectDmgAttack(a2)) then
 			    	apply = true
@@ -1926,51 +3609,93 @@ function _unitAura_AddedDamageSum(unit)
 	     + _unitAura_EffectSumStack(ua_AddedDamagePercent45, 45)
 end
 
-function externalModifiers(attacker, target)
+function externalModifiers(battle)
 	-- _get_Group_and_Mods(attacker.unit)
-	local aGroup, aOwner, aOwnerType = _GroupInfo_getUnitGroup(attacker.unit)
-	local aGroupM, aGroupMD = _GroupInfo_GroupModifires(aGroupM, attacker.unit)
+	local aOwner, aOwnerType = _batInfo_GroupOwner_Attackers(battle)
+	local aGroup = aOwner.group
+	local aGroupM, aGroupMD = _GroupInfo_GroupModifires(aGroup, aGroup.units[1])
 	local aPlayer = _GroupInfo_getPlayer(aOwnerType, aOwner)
 	local aLeader = _GroupInfo_getGroupLeader(aGroup)
-	local aExpMul = _mapMultipliers_XpGain_Multi(attacker.unit)
+	local aExpMul = _mapMultipliers_XpGain_Multi(aLeader, aPlayer)
+	local aDebuffMulti
+	local aBuffMulti
+	if aLeader ~= nil then
+		local aLeaderMods = _GroupInfo_UnitModifiers(aLeader)
+		aDebuffMulti = math.max(0, 1 - 0.01 * _unitAura_SpellDebuffResistance_total_alt(aLeader, aLeaderMods, aGroupM))
+		aBuffMulti = _unitAura_SpellBuffLowerEffect_multiplier(aLeader, aLeaderMods, aDebuffMulti)
+	else
+		aDebuffMulti = 1
+		aBuffMulti = 1
+	end
+
+	if smnsEnabled then
+		aExpMul = aExpMul + 0.01 * _smns_getExpGainBonus(aExpMul, aGroup, aPlayer, aLeader)
+	end
+	if workshopEnabled then
+		aExpMul = aExpMul * ( 1 + 0.01 * Workshop_getBonus_XpGain_Percent(scenario, attacker.unit, true) )
+	end
+
 	-- _get_Group_and_Mods(target.unit)
-	local tGroup, tOwner, tOwnerType = _GroupInfo_getUnitGroup(target.unit)
-	local tGroupM, tGroupMD = _GroupInfo_GroupModifires(tGroupM, target.unit)
+	local tGroup = battle.defender
+ 	local tOwner, tOwnerType = _batInfo_GroupOwner_Defenders(battle)
+	local tGroupM, tGroupMD = _GroupInfo_GroupModifires(tGroup, tGroup.units[1])
 	local tPlayer = _GroupInfo_getPlayer(tOwnerType, tOwner)
 	local tLeader = _GroupInfo_getGroupLeader(tGroup)
-	local tExpMul = _mapMultipliers_XpGain_Multi(target.unit)
-	
-	externalModifiersApply(aGroup, aPlayer, aLeader, aGroupM, aExpMul,
-	                       tGroup, tPlayer, tLeader, tGroupM, tExpMul)
-	externalModifiersApply(tGroup, tPlayer, tLeader, tGroupM, tExpMul,
-	                       aGroup, aPlayer, aLeader, aGroupM, aExpMul)
+	local tExpMul = _mapMultipliers_XpGain_Multi(tLeader, tPlayer)
+	local tDebuffMulti
+	local tBuffMulti
+	if tLeader ~= nil then
+		local tLeaderMods = _GroupInfo_UnitModifiers(tLeader)
+		tDebuffMulti = math.max(0, 1 - 0.01 * _unitAura_SpellDebuffResistance_total_alt(tLeader, tLeaderMods, tGroupM))
+		tBuffMulti = _unitAura_SpellBuffLowerEffect_multiplier(tLeader, tLeaderMods, tDebuffMulti)
+	else
+		tDebuffMulti = 1
+		tBuffMulti = 1
+	end
+
+	if smnsEnabled then
+		tExpMul = tExpMul + 0.01 * _smns_getExpGainBonus(tExpMul, tGroup, tPlayer, tLeader)
+	end
+	if workshopEnabled then
+		tExpMul = tExpMul * ( 1 + 0.01 * Workshop_getBonus_XpGain_Percent(scenario, target.unit, true) )
+	end
+
+	externalModifiersApply(aGroup, aPlayer, aLeader, aGroupM, aExpMul, aDebuffMulti, aBuffMulti,
+	                       tGroup, tPlayer, tLeader, tGroupM, tExpMul, tDebuffMulti, tBuffMulti)
+	externalModifiersApply(tGroup, tPlayer, tLeader, tGroupM, tExpMul, tDebuffMulti, tBuffMulti,
+	                       aGroup, aPlayer, aLeader, aGroupM, aExpMul, aDebuffMulti, aBuffMulti)
 	return 0
 end
-function externalModifiersApply(g1, p1, l1, m1, e1,
-                                g2, p2, l2, m2, e2)
+function externalModifiersApply(g1, p1, l1, m1, e1, d1, b1,
+				g2, p2, l2, m2, e2, d2, b2)
 	local ExpKilled = 1
 	if p1 ~= nil and p1.race ~= Race.Neutral and p1.lord == Lord.Warrior then
 		ExpKilled = ExpKilled + 0.05
 	end
 	if l1 ~= nil then
 		local mods = _GroupInfo_UnitModifiers(l1)
-		ExpKilled = ExpKilled + 0.01 * _unitAura_ExpKill_valFlat(mods)
+		ExpKilled = ExpKilled + 0.01 * _unitAura_ExpKill_valFlat(mods, d1, b1)
 		if _GroupInfo_UnitModifierAmount(mods, harvestarmor_mod) > 0 and
 		   _GroupInfo_UnitModifierAmount(mods, harvestcup_mod) > 0 and
 		   _GroupInfo_UnitModifierAmount(mods, harvestdagger_mod) > 0 then
 			ExpKilled = ExpKilled + 0.15
 		end
 		if _GroupInfo_UnitModifierAmount(mods, itemsmasterperk_mod) > 0 then
-			ExpKilled = ExpKilled + 0.01 * _unitAura_ItemsMasterPerk_Effect(l1)
+			ExpKilled = ExpKilled + 0.01 * _unitAura_ItemsMasterPerk_Effect(l1, 2)
 		end
 	end
-	ExpKilled = ExpKilled * e1
-	
+
 	local units = g2.units
 	local v
 	for i = 1, #units do
 		v = units[i].id.value
-		uaExternalExpKilled[v] = ExpKilled
+		-- uaExternalExpKilled_Increased[v] = 0
+		uaExternalExpKilled_More[v]      = ExpKilled * e1
+		if units[i].original ~= nil then
+			local vOrig = units[i].original.id.value
+			-- uaExternalExpKilled_Increased[vOrig] = uaExternalExpKilled_Increased[v]
+			uaExternalExpKilled_More[vOrig]      = uaExternalExpKilled_More[v]
+		end
 	end
 	return 0
 end
@@ -1983,7 +3708,71 @@ function _unitAura_LostHPEffect(unit, effectMultiplier)
 	return effectMultiplier * 100 * ( maxHP - math.min(maxHP, unit.hp) ) / ( 2 * maxHP )
 end
 
-function _unitAura_SpiritCage_Effect(unit, group)
+function _unitAura_NearestGroupsAuraEffect(unit, effectFunction, radius)
+	local diplomacy = scenario.diplomacy
+	if diplomacy == nil then
+		return 0
+	end
+
+	local unitOwner, unitOwnerType = _GroupInfo_getUnitOwner_Fast(unit)
+	local unitPlayerRace
+	local pos = unitOwner.position
+	local minX, maxX, minY, maxY
+	minX = pos.x - radius
+	minY = pos.y - radius
+	if unitOwnerType == OwnerTypeStack then
+		unitPlayerRace = unitOwner.owner.race
+		maxX = pos.x + radius
+		maxY = pos.y + radius
+	elseif unitOwnerType == OwnerTypeFort then
+		unitPlayerRace = unitOwner.owner.race
+		maxX = pos.x + radius + 3
+		maxY = pos.y + radius + 3
+		-- maxX = pos.x + radius + unitOwner.size - 1
+		-- maxY = pos.Y + radius + unitOwner.size - 1
+	elseif unitOwnerType == OwnerTypeRuin then
+		unitPlayerRace = Race.Neutral
+		maxX = pos.x + radius + 2
+		maxY = pos.y + radius + 2
+	end
+	
+	local effect, unitGroup, unitGroupModifiers, unitGroupModifiersDead
+	local objrace
+	local stacks, ruins, forts = _GroupInfo_GetObjectsWithGroups(minX, maxX, minY, maxY)
+	local objects = {stacks, ruins, forts}
+	local effectSum = 0
+
+	for j = 1, #objects do
+		for i = 1, #objects[j] do
+			unitGroup = objects[j][i].group
+			if unitGroup.units[1] ~= nil then
+				unitGroupModifiers, unitGroupModifiersDead = _GroupInfo_GroupModifires(unitGroup, unitGroup.units[1])
+				effect = effectFunction(nil, unitGroupModifiers)
+				if effect ~= 0 then
+					if j ~= 2 then
+						-- stacks and forts
+						objrace = objects[j][i].owner.race
+						if objrace == unitPlayerRace
+						or (objrace ~= Race.Neutral and diplomacy:getAlliance(objrace, unitPlayerRace)) then
+							effectSum = effectSum + effect
+						end
+					else
+						-- ruins
+						if unitPlayerRace == Race.Neutral then
+							effectSum = effectSum + effect
+						end
+					end
+				end
+			end
+		end
+	end
+	return effectSum
+end
+
+function _unitAura_SpiritCage_Effect(unit, group, mode)
+	-- mode == 1 - hp
+	-- mode == 2 - regen
+	-- mode == 3 - vampirism
 	local units = group.units
 	local expSum = 0
 	for i = 1, #units do
@@ -1992,13 +3781,18 @@ function _unitAura_SpiritCage_Effect(unit, group)
 			expSum = expSum + u.leveledImpl.xpKilled
 		end
 	end
-	return math.floor( 0.1 * expSum)
+	if mode ~= 2 then
+		return math.floor( 0.1 * expSum)
+	else
+		local maxHP = scenario:getUnit(unit.id).hpMax
+		return math.floor( 0.1 * expSum * 100 / maxHP)
+	end
 end
 
 function _unitAura_ChainsOfHumility_Effect(unit, group)
 	local leader = _GroupInfo_getGroupLeader(group)
 	if leader ~= nil then
-		local impl = leader.impl 
+		local impl = leader.impl
 		return impl.level + 10 * (impl.leadership - leader.baseImpl.leadership)
 	end
 	return 0
@@ -2006,6 +3800,9 @@ end
 
 function _unitAura_ChainsOfSacrifice_Effect(unit, unitMods, baseValue, gotGroup)
 	-- use it only as wearable item modifier
+	if unit.hp == 0 then
+		return baseValue
+	end
 	if not gotGroup then
 		_get_Group_and_Mods(unit)
 	end
@@ -2018,20 +3815,16 @@ function _unitAura_ChainsOfSacrifice_Effect(unit, unitMods, baseValue, gotGroup)
 			else
 				local umCount
 				for i = 1, #nearestUnits do
-					umCount = _GroupInfo_UnitModifierAmount(_GroupInfo_UnitModifiers(nearestUnits[i]), chainsofsacrifice_mod)
+					local unitMods = _GroupInfo_UnitModifiers(nearestUnits[i])
+					umCount = _GroupInfo_UnitModifierAmount(unitMods, chainsofsacrifice_mod)
 					if umCount > 0 then
-						local modOwnerBaseValue
-						if uaNewInitiative[id] == nil then
-							modOwnerBaseValue = nearestUnits[i].leveledImpl.attack1.initiative
-						else
-							modOwnerBaseValue = uaNewInitiative[id]
-						end
+						local modOwnerBaseValue = _unitAura_BaseInitiative(nearestUnits[i].id, unitMods, nearestUnits[i])
 						local nearestToOwner = _GroupInfo_getLeftAndRightNearestUnits(nearestUnits[i], true)
 						local ownerEffect = math.floor( modOwnerBaseValue * ( 1 - 0.2 * umCount ) )
 						return baseValue + math.ceil( ( modOwnerBaseValue - ownerEffect ) / #nearestToOwner )
 					end
 				end
-			end 
+			end
 		end
 	end
 	return baseValue
@@ -2044,17 +3837,17 @@ function _unitAura_RingOfHeavenWill_Effect(unit, unitMods, group)
 		if stack == nil then
 			return 0
 		end
-		
+
 		local group = _GroupInfo_getCurrentGroup()
 		local leader = _GroupInfo_getGroupLeader(group)
 		if leader == nil then
 			return 0
 		end
-		
+
 		local result = 0
 		local leadership = leader.impl.leadership
 		local uHeavenwill = _GroupInfo_UnitModifierAmount(unitMods, ringofheavenwill_mod)
-		
+
 		local art1 = stack:getEquippedItem(Equipment.Artifact1)
 		local art2 = stack:getEquippedItem(Equipment.Artifact2)
 		if art1 ~= nil then
@@ -2072,19 +3865,28 @@ function _unitAura_RingOfHeavenWill_Effect(unit, unitMods, group)
 	return 0
 end
 
-function _unitAura_ItemsMasterPerk_Effect(unit)
+function _unitAura_ItemsMasterPerk_Effect(unit, mode)
 	local stack = _GroupInfo_getUnitStack(unit)
+	if stack == nil then
+		return 0
+	end
 	local item
 	local totalCost = 0
 	local checkTypes = {Equipment.Artifact1, Equipment.Artifact2, Equipment.Boots, Equipment.Banner, Equipment.Tome}
 	for i = 1, #checkTypes do
-		item = stack:getEquippedItem(checkTypes[i])		
+		item = stack:getEquippedItem(checkTypes[i])
 		if item ~= nil then
 			totalCost = totalCost + item.base.value.gold
 		end
 	end
-	return math.floor(totalCost / 3000)
+	if mode == 1 then
+		return 2 * math.floor(totalCost / 3000)
+	else
+		return math.floor(totalCost / 3000)
+	end
 end
+
+umMaxAttackCritDamage25 = _bloodsorcerer_info_addMods(umMaxAttackCritDamage25)
 
 if smnsEnabled then
 	uaHitPoint_valPercent5 = _smns_addMod_uaHitPoint_valPercent5(uaHitPoint_valPercent5)
@@ -2153,10 +3955,10 @@ if smnsEnabled then
 	ua_AddedDamagePercent35 = _smns_addMod_ua_AddedDamagePercent35(ua_AddedDamagePercent35)
 	ua_AddedDamagePercent45 = _smns_addMod_ua_AddedDamagePercent45(ua_AddedDamagePercent45)
 	umDrainLevelResistance50 = _smns_addMod_umDrainLevelResistance50(umDrainLevelResistance50)
-	uaHitPointOnDeath_valPercent10 = _smns_addMod_uaHitPointOnDeath_valPercent10(uaHitPointOnDeath_valPercent10)
-	uaHitPointOnDeath_valPercent20 = _smns_addMod_uaHitPointOnDeath_valPercent20(uaHitPointOnDeath_valPercent20)
-	uaAttackDrainOnDeath_valPercent10 = _smns_addMod_uaAttackDrainOnDeath_valPercent10(uaAttackDrainOnDeath_valPercent10)
-	uaAttackDrainOnDeath_valPercent20 = _smns_addMod_uaAttackDrainOnDeath_valPercent20(uaAttackDrainOnDeath_valPercent20)
+	uaHitPointOnDeath10 = _smns_addMod_uaHitPointOnDeath_valPercent10(uaHitPointOnDeath10)
+	uaHitPointOnDeath20 = _smns_addMod_uaHitPointOnDeath_valPercent20(uaHitPointOnDeath20)
+	uaAttackDrainOnDeath10 = _smns_addMod_uaAttackDrainOnDeath_valPercent10(uaAttackDrainOnDeath10)
+	uaAttackDrainOnDeath20 = _smns_addMod_uaAttackDrainOnDeath_valPercent20(uaAttackDrainOnDeath20)
 	umHitPointPerCorpse = _smns_addMod_umHitPointPerCorpse(umHitPointPerCorpse)
 end
 

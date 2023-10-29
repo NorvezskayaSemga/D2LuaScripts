@@ -1,12 +1,15 @@
-package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\units\\?.lua"
+package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modifiers\\drawing\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\leaderMods\\?.lua;.\\Scripts\\modifiers\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\?.lua;.\\Scripts\\modifiers\\smns\\items\\?.lua;.\\Scripts\\modifiers\\smns\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\spells\\?.lua;.\\Scripts\\modifiers\\smns\\units\\?.lua;.\\Scripts\\modifiers\\spells\\?.lua;.\\Scripts\\modifiers\\units\\?.lua;.\\Scripts\\modifiers\\units\\bloodsorcerer\\?.lua;.\\Scripts\\modifiers\\units\\multiplicative_stats\\?.lua;.\\Scripts\\modifiers\\units\\torhoth\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\workshop\\?.lua;.\\Scripts\\workshop\\classes\\?.lua"
 require('setValue')
 
 function getModifierDescTxt(unit, prev)
-	return prev
+	if perk_stats_bonus_additive(unit) > 0 then
+		return prev
+	end
+	return Id.new('x012tg'..tostring(1125 + unit.impl.level))
 end
 
 function getModifierDisplay(unit, prev)
-	if unit.impl.level > 5 then
+	if perk_stats_bonus_additive(unit) > 0 then
 		return false
 	end
 	return prev
@@ -17,9 +20,8 @@ function getLeadership(unit, prev)
 end
 
 function getMovement(unit, prev)
-	local level = unit.impl.level
-	if level < 6 then
-		return svFlatEffectMovement(unit, prev, -10)
+	if perk_stats_bonus_additive(unit) == 0 then
+		return svFlatEffectMovement(unit, prev, -3 - 2 * unit.impl.level)
 	else
 		return prev
 	end
@@ -66,8 +68,7 @@ function perk_stats_bonus(unit)
 end
 
 function perk_stats_bonus_additive(unit)
-	local level = unit.impl.level
-	if level < 6 then
+	if unit.impl.level < 5 then
 		return 0
 	else
 		return 5

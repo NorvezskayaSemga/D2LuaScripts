@@ -1,30 +1,13 @@
-package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\units\\?.lua"
+package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modifiers\\drawing\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\leaderMods\\?.lua;.\\Scripts\\modifiers\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\?.lua;.\\Scripts\\modifiers\\smns\\items\\?.lua;.\\Scripts\\modifiers\\smns\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\spells\\?.lua;.\\Scripts\\modifiers\\smns\\units\\?.lua;.\\Scripts\\modifiers\\spells\\?.lua;.\\Scripts\\modifiers\\units\\?.lua;.\\Scripts\\modifiers\\units\\bloodsorcerer\\?.lua;.\\Scripts\\modifiers\\units\\multiplicative_stats\\?.lua;.\\Scripts\\modifiers\\units\\torhoth\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\workshop\\?.lua;.\\Scripts\\workshop\\classes\\?.lua"
+require "darkpaladin_info"
 require "unitAuraCustomDesc"
 require "setValue"
 require "unitAura"
 
-darkPaladinFearLevelCap = 5
-
 function getModifierDisplay(unit, prev)
-	if unit.impl.level - unit.baseImpl.level >= darkPaladinFearLevelCap then
-		return false
-	else
-		return prev
-	end
+	return _Darkpaladin_Info_getModifierDisplay_Power(unit, prev)
 end
 
 function getModifierDescTxt(unit, prev)
 	return prev
-end
-
-function getAttack2Id(unit, prev)
-	if tostring(prev) ~= tostring(unit.leveledImpl.attack2.id) then
-		return prev
-	end
-	local overlevels = unit.impl.level - unit.baseImpl.level
-	if overlevels > 0 then
-		_unitAura_SetNewPower2(unit, 10 * math.min(overlevels, darkPaladinFearLevelCap))
-		return prev
-	end
-	return prev.emptyId()
 end

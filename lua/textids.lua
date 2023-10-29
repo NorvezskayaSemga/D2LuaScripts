@@ -132,6 +132,11 @@ textids = {
 		-- The text must contain keywords "%STAT%", %UPG1% and %UPG2%.
 		-- Fallback text is "%STAT% (%UPG1% | %UPG2% per level)".
 		dynamicUpgradeValues = "X015TA0012",
+		
+		-- Defines text id to format broken (removed) wards in unit encyclopedia.
+		-- The text must contain keyword "%WARD%", or it can be an empty string to not display broken wards at all.
+		-- Fallback text is "\fMedBold;\c100;000;000;%WARD%\c000;000;000;\fNormal;".
+		removedAttackWard = "",
 	},
 
 	-- Text ids related to events logic
@@ -196,4 +201,21 @@ textids = {
 			},
 		},
 	},
+	
+	
+    generator = {
+        -- Description text for randomly generated scenarios
+        -- Fallback text "Random scenario based on template '%TMPL%'. Seed: %SEED%. Starting gold: %GOLD%. Roads: %ROADS%%. Forest: %FOREST%%."
+        description = "X015TA0035",
+        -- Generator could not process game data from dbf tables or .ff files
+        -- Error details are logged in mssProxyError.log
+        -- Fallback text "Could not read game data needed for scenario generator.\nSee mssProxyError.log for details"
+        wrongGameData = "X015TA0036",
+        -- Error occured during scenario generation
+        -- Fallback text "Error during random scenario map generation.\nSee mssProxyError.log for details".
+        generationError = "X015TA0037",
+        -- Generator failed to create scenario after specified number of attempts
+        -- Fallback text "Could not generate scenario map after %NUM% attempts.\nPlease, adjust template contents or settings"
+        limitExceeded = "X015TA0038",
+    },
 }

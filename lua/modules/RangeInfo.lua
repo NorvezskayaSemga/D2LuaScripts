@@ -1,4 +1,4 @@
-package.Path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modules\\smns\\?.lua"
+package.path = ".\\Scripts\\?.lua;.\\Scripts\\exp\\?.lua;.\\Scripts\\modifiers\\?.lua;.\\Scripts\\modifiers\\drawing\\?.lua;.\\Scripts\\modifiers\\items\\?.lua;.\\Scripts\\modifiers\\leaderMods\\?.lua;.\\Scripts\\modifiers\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\?.lua;.\\Scripts\\modifiers\\smns\\items\\?.lua;.\\Scripts\\modifiers\\smns\\perks\\?.lua;.\\Scripts\\modifiers\\smns\\spells\\?.lua;.\\Scripts\\modifiers\\smns\\units\\?.lua;.\\Scripts\\modifiers\\spells\\?.lua;.\\Scripts\\modifiers\\units\\?.lua;.\\Scripts\\modifiers\\units\\bloodsorcerer\\?.lua;.\\Scripts\\modifiers\\units\\multiplicative_stats\\?.lua;.\\Scripts\\modifiers\\units\\torhoth\\?.lua;.\\Scripts\\modules\\?.lua;.\\Scripts\\modules\\smns\\?.lua;.\\Scripts\\workshop\\?.lua;.\\Scripts\\workshop\\classes\\?.lua"
 require('smnsInfo')
 if smnsEnabled then
 	require('smnsAddedRanges')
@@ -113,7 +113,7 @@ _rangeInfo_idToAttackScriptName[10]  = "_attack_Line"
 _rangeInfo_idToAttackScriptName[11]  = "_attack_Column"
 _rangeInfo_idToAttackScriptName[12]  = "_attack_Area2x2"
 _rangeInfo_idToAttackScriptName[13]  = "_attack_SelectedTargetAndTwoChainedRandom"
-_rangeInfo_idToAttackScriptName[14]  = "_attack_Area2x2"
+_rangeInfo_idToAttackScriptName[14]  = "_attack_Area2x2melee"
 _rangeInfo_idToAttackScriptName[15]  = "_attack_SelectedTargetAndOneRandom"
 _rangeInfo_idToAttackScriptName[16]  = "_attack_SemgaCheckers"
 _rangeInfo_idToAttackScriptName[17]  = "_attack_SemgaCheckers"

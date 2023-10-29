@@ -9,3 +9,9 @@ BoostDamage_minLevel = 1
 BoostDamage_maxLevel = 4
 
 LowerInitiative_1_value = 0.5
+
+OwnerTypeStack = 1
+OwnerTypeFort  = 2
+OwnerTypeRuin  = 3
+
+
