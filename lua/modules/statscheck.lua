@@ -28,25 +28,25 @@ function statsCheck_isDrainOverflowUnit(unit)
 end
 
 function statsCheck_isDirectDmgUnitImpl(unitImpl)
-	if statsCheck_isDirectDmgAttack(unitImpl.attack1) then
+	if statsCheck_isDirectDmgAttack(_common_getImplAttack1(unitImpl)) then
 		return true
 	end
 	return statsCheck_isDirectDmgAttack(unitImpl.attack2)
 end
 function statsCheck_isHealUnitImpl(unitImpl)
-	if statsCheck_isHealAttack(unitImpl.attack1) then
+	if statsCheck_isHealAttack(_common_getImplAttack1(unitImpl)) then
 		return true
 	end
 	return statsCheck_isHealAttack(unitImpl.attack2)
 end
 function statsCheck_isCurseUnitImpl(unitImpl)
-	if statsCheck_isCurseAttack(unitImpl.attack1) then
+	if statsCheck_isCurseAttack(_common_getImplAttack1(unitImpl)) then
 		return true
 	end
 	return statsCheck_isCurseAttack(unitImpl.attack2)
 end
 function statsCheck_isDoTUnitImpl(unitImpl)
-	if statsCheck_isDoTAttack(unitImpl.attack1) then
+	if statsCheck_isDoTAttack(_common_getImplAttack1(unitImpl)) then
 		return true
 	end
 	return statsCheck_isDoTAttack(unitImpl.attack2)
@@ -58,25 +58,25 @@ function statsCheck_isSelfTransformUnitImpl(unitImpl)
 	return statsCheck_isSelfTransformAttack(unitImpl.attack2)
 end
 function statsCheck_isSummonUnitImpl(unitImpl)
-	if statsCheck_isSummonAttack(unitImpl.attack1) then
+	if statsCheck_isSummonAttack(_common_getImplAttack1(unitImpl)) then
 		return true
 	end
 	return statsCheck_isSummonAttack(unitImpl.attack2)
 end
 function statsCheck_isShatterUnitImpl(unitImpl)
-	if statsCheck_isShatterAttack(unitImpl.attack1) then
+	if statsCheck_isShatterAttack(_common_getImplAttack1(unitImpl)) then
 		return true
 	end
 	return statsCheck_isShatterAttack(unitImpl.attack2)
 end
 function statsCheck_isDrainUnitImpl(unitImpl)
-	if statsCheck_isDrainAttack(unitImpl.attack1) then
+	if statsCheck_isDrainAttack(_common_getImplAttack1(unitImpl)) then
 		return true
 	end
 	return statsCheck_isDrainAttack(unitImpl.attack2)
 end
 function statsCheck_isDrainOverflowUnitImpl(unitImpl)
-	if statsCheck_isDrainOverflowAttack(unitImpl.attack1) then
+	if statsCheck_isDrainOverflowAttack(_common_getImplAttack1(unitImpl)) then
 		return true
 	end
 	return statsCheck_isDrainOverflowAttack(unitImpl.attack2)

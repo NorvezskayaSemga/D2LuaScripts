@@ -8,7 +8,7 @@ end
 
 function _Baroness_Info_getAttackPower(unit)
 	if unit.impl.level > 2 then
-		return unit.baseImpl.attack1.power * 0.875
+		return _common_getImplAttack1(unit.baseImpl).power * 0.875
 	end
-	return unit.baseImpl.attack1.power
+	return _common_getImplAttack1(unit.baseImpl).power
 end

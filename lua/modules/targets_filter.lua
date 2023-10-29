@@ -95,7 +95,7 @@ function _targets_filter_Alchemist(attacker, targets, targetsAreAllies, item, ba
 			if targets[i].unit ~= nil then
 				exclude = false
 				aimpl = targets[i].unit.impl
-				if aimpl.attack1.type == Attack.GiveAttack then
+				if _common_getImplAttack1(aimpl).type == Attack.GiveAttack then
 					exclude = true
 				else
 					a = aimpl.attack2
@@ -147,7 +147,7 @@ function _targets_filter_Doppelganger(attacker, targets, allies, targetsAreAllie
 		local targetScript
 		for i=1, #targets do
 			if targets[i].unit ~= nil then
-				a = targets[i].unit.impl.attack1
+				a = _common_getImplAttack1(targets[i].unit.impl)
 				atype = a.type
 				if statsCheck_isDirectDmgType(atype)
 				or statsCheck_isCurseType(atype)
@@ -195,7 +195,7 @@ function _targets_filter_Doppelganger(attacker, targets, allies, targetsAreAllie
 				if _targets_filter_isDoppelganger(allies[i]) then
 					doppelgangersAmount = doppelgangersAmount + 1
 				else
-					a = allies[i].unit.impl.attack1
+					a = _common_getImplAttack1(allies[i].unit.impl)
 					atype = a.type
 					if statsCheck_isSummonType(atype)
 					or statsCheck_isHealType(atype)
@@ -245,7 +245,7 @@ function _targets_filter_DoTIsMainAttack_I(methodName, attacker, selected, allie
 	if item then
 		return targets
 	end
-	if targetsAreAllies or not statsCheck_isDoTType(attacker.unit.impl.attack1.type) or #targets < 1 then
+	if targetsAreAllies or not statsCheck_isDoTType(_common_getImplAttack1(attacker.unit.impl).type) or #targets < 1 then
 		return targets
 	end
 	
@@ -274,7 +274,7 @@ function _targets_filter_DoTIsMainAttack_II(methodName, attacker, selected, alli
 	if item then
 		return targets
 	end
-	if targetsAreAllies or not statsCheck_isDoTType(attacker.unit.impl.attack1.type) or #targets < 1 then
+	if targetsAreAllies or not statsCheck_isDoTType(_common_getImplAttack1(attacker.unit.impl).type) or #targets < 1 then
 		return targets
 	end
 	
@@ -354,7 +354,7 @@ function _targets_filter_ModifBuffer(attacker, targets, targetsAreAllies, item, 
 			for i = 1, #targets do
 				if addTarget[i] then
 					uimpl = targets[i].unit.impl
-					powerAppliable[i] = statsCheck_isPowerAppliable(uimpl.attack1.type)
+					powerAppliable[i] = statsCheck_isPowerAppliable(_common_getImplAttack1(uimpl).type)
 					if not powerAppliable[i] then
 						attack = uimpl.attack2
 						if attack ~= nil then
@@ -725,7 +725,7 @@ function _targets_filter_GetAllyTargets(methodName, attacker, selected, allies, 
 		return targets, nil
 	end
 
-	local areaScript = _RangeInfo_getAttackScriptName(attacker.unit.impl.attack1.reach)
+	local areaScript = _RangeInfo_getAttackScriptName(_common_getImplAttack1(attacker.unit.impl).reach)
 	local myGroupSlots = _batInfo_unitGroup(targets[1].unit, battle).slots
 	local selectedTargets = {}
 	local newTargets = {}
@@ -779,7 +779,7 @@ function _targets_filter_TargetsForHealAndBoost(methodName, attacker, selected, 
 		return targets, nil
 	end
 	
-	local areaScript = _RangeInfo_getAttackScriptName(attacker.unit.impl.attack1.reach)
+	local areaScript = _RangeInfo_getAttackScriptName(_common_getImplAttack1(attacker.unit.impl).reach)
 	local myGroupSlots = _batInfo_unitGroup(attacker.unit, battle).slots
 	local selectedTargets = {}
 	local newTargets = {}
@@ -887,7 +887,7 @@ function _targets_filter_GetAttack1(attacker, item, battle)
 	if item then
 		return item.base.attack
 	else
-		return attacker.unit.impl.attack1
+		return _common_getImplAttack1(attacker.unit.impl)
 	end
 end
 function _targets_filter_GetAttack2(attacker, item, battle)
@@ -901,7 +901,7 @@ function _targets_filter_GetAttack1Type(attacker, item, battle)
 	if item then
 		return item.base.attack.type
 	else
-		return attacker.unit.impl.attack1.type
+		return _common_getImplAttack1(attacker.unit.impl).type
 	end
 end
 function _targets_filter_GetAttack2Type(attacker, item, battle)

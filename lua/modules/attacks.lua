@@ -203,7 +203,7 @@ function _attack_SemgaCross(attacker, selected, allies, targets, targetsAreAllie
 	else
 		isSmall = true
 	end
-	if #result < 2 and not isSmall and attacker.unit.impl.attack1.reach == 19 then
+	if #result < 2 and not isSmall and _common_getImplAttack1(attacker.unit.impl).reach == 19 then
 		result = _common_AddDelta(result, selected, targets, 1, 1, 0)
 		result = _common_AddDelta(result, selected, targets, -1, 1, 0)
 	end

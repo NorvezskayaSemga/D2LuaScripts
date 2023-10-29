@@ -10,7 +10,7 @@ function getModifierDescTxt(unit, prev)
 end
 
 function getAttackLevel(unit, prev)
-	local a = unit.impl.attack1.type
+	local a = _common_getImplAttack1(unit.impl).type
 	if a == Attack.LowerDamage then
 		return math.max(LowerDamage_minLevel, math.min(LowerDamage_maxLevel, prev - 1))
 	elseif a == Attack.LowerInitiative then

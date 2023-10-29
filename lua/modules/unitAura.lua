@@ -573,7 +573,7 @@ end
 function _unitAura_BaseInitiative(unitId, unitMods, unit)
 	local result
 	if uaNewInitiative[unitId] == nil then
-		result = unit.leveledImpl.attack1.initiative
+		result = _common_getImplAttack1(unit.leveledImpl).initiative
 	else
 		result = uaNewInitiative[unitId]
 	end
@@ -752,7 +752,7 @@ function _unitAura_DamageModsEffect(unit, prev, attackN, callGetGroupAndMods)
 		local multiplier = 1 + 0.01 * multiplicative
 		local attk = nil
 		if attackN == 1 then
-			attk = unit.impl.attack1
+			attk = _common_getImplAttack1(unit.impl)
 		elseif attackN == 2 then
 			attk = unit.impl.attack2
 		end
@@ -1172,7 +1172,7 @@ function _unitAura_AttackCritDamage(unit, prev)
 
 	local effect = _unitAura_AttackCritDamageEffect1(unit, true)
 	local result
-	if unit.leveledImpl.attack1.crit then
+	if _common_getImplAttack1(unit.leveledImpl).crit then
 		result = prev + effect
 	else
 		result = effect
@@ -1189,7 +1189,7 @@ function _unitAura_AttackCritDamage(unit, prev)
 			ratio = 1
 			totalDmg = baseDmg
 		else
-			totalDmg = scenario:getUnit(unit.id).impl.attack1.damage
+			totalDmg = _common_getImplAttack1(scenario:getUnit(unit.id).impl).damage
 			if totalDmg == 0 then
 				totalDmg = baseDmg
 			end
@@ -1412,7 +1412,7 @@ function _unitAura_AttackId(unit, prev)
 
 	local leveledAttack1
 	if unit.leveledImpl.altAttack == nil then
-		leveledAttack1 = unit.leveledImpl.attack1
+		leveledAttack1 = _common_getImplAttack1(unit.leveledImpl)
 	else
 		leveledAttack1 = unit.leveledImpl.altAttack
 	end
@@ -2300,7 +2300,7 @@ function _unitAura_AttackId(unit, prev)
 	end
 
 	if unit.leveledImpl.altAttack ~= nil then
-		return unit.leveledImpl.attack1.id
+		return _common_getImplAttack1(unit.leveledImpl).id
 	end
 	return leveledAttack1Id
 end
@@ -3065,7 +3065,7 @@ function _unitAura_CowardiceBig_val(unit, unitMods)
 	end
 	local r = _unitAura_EffectSumUnit(unitMods, umCowardiceBig, 1)
 	if r > 0 then
-		local attackType = scenario:getUnit(unit.id).impl.attack1.type
+		local attackType = _common_getImplAttack1(scenario:getUnit(unit.id).impl).type
 		if not (statsCheck_isDirectDmgType(attackType)
 		     or statsCheck_isCurseType(attackType)
 		     or statsCheck_isDoTType(attackType)) then
@@ -3546,7 +3546,7 @@ function _unitAura_MostLostHPBuff_Calc(unit, effect, ignoreForFilter, forDirectD
 	            if uid ~= prev_uid then
 	            	    prev_uid = uid
 			    unitImpl = scenario:getUnit(uid).impl
-			    a1 = unitImpl.attack1
+			    a1 = _common_getImplAttack1(unitImpl)
 			    a2 = unitImpl.attack2
 
 			    apply = ignoreForFilter

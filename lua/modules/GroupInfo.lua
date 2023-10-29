@@ -165,7 +165,7 @@ end
 G040UM0064 = Id.new('g040um0064').value
 G040UM0106 = Id.new('g040um0106').value
 function _GroupInfo_UnitIsRangedWithoutBow(unit)
-	local r = unit.leveledImpl.attack1.reach
+	local r = _common_getImplAttack1(unit.leveledImpl).reach
 	if r == _RangeInfo_changeToRanged(r) then
 		return true
 	end

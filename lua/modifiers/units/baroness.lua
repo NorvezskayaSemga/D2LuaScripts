@@ -9,7 +9,7 @@ local baronessPerkTxt2 = Id.new("x010tg1808")
 
 function getModifierDisplay(unit, prev)
 	local uimpl = getScenario():getUnit(unit.id).impl
-	local atype = uimpl.attack1.type
+	local atype = _common_getImplAttack1(uimpl).type
 	if atype == Attack.Fear then
 		return prev
 	elseif atype == Attack.Paralyze then
@@ -21,7 +21,7 @@ function getModifierDisplay(unit, prev)
 end
 function getModifierDescTxt(unit, prev)
 	local uimpl = getScenario():getUnit(unit.id).impl
-	local atype = uimpl.attack1.type
+	local atype = _common_getImplAttack1(uimpl).type
 	if atype == Attack.Fear or atype == Attack.Paralyze then
 		if uimpl.level > 2 then
 			return baronessPerkTxt2
@@ -34,7 +34,7 @@ end
 
 function getAttackInfinite(unit, prev)
 	local uimpl = getScenario():getUnit(unit.id).impl
-	local atype = uimpl.attack1.type
+	local atype = _common_getImplAttack1(uimpl).type
 	if atype == Attack.Paralyze then
 		local chance = 10 * ( uimpl.level - unit.baseImpl.level )
 		return _mRnd_simpleRndEvent(chance)
@@ -44,7 +44,7 @@ end
 
 function getAttackNameTxt(unit, prev)
 	local uimpl = getScenario():getUnit(unit.id).impl
-	local atype = uimpl.attack1.type
+	local atype = _common_getImplAttack1(uimpl).type
 	if atype == Attack.Paralyze then
 		return baronessParalizeTxt
 	end

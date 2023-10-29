@@ -10,7 +10,7 @@ end
 
 function getAttackDamRatio(unit, prev)
 	return svFlatEffectSplash1(unit, 
-				   prev - unit.baseImpl.attack1.damageRatio, 
+				   prev - _common_getImplAttack1(unit.baseImpl).damageRatio, 
 				   math.max(50, 75 - 5 * ( unit.impl.level - unit.baseImpl.level )))
 end
 

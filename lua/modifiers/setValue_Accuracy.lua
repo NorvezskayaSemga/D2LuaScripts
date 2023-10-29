@@ -39,7 +39,7 @@ function svGetAttackDamageSpreadChanceShift(unit, attackN, scen)
 		local uimpl = scen:getUnit(unit.id).impl
 		if attackN == 1 then
 			_setValue_attack1DamageSpreadChanceShift[unit.id.value] = 100
-			local att1 = uimpl.attack1
+			local att1 = _common_getImplAttack1(uimpl)
 			if att1 ~= nil then
 				local acc = att1.power
 			end

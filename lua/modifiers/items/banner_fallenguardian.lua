@@ -11,7 +11,7 @@ function getModifierDescTxt(unit, prev)
 end
 
 function getRegen(unit, prev)
-	local a1 = unit.impl.attack1
+	local a1 = _common_getImplAttack1(unit.impl)
 	local a2 = unit.impl.attack2
 	if statsCheck_isHealAttack(a1)
 	or statsCheck_isHealAttack(a2)
@@ -25,7 +25,7 @@ end
 
 function getImmuneToAttack(unit, attack, prev)
 	if statsCheck_isCurseType(attack) and attack ~= Attack.LowerDamage then
-		if statsCheck_isHealAttack(unit.impl.attack1)
+		if statsCheck_isHealAttack(_common_getImplAttack1(unit.impl))
 		or statsCheck_isHealAttack(unit.impl.attack2) then
 			return svAttackImmunityClass(unit, attack, prev, Immune.Always)
 		end
@@ -34,7 +34,7 @@ function getImmuneToAttack(unit, attack, prev)
 end
 
 function getAttackPower(unit, prev)
-	if statsCheck_isCurseAttack(unit.impl.attack1) then
+	if statsCheck_isCurseAttack(_common_getImplAttack1(unit.impl)) then
 		return svMultimplyPower1(unit, prev, 0.2)
 	else
 		return prev

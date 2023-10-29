@@ -193,7 +193,7 @@ local vcAttack1Drain_Min = {}
 local vcAttack2Drain_Min = {}
 function _valueCap_Set_Attack1Drain_Cap(unit, damage)
 	local minVal
-	local attack = unit.impl.attack1
+	local attack = _common_getImplAttack1(unit.impl)
 	if statsCheck_isDrainAttack(attack) then
 		minVal = valueCap_DefaultDrainValue
 	elseif statsCheck_isDrainOverflowAttack(attack) then

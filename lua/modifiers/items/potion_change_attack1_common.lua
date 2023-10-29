@@ -50,7 +50,7 @@ function _changeAttackClass_Dmg1(unit, prev, canApply)
 	   not statsCheck_isShatterType(prev) then
 		local impl = unit.impl
 		local bimpl = unit.baseImpl
-		local attack1 = impl.attack1
+		local attack1 = _common_getImplAttack1(impl)
 		local a1heal = attack1.heal
 		local overlevel = impl.level - bimpl.level
 		
@@ -109,10 +109,10 @@ function _changeAttackClass_Heal1(unit, prev, canApply)
 		return 0
 	end
 	
-	if not statsCheck_isHealType(prev) or unit.impl.attack1.heal == 0 then
+	if not statsCheck_isHealType(prev) or _common_getImplAttack1(unit.impl).heal == 0 then
 		local impl = unit.impl
 		local bimpl = unit.baseImpl
-		local attack1 = impl.attack1
+		local attack1 = _common_getImplAttack1(impl)
 		local attack2 = impl.attack2
 		local a1damage = attack1.damage
 		local a2effect = 0
@@ -132,7 +132,7 @@ function _changeAttackClass_Heal1(unit, prev, canApply)
 		if a1damage > 1 then
 			-- _unitAura_SetNewHeal1(unit, (a1damage + a2effect) * 0.01 * attack1.power)
 			local a1Power
-			local baseA1 = bimpl.attack1
+			local baseA1 = _common_getImplAttack1(bimpl)
 			if baseA1 ~= nil then
 				a1Power = baseA1.power
 			else

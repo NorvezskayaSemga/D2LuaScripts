@@ -25,7 +25,7 @@ end
 
 function getAttackHeal(unit, prev)
 	if prev > 0 then
-		local value = _getCitrineGargoyleAttackBonus(unit) * unit.impl.attack1.power
+		local value = _getCitrineGargoyleAttackBonus(unit) * _common_getImplAttack1(unit.impl).power
 		return svFlatEffectHeal1(unit, prev, value)
 	end
 	return prev

@@ -48,7 +48,7 @@ function _getTargets(methodName, attacker, selected, allies, targets, targetsAre
 	if (not isMarking) and useRandom_PrevState then
 		local mods = _GroupInfo_UnitModifiers(attacker.unit)
 		if _targets_filter_SelectedTargetsRandomly(mods, attacker, item, battle) then
-			local targetScriptName = _RangeInfo_getTargetScriptName(attacker.unit.impl.attack1.reach)
+			local targetScriptName = _RangeInfo_getTargetScriptName(_common_getImplAttack1(attacker.unit.impl).reach)
 			local enableAiHelper_PrevState = enableAiHelper
 			enableAiHelper = false
 			local allTargets = _getChoices(targetScriptName, attacker, selected, allies, targets, targetsAreAllies, item, battle, isMarking)

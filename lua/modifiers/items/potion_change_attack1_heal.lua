@@ -10,7 +10,7 @@ function getModifierDescTxt(unit, prev)
 end
 
 function getAttackSource(unit, prev)
-	if prev ~= Source.Life and statsCheck_isHealType(unit.impl.attack1.type) then
+	if prev ~= Source.Life and statsCheck_isHealType(_common_getImplAttack1(unit.impl).type) then
 		return Source.Life
 	end
 	return prev
